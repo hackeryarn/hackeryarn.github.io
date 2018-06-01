@@ -2,65 +2,65 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Artem Chernyak&#39;s Blog</title>
-    <link>http://localhost:1313/categories/</link>
+    <link>https://achernyak.me/categories/</link>
     <description>Recent content in Categories on Artem Chernyak&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-	<atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://achernyak.me/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ClojureScript</title>
-      <link>http://localhost:1313/categories/clojurescript/</link>
+      <link>https://achernyak.me/categories/clojurescript/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/clojurescript/</guid>
+      <guid>https://achernyak.me/categories/clojurescript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Elixir</title>
-      <link>http://localhost:1313/categories/elixir/</link>
+      <link>https://achernyak.me/categories/elixir/</link>
       <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/elixir/</guid>
+      <guid>https://achernyak.me/categories/elixir/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Haskell</title>
-      <link>http://localhost:1313/categories/haskell/</link>
+      <link>https://achernyak.me/categories/haskell/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/haskell/</guid>
+      <guid>https://achernyak.me/categories/haskell/</guid>
       <description></description>
     </item>
     
     <item>
       <title>JavaScript</title>
-      <link>http://localhost:1313/categories/javascript/</link>
+      <link>https://achernyak.me/categories/javascript/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/javascript/</guid>
+      <guid>https://achernyak.me/categories/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rails</title>
-      <link>http://localhost:1313/categories/rails/</link>
+      <link>https://achernyak.me/categories/rails/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/rails/</guid>
+      <guid>https://achernyak.me/categories/rails/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ruby</title>
-      <link>http://localhost:1313/categories/ruby/</link>
+      <link>https://achernyak.me/categories/ruby/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/categories/ruby/</guid>
+      <guid>https://achernyak.me/categories/ruby/</guid>
       <description></description>
     </item>
     
