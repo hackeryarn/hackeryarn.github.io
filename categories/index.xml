@@ -40,7 +40,7 @@
     <item>
       <title>JavaScript</title>
       <link>https://achernyak.me/categories/javascript/</link>
-      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://achernyak.me/categories/javascript/</guid>
       <description></description>
@@ -61,6 +61,15 @@
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://achernyak.me/categories/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Testing</title>
+      <link>https://achernyak.me/categories/testing/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://achernyak.me/categories/testing/</guid>
       <description></description>
     </item>
     

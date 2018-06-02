@@ -12,14 +12,14 @@
     
     
     <item>
-      <title>Efficient CSV imports in Rails</title>
+      <title>Efficient CSV Imports in Rails</title>
       <link>https://achernyak.me/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://achernyak.me/post/rails-csv-imports/</guid>
       <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
+Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
     </item>
     
   </channel>

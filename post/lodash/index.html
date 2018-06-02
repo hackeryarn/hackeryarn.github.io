@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>How Lodash worked itself out of a job - Artem Chernyak&#39;s Blog</title>
+  <title>How Lodash Worked Itself Out of a Job - Artem Chernyak&#39;s Blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -50,7 +50,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 
 
 
-<meta property="og:title" content="How Lodash worked itself out of a job" />
+<meta property="og:title" content="How Lodash Worked Itself Out of a Job" />
 <meta property="og:description" content="I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
 I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&rsquo;s core, and highly influanced how I think about code to this day." />
 <meta property="og:type" content="article" />
@@ -72,7 +72,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 
 
 
-<meta itemprop="name" content="How Lodash worked itself out of a job">
+<meta itemprop="name" content="How Lodash Worked Itself Out of a Job">
 <meta itemprop="description" content="I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
 I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&rsquo;s core, and highly influanced how I think about code to this day.">
 
@@ -85,7 +85,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 
 <meta itemprop="keywords" content="opinion," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="How Lodash worked itself out of a job"/>
+<meta name="twitter:title" content="How Lodash Worked Itself Out of a Job"/>
 <meta name="twitter:description" content="I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
 I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&rsquo;s core, and highly influanced how I think about code to this day."/>
 
@@ -150,7 +150,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">How Lodash worked itself out of a job</h1>
+      <h1 class="post-title">How Lodash Worked Itself Out of a Job</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2017-06-25 </span>
@@ -174,12 +174,12 @@ I gravitated towards using Lodash because the first language I learned was Schem
 <ul>
 <li><a href="#es6-vs-lodash">ES6 vs Lodash</a>
 <ul>
-<li><a href="#library-size">Library size</a></li>
-<li><a href="#clean-code">Clean code</a></li>
+<li><a href="#library-size">Library Size</a></li>
+<li><a href="#clean-code">Clean Code</a></li>
 </ul></li>
-<li><a href="#where-lodash-is-still-ahead">Where lodash is still ahead</a></li>
-<li><a href="#don-t-pick-a-side">Don&rsquo;t pick a side</a></li>
-<li><a href="#consider-your-options">Consider your options</a></li>
+<li><a href="#where-lodash-is-still-ahead">Where lodash is Still Ahead</a></li>
+<li><a href="#don-t-pick-a-side">Don&rsquo;t Pick a Side</a></li>
+<li><a href="#consider-your-options">Consider Your Options</a></li>
 </ul>
 </nav>
   </div>
@@ -213,7 +213,7 @@ that are taking my attention away from Lodash. There are libraries like <a href=
 The main stumbling point in this transition can be browser support but most teams use
 transpilers such as Babel, so this isn&rsquo;t a concern anymore.</p>
 
-<h2 id="library-size">Library size</h2>
+<h2 id="library-size">Library Size</h2>
 
 <p>This should come as no surprise, but Lodash is a big library. In fact, if you
 modularize your application, chances are it&rsquo;s bigger than your codebase. However, you can import only the modules you need if you have the propper plugins setup, such as <a href="https://github.com/lodash/babel-plugin-lodash">babel-plugin-lodash</a> or <a href="https://github.com/lodash/lodash-webpack-plugin">lodash-webpack-plugin</a>.</p>
@@ -221,7 +221,7 @@ modularize your application, chances are it&rsquo;s bigger than your codebase. H
 <p>ES6, on the other hand, won&rsquo;t add much bloat by default. It&rsquo;s efficiently transpiled into your code and only slightly increases transpiled size, plus chances are you have to use it
 anyways to gain other ownderful features.</p>
 
-<h2 id="clean-code">Clean code</h2>
+<h2 id="clean-code">Clean Code</h2>
 
 <p>Clean code is a big one. Let&rsquo;s take a look at what Lodash provides:</p>
 
@@ -288,14 +288,14 @@ It&rsquo;s clear what&rsquo;s going on and we don&rsquo;t have functions wrappin
 and ES6. Much of the functionaly of Lodash is present in ES6. Please
 take a look at the standard <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> methods available for more.</p>
 
-<h1 id="where-lodash-is-still-ahead">Where lodash is still ahead</h1>
+<h1 id="where-lodash-is-still-ahead">Where lodash is Still Ahead</h1>
 
 <p>I can&rsquo;t go without saying that the nested object manipulation which Lodash
 provides is far superior to what&rsquo;s available in ES6. The problem is that
 we need to import the entirity of Lodash&rsquo;s core in order to get just a portion
 of the functionality that we will use. However, there is a solution.</p>
 
-<h1 id="don-t-pick-a-side">Don&rsquo;t pick a side</h1>
+<h1 id="don-t-pick-a-side">Don&rsquo;t Pick a Side</h1>
 
 <p>You might be thinking that you have a hard choice to make here. Well the good
 news is, there is a middle ground that can yield the best of both worlds!</p>
@@ -348,7 +348,7 @@ more generically to allow for more reuse.</p>
 
 <p>As it has been mentioned in the comments, much of the functionality of Ramda is actually available in Lodash through the recen addition of <a href="https://github.com/lodash/lodash/wiki/FP-Guide">lodash-fp</a>. I think both options are fine choices to imporove code reuse.</p>
 
-<h1 id="consider-your-options">Consider your options</h1>
+<h1 id="consider-your-options">Consider Your Options</h1>
 
 <p>I don&rsquo;t mean to say that you should ditch Lodash and runaway from it like you
 probably should with jQuery. What I want to bring to light is that there are
@@ -392,12 +392,12 @@ a job.</p>
         
           <a class="prev" href="/post/clojurescript-setup/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">ClojureScript setup for Leiningen project with Emacs</span>
+            <span class="prev-text nav-default">ClojureScript Setup for Leiningen Project With Emacs</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
           <a class="next" href="/post/rails-csv-imports/">
-            <span class="next-text nav-default">Efficient CSV imports in Rails</span>
+            <span class="next-text nav-default">Efficient CSV Imports in Rails</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

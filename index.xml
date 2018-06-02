@@ -6,13 +6,24 @@
     <description>Recent content on Artem Chernyak&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 15 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://achernyak.me/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>ClojureScript setup for Leiningen project with Emacs</title>
+      <title>Universally Testable Dependencies in JavaScript</title>
+      <link>https://achernyak.me/post/universally-testable-dependencies/</link>
+      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://achernyak.me/post/universally-testable-dependencies/</guid>
+      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
+This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
+The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
+    </item>
+    
+    <item>
+      <title>ClojureScript Setup for Leiningen Project With Emacs</title>
       <link>https://achernyak.me/post/clojurescript-setup/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
       
@@ -23,7 +34,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
     </item>
     
     <item>
-      <title>How Lodash worked itself out of a job</title>
+      <title>How Lodash Worked Itself Out of a Job</title>
       <link>https://achernyak.me/post/lodash/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
@@ -33,14 +44,14 @@ I gravitated towards using Lodash because the first language I learned was Schem
     </item>
     
     <item>
-      <title>Efficient CSV imports in Rails</title>
+      <title>Efficient CSV Imports in Rails</title>
       <link>https://achernyak.me/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://achernyak.me/post/rails-csv-imports/</guid>
       <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
+Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
     </item>
     
     <item>
@@ -55,7 +66,7 @@ In this talk, I cover some of the best features of Phoenix:
     </item>
     
     <item>
-      <title>Easy universal Haskell development environment</title>
+      <title>Easy Universal Haskell Development Environment</title>
       <link>https://achernyak.me/post/universal-haskell-dev-enviornment/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
       
