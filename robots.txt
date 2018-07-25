@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://achernyak.me/sitemap.xml
+Sitemap: https://hackeryarn.com/sitemap.xml

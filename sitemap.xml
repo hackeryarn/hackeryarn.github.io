@@ -1,163 +1,163 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="https://achernyak.me/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://hackeryarn.com/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://achernyak.me/post/universally-testable-dependencies/</loc>
+    <loc>https://hackeryarn.com/post/universally-testable-dependencies/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/clojurescript-setup/</loc>
+    <loc>https://hackeryarn.com/post/clojurescript-setup/</loc>
     <lastmod>2017-07-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/lodash/</loc>
+    <loc>https://hackeryarn.com/post/lodash/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/rails-csv-imports/</loc>
+    <loc>https://hackeryarn.com/post/rails-csv-imports/</loc>
     <lastmod>2017-06-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/phoenix-talk/</loc>
+    <loc>https://hackeryarn.com/post/phoenix-talk/</loc>
     <lastmod>2016-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/universal-haskell-dev-enviornment/</loc>
+    <loc>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</loc>
     <lastmod>2016-02-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/</loc>
-    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
+    <loc>https://hackeryarn.com/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://achernyak.me/categories/clojurescript/</loc>
+    <loc>https://hackeryarn.com/categories/clojurescript/</loc>
     <lastmod>2017-07-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/elixir/</loc>
+    <loc>https://hackeryarn.com/categories/elixir/</loc>
     <lastmod>2016-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/guide/</loc>
+    <loc>https://hackeryarn.com/tags/guide/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/haskell/</loc>
+    <loc>https://hackeryarn.com/categories/haskell/</loc>
     <lastmod>2016-02-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/javascript/</loc>
+    <loc>https://hackeryarn.com/categories/javascript/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/opinion/</loc>
+    <loc>https://hackeryarn.com/tags/opinion/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/post/</loc>
+    <loc>https://hackeryarn.com/post/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/rails/</loc>
+    <loc>https://hackeryarn.com/categories/rails/</loc>
     <lastmod>2017-06-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/ruby/</loc>
+    <loc>https://hackeryarn.com/categories/ruby/</loc>
     <lastmod>2017-06-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/setup/</loc>
+    <loc>https://hackeryarn.com/tags/setup/</loc>
     <lastmod>2017-07-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/</loc>
+    <loc>https://hackeryarn.com/tags/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/talk/</loc>
+    <loc>https://hackeryarn.com/tags/talk/</loc>
     <lastmod>2016-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/testing/</loc>
+    <loc>https://hackeryarn.com/tags/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/categories/testing/</loc>
+    <loc>https://hackeryarn.com/categories/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://achernyak.me/tags/video/</loc>
+    <loc>https://hackeryarn.com/tags/video/</loc>
     <lastmod>2016-08-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/</loc>
+    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

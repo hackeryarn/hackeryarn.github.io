@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>How Lodash Worked Itself Out of a Job - Artem Chernyak&#39;s Blog</title>
+  <title>How Lodash Worked Itself Out of a Job - hackeryarn</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" />
+<meta name="author" content="Artem Cheryank" />
   <meta name="description" content="I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
 I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day." />
 
@@ -27,10 +27,10 @@ I gravitated towards using Lodash because the first language I learned was Schem
 
 
 
-<meta name="generator" content="Hugo 0.41" />
+<meta name="generator" content="Hugo 0.40.1" />
 
 
-<link rel="canonical" href="https://achernyak.me/post/lodash/" />
+<link rel="canonical" href="https://hackeryarn.com/post/lodash/" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -44,7 +44,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 
 
 
-<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
 <link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
 
 
@@ -54,7 +54,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 <meta property="og:description" content="I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
 I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&rsquo;s core, and highly influanced how I think about code to this day." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://achernyak.me/post/lodash/" />
+<meta property="og:url" content="https://hackeryarn.com/post/lodash/" />
 
 
 
@@ -102,7 +102,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">Artem Chernyak</a>
+    <a href="/" class="logo">hackeryarn</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -126,7 +126,7 @@ I gravitated towards using Lodash because the first language I learned was Schem
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/" class="logo">Artem Chernyak</a>
+  <a href="/" class="logo">hackeryarn</a>
 </div>
 
 <nav class="site-navbar">
@@ -367,7 +367,7 @@ a job.</p>
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">Author</span>
-    <span class="item-content">Artem Chernyak</span>
+    <span class="item-content">Artem Cheryank</span>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
@@ -431,7 +431,7 @@ a job.</p>
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://achernyak.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -452,7 +452,7 @@ a job.</p>
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">Artem Chernyak</span>
+    <span class="author">Artem Cheryank</span>
   </span>
 </div>
     </footer>
@@ -467,17 +467,13 @@ a job.</p>
   <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
 
 
-<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
 
 
 <script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-72377824-1', 'auto');
-	
-	ga('send', 'pageview');
-}
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-72377824-1', 'auto');
+ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>
 
