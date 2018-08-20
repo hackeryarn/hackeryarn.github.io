@@ -3,6 +3,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hackeryarn.com/post/your-job-isnt-writing-code/</loc>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/post/universally-testable-dependencies/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -58,6 +65,13 @@
   </url>
   
   <url>
+    <loc>https://hackeryarn.com/categories/development/</loc>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/categories/elixir/</loc>
     <lastmod>2016-08-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -66,7 +80,7 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/guide/</loc>
-    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -87,14 +101,14 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/opinion/</loc>
-    <lastmod>2017-06-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://hackeryarn.com/post/</loc>
-    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -122,7 +136,7 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/</loc>
-    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -157,7 +171,7 @@
   
   <url>
     <loc>https://hackeryarn.com/</loc>
-    <lastmod>2018-06-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-19T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
