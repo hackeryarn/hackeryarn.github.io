@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Cheryank" />
+<meta name="author" content="Artem Chernyak" />
   <meta name="description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
 Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API." />
@@ -28,7 +28,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 
 
 
-<meta name="generator" content="Hugo 0.40.1" />
+<meta name="generator" content="Hugo 0.47.1" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/rails-csv-imports/" />
@@ -56,24 +56,8 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
 Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/rails-csv-imports/" />
-
-
-
-<meta property="article:published_time" content="2017-06-11T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://hackeryarn.com/post/rails-csv-imports/" /><meta property="article:published_time" content="2017-06-11T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2017-06-11T00:00:00&#43;00:00"/>
-
-
-
-
-
-
-
-
-
-
-
 <meta itemprop="name" content="Efficient CSV Imports in Rails">
 <meta itemprop="description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
@@ -323,7 +307,7 @@ much more worth it!</p>
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">Author</span>
-    <span class="item-content">Artem Cheryank</span>
+    <span class="item-content">Artem Chernyak</span>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
@@ -408,7 +392,7 @@ much more worth it!</p>
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
-    <span class="author">Artem Cheryank</span>
+    <span class="author">Artem Chernyak</span>
   </span>
 </div>
     </footer>
@@ -426,12 +410,16 @@ much more worth it!</p>
 <script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
 
 
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-72377824-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 
