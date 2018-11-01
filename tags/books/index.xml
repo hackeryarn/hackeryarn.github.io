@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Books on hackeryarn</title>
+    <link>https://hackeryarn.com/tags/books/</link>
+    <description>Recent content in Books on hackeryarn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 31 Oct 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hackeryarn.com/tags/books/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>It Doesn&#39;t Have to be Crazy at Work - Day 1</title>
+      <link>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day1/</link>
+      <pubDate>Wed, 31 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day1/</guid>
+      <description>Calm is the Secret to Great Work  &amp;ldquo;Comparison is the death of joy.&amp;rdquo;
+&amp;ndash; Mark Twain
+ Drawn out goals, packed schedules, and crazy work environments sap the calm from any workspace.
+Remember that packing your schedule and trying to get more done is not the way to stay creative. Instead allow yourself uninterrupted chunks of time, at least 90 minutes to work. Use this time to to accomplish what you need to and produce something of quality.</description>
+    </item>
+    
+  </channel>
+</rss>
