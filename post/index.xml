@@ -6,10 +6,20 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>It Doesn&#39;t Have to be Crazy at Work - Day 5</title>
+      <link>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day5/</link>
+      <pubDate>Mon, 05 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day5/</guid>
+      <description>The small choices you make today determine the future  &amp;ldquo;When you deal with people who have trouble, you can either choose to take the token that says &amp;lsquo;It&amp;rsquo;s no big deal&amp;rsquo; or the token that says &amp;lsquo;It&amp;rsquo;s the end of the world.&amp;rsquo; Whichever token you pick, they&amp;rsquo;ll take the other.&amp;rdquo;
+ Your company culture, your mood, even your level of stress are all determined by the small choices you make every day.</description>
+    </item>
     
     <item>
       <title>It Doesn&#39;t Have to be Crazy at Work - Day 4</title>
@@ -140,16 +150,6 @@ In this talk, I cover some of the best features of Phoenix:
       <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
 Traditional methods included:
  Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
-    </item>
-    
-    <item>
-      <title>It Doesn&#39;t Have to be Crazy at Work - Day 5</title>
-      <link>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day5/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day5/</guid>
-      <description>The small choices you make today determine the future  &amp;ldquo;When you deal with people who have trouble, you can either choose to take the token that says &amp;lsquo;It&amp;rsquo;s no big deal&amp;rsquo; or the token that says &amp;lsquo;It&amp;rsquo;s the end of the world.&amp;rsquo; Whichever token you pick, they&amp;rsquo;ll take the other.&amp;rdquo;
- Your company culture, your mood, even your level of stress are all determined by the small choices you make every day.</description>
     </item>
     
   </channel>

@@ -54,7 +54,7 @@
 <meta property="og:description" content="A blog by Artem Chernyak" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hackeryarn.com/" />
-<meta property="og:updated_time" content="2016-08-02T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2017-06-11T00:00:00&#43;00:00"/>
 <meta itemprop="name" content="hackeryarn">
 <meta itemprop="description" content="A blog by Artem Chernyak">
 
@@ -127,6 +127,35 @@
     
       <article class="post">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/rails-csv-imports/">Efficient CSV Imports in Rails</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-06-11 </span>
+      <div class="post-category">
+          
+            <a href="/categories/ruby/"> Ruby </a>
+          
+            <a href="/categories/rails/"> Rails </a>
+          
+        </div>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
+We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
+Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.
+    </div>
+    <div class="read-more">
+      <a href="/post/rails-csv-imports/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    
+      <article class="post">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/phoenix-talk/">Phoenix talk</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2016-08-02 </span>
@@ -174,32 +203,6 @@ Traditional methods included:
     </div>
     <div class="read-more">
       <a href="/post/universal-haskell-dev-enviornment/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/it-doesnt-have-to-be-crazy-at-work/day5">It Doesn&#39;t Have to be Crazy at Work - Day 5</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 0001-01-01 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      The small choices you make today determine the future  &ldquo;When you deal with people who have trouble, you can either choose to take the token that says &lsquo;It&rsquo;s no big deal&rsquo; or the token that says &lsquo;It&rsquo;s the end of the world.&rsquo; Whichever token you pick, they&rsquo;ll take the other.&rdquo;
- Your company culture, your mood, even your level of stress are all determined by the small choices you make every day.
-    </div>
-    <div class="read-more">
-      <a href="/books/it-doesnt-have-to-be-crazy-at-work/day5" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
