@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://hackeryarn.com/books/principles/day3/</loc>
+    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/books/principles/day2/</loc>
     <lastmod>2018-12-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -276,14 +283,14 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/books/</loc>
+    <loc>https://hackeryarn.com/categories/books/</loc>
     <lastmod>2018-12-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/books/</loc>
+    <loc>https://hackeryarn.com/tags/books/</loc>
     <lastmod>2018-12-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -402,14 +409,14 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/testing/</loc>
+    <loc>https://hackeryarn.com/categories/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/testing/</loc>
+    <loc>https://hackeryarn.com/tags/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
