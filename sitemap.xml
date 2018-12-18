@@ -3,6 +3,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hackeryarn.com/books/principles/day6/</loc>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/books/principles/day5/</loc>
+    <lastmod>2018-12-16T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/books/principles/day4/</loc>
     <lastmod>2018-12-14T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -283,22 +297,22 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/books/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <loc>https://hackeryarn.com/tags/books/</loc>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/books/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <loc>https://hackeryarn.com/categories/books/</loc>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://hackeryarn.com/categories/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -368,7 +382,7 @@
   
   <url>
     <loc>https://hackeryarn.com/post/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -396,7 +410,7 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -409,14 +423,14 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/testing/</loc>
+    <loc>https://hackeryarn.com/tags/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/testing/</loc>
+    <loc>https://hackeryarn.com/categories/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -431,7 +445,7 @@
   
   <url>
     <loc>https://hackeryarn.com/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
