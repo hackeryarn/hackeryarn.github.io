@@ -6,10 +6,21 @@
     <description>Recent content in Books on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 08 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hackeryarn.com/tags/books/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Principles - Day 19</title>
+      <link>https://hackeryarn.com/books/principles/day19/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/books/principles/day19/</guid>
+      <description>People should always know where they stand. Instead of a big surprise during an infrequent review, they should be receiving a stream of continuous feedback.
+This allows them to address problems quicker, and gives them less shock when an issue is brought up. Especially if it is backed by a data and a specific occurrence.
+The data set provides a way to see a pattern in their behavior. It makes it clear that the issue wasn&amp;rsquo;t a one off but something that needs work.</description>
+    </item>
     
     <item>
       <title>Principles - Day 18</title>
