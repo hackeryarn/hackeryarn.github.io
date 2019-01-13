@@ -54,7 +54,7 @@
 <meta property="og:description" content="A blog by Artem Chernyak" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hackeryarn.com/" />
-<meta property="og:updated_time" content="2019-01-01T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2017-06-11T00:00:00&#43;00:00"/>
 <meta itemprop="name" content="hackeryarn">
 <meta itemprop="description" content="A blog by Artem Chernyak">
 
@@ -127,12 +127,14 @@
     
       <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day14">Principles - Day 14</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/rails-csv-imports/">Efficient CSV Imports in Rails</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2019-01-01 </span>
+      <span class="post-time"> 2017-06-11 </span>
       <div class="post-category">
           
-            <a href="/categories/books/"> Books </a>
+            <a href="/categories/ruby/"> Ruby </a>
+          
+            <a href="/categories/rails/"> Rails </a>
           
         </div>
       
@@ -141,11 +143,12 @@
   
   <div class="post-content">
     <div class="post-summary">
-      Radical truthfulness is the corner stone of the most important things in life. It allows you to build stronger relationships. You won&rsquo;t try to &ldquo;protect&rdquo; people from difficult situation, and instead give them time to prepare. You will grow closer than ever because there won&rsquo;t be hidden agendas or tricks.
-Ultimately, you can only control yourself in being radically truthful, but this behavior is contagious. Those that get it won&rsquo;t want to operate any other way.
+      Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
+We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
+Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.
     </div>
     <div class="read-more">
-      <a href="/books/principles/day14" class="read-more-link">Read more..</a>
+      <a href="/post/rails-csv-imports/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
@@ -153,12 +156,12 @@ Ultimately, you can only control yourself in being radically truthful, but this 
     
       <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day13">Principles - Day 13</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/phoenix-talk/">Phoenix talk</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2018-12-31 </span>
+      <span class="post-time"> 2016-08-02 </span>
       <div class="post-category">
           
-            <a href="/categories/books/"> Books </a>
+            <a href="/categories/elixir/"> Elixir </a>
           
         </div>
       
@@ -167,11 +170,12 @@ Ultimately, you can only control yourself in being radically truthful, but this 
   
   <div class="post-content">
     <div class="post-summary">
-      There are undeniable correlations between life and work. Both are built on relationships, both are driven and improved by the people you surround yourself with.
-Many of the things people pursue are a byproduct of the people an culture they create around them. If money is your goal, you will never make much by just chasing money. The way to make money is to become excellent and valuable at what you do.
+      I recently gave a talk, at the local Fullstack Meetup, on the Phoenix Framework. Phoenix is the de facto web framework for Elixir.
+In this talk, I cover some of the best features of Phoenix:
+ Erlang: The platmor which Elixir and Phoenix are build on. (albeit very brief overview of the major features) Plug: The specification for composable module design that gives Phoenix much of it&rsquo;s power. Ecto: The database integration layer.
     </div>
     <div class="read-more">
-      <a href="/books/principles/day13" class="read-more-link">Read more..</a>
+      <a href="/post/phoenix-talk/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
@@ -179,12 +183,12 @@ Many of the things people pursue are a byproduct of the people an culture they c
     
       <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day12">Principles - Day 12</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/universal-haskell-dev-enviornment/">Easy Universal Haskell Development Environment</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2018-12-29 </span>
+      <span class="post-time"> 2016-02-06 </span>
       <div class="post-category">
           
-            <a href="/categories/books/"> Books </a>
+            <a href="/categories/haskell/"> Haskell </a>
           
         </div>
       
@@ -193,64 +197,12 @@ Many of the things people pursue are a byproduct of the people an culture they c
   
   <div class="post-content">
     <div class="post-summary">
-      The fastest way to improve your life is to learn to make better decisions. There are three steps to making better decisions.
-Gather enough information to increase your odds of making the correct decision. When doing this, remember the 80&frasl;20 rule and weigh the cost of delaying the decision vs the cost of being wrong.
-Find common patterns in your decision making and turn them into principles. Simplify your decision making process to a level where anyone can take your explanation and make the same decision you would have.
+      Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
+Traditional methods included:
+ Installing The Haskell Platform, which was a great project in it&rsquo;s time but always seems to lag a few GHC versions behind.
     </div>
     <div class="read-more">
-      <a href="/books/principles/day12" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day11">Principles - Day 11</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      There are many kind of people. All of them with their own strength and weaknesses. No matter how far you have gotten on your own, you will hit a wall when you need the help of others. The human species didn&rsquo;t survive this long because of the brilliants of the hermits. It survived because human have learned to work together in large groups.
-So be open to the help and input of others.
-    </div>
-    <div class="read-more">
-      <a href="/books/principles/day11" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day10">Principles - Day 10</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-27 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Being open minded is one of the hardest things you can do. It required you to go against your baser instincts when they are at their strongest. You have to face your fears of shame, failure, and humiliation head on.
-However, through these battles you gain the truth. You get to make better decisions, see the world in new ways, and constantly improve. By being radically open minded, you unlock your potential.
-    </div>
-    <div class="read-more">
-      <a href="/books/principles/day10" class="read-more-link">Read more..</a>
+      <a href="/post/universal-haskell-dev-enviornment/" class="read-more-link">Read more..</a>
     </div>
   </div>
 </article>
@@ -265,10 +217,6 @@ However, through these battles you gain the truth. You get to make better decisi
         <span class="prev-text">Prev</span>
       </a>
     
-      <a class="next" href="/page/3/">
-        <span class="next-text">Next</span>
-        <i class="iconfont icon-right"></i>
-      </a>
   </nav>
 
         </div>

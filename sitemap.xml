@@ -3,335 +3,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hackeryarn.com/books/principles/day19/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day18/</loc>
-    <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day17/</loc>
-    <lastmod>2019-01-07T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day16/</loc>
-    <lastmod>2019-01-06T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day15/</loc>
-    <lastmod>2019-01-04T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day14/</loc>
-    <lastmod>2019-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day13/</loc>
-    <lastmod>2018-12-31T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day12/</loc>
-    <lastmod>2018-12-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day11/</loc>
-    <lastmod>2018-12-28T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day10/</loc>
-    <lastmod>2018-12-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day9/</loc>
-    <lastmod>2018-12-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day8/</loc>
-    <lastmod>2018-12-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day7/</loc>
-    <lastmod>2018-12-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day6/</loc>
-    <lastmod>2018-12-17T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day5/</loc>
-    <lastmod>2018-12-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day4/</loc>
-    <lastmod>2018-12-14T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day3/</loc>
-    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day2/</loc>
-    <lastmod>2018-12-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/principles/day1/</loc>
-    <lastmod>2018-12-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day9/</loc>
-    <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day8/</loc>
-    <lastmod>2018-12-04T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day7/</loc>
-    <lastmod>2018-12-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day6/</loc>
-    <lastmod>2018-12-02T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day5/</loc>
-    <lastmod>2018-12-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day4/</loc>
-    <lastmod>2018-11-30T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day3/</loc>
-    <lastmod>2018-11-29T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day2/</loc>
-    <lastmod>2018-11-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/getting-to-yes/day1/</loc>
-    <lastmod>2018-11-26T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day14/</loc>
-    <lastmod>2018-11-25T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day13/</loc>
-    <lastmod>2018-11-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day12/</loc>
-    <lastmod>2018-11-23T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day11/</loc>
-    <lastmod>2018-11-21T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day10/</loc>
-    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day9/</loc>
-    <lastmod>2018-11-19T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day8/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day7/</loc>
-    <lastmod>2018-11-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day6/</loc>
-    <lastmod>2018-11-14T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day5/</loc>
-    <lastmod>2018-11-13T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day4/</loc>
-    <lastmod>2018-11-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day3/</loc>
-    <lastmod>2018-11-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day2/</loc>
-    <lastmod>2018-11-08T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/shadow-divers/day1/</loc>
-    <lastmod>2018-11-06T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day5/</loc>
-    <lastmod>2018-11-05T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day4/</loc>
-    <lastmod>2018-11-04T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day3/</loc>
-    <lastmod>2018-11-03T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day2/</loc>
-    <lastmod>2018-11-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/books/it-doesnt-have-to-be-crazy-at-work/day1/</loc>
-    <lastmod>2018-10-31T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</loc>
     <lastmod>2018-09-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -388,22 +59,7 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/books/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/categories/books/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/categories/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -473,7 +129,7 @@
   
   <url>
     <loc>https://hackeryarn.com/post/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -501,7 +157,7 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -536,7 +192,7 @@
   
   <url>
     <loc>https://hackeryarn.com/</loc>
-    <lastmod>2019-01-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
