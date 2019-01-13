@@ -97,5 +97,16 @@ Traditional methods included:
  Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
     </item>
     
+    <item>
+      <title>Introducing Daily Reading Notes</title>
+      <link>https://hackeryarn.com/post/daily-reading-notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/daily-reading-notes/</guid>
+      <description>Recently I ran an experiment of posting daily reading notes on this blog. This was very much a personal experiment.
+Making these posts every day reinforced my reading habit. I felt motivated to set aside time to read, and I got the chance to reflect on my reading. It also provided the opportunity to share more with others.
+I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right place for it.</description>
+    </item>
+    
   </channel>
 </rss>
