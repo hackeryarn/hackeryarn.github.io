@@ -220,14 +220,14 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/testing/</loc>
+    <loc>https://hackeryarn.com/tags/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/testing/</loc>
+    <loc>https://hackeryarn.com/categories/testing/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
