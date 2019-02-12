@@ -17,8 +17,8 @@
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>[React][https://reactjs.org/] and [Redux][https://redux.js.org/] are a top choice for front end projects. [React][https://reactjs.org/] provides fast performance, easy ways to create shared components, and a plethora of libraries. [Redux][https://redux.js.org/] lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, (Redux)[https://redux.js.org/] bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
+      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
+In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
     </item>
     
   </channel>

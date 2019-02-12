@@ -17,8 +17,8 @@
 
 
 <meta name="author" content="Artem Chernyak" />
-  <meta name="description" content="[React][https://reactjs.org/] and [Redux][https://redux.js.org/] are a top choice for front end projects. [React][https://reactjs.org/] provides fast performance, easy ways to create shared components, and a plethora of libraries. [Redux][https://redux.js.org/] lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, (Redux)[https://redux.js.org/] bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component." />
+  <meta name="description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
+In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component." />
 
   <meta name="keywords" content="blog, tech, ideas" />
 
@@ -51,14 +51,14 @@ In large projects, (Redux)[https://redux.js.org/] bloat your project with repeti
 
 
 <meta property="og:title" content="Making Redux Easy" />
-<meta property="og:description" content="[React][https://reactjs.org/] and [Redux][https://redux.js.org/] are a top choice for front end projects. [React][https://reactjs.org/] provides fast performance, easy ways to create shared components, and a plethora of libraries. [Redux][https://redux.js.org/] lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, (Redux)[https://redux.js.org/] bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component." />
+<meta property="og:description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
+In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hackeryarn.com/post/making-redux-easy/" /><meta property="article:published_time" content="2019-02-11T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2019-02-11T00:00:00&#43;00:00"/>
 <meta itemprop="name" content="Making Redux Easy">
-<meta itemprop="description" content="[React][https://reactjs.org/] and [Redux][https://redux.js.org/] are a top choice for front end projects. [React][https://reactjs.org/] provides fast performance, easy ways to create shared components, and a plethora of libraries. [Redux][https://redux.js.org/] lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, (Redux)[https://redux.js.org/] bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.">
+<meta itemprop="description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
+In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.">
 
 
 <meta itemprop="datePublished" content="2019-02-11T00:00:00&#43;00:00" />
@@ -70,8 +70,8 @@ In large projects, (Redux)[https://redux.js.org/] bloat your project with repeti
 <meta itemprop="keywords" content="opinion,experiment,guide," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Making Redux Easy"/>
-<meta name="twitter:description" content="[React][https://reactjs.org/] and [Redux][https://redux.js.org/] are a top choice for front end projects. [React][https://reactjs.org/] provides fast performance, easy ways to create shared components, and a plethora of libraries. [Redux][https://redux.js.org/] lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, (Redux)[https://redux.js.org/] bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component."/>
+<meta name="twitter:description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
+In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -178,12 +178,12 @@ In large projects, (Redux)[https://redux.js.org/] bloat your project with repeti
     <div class="post-content">
       
 
-<p>[React][<a href="https://reactjs.org/">https://reactjs.org/</a>] and [Redux][<a href="https://redux.js.org/">https://redux.js.org/</a>] are a top choice for front end projects. [React][<a href="https://reactjs.org/">https://reactjs.org/</a>] provides fast
+<p><a href="https://reactjs.org/">React</a> and <a href="https://redux.js.org/">Redux</a> are a top choice for front end projects. <a href="https://reactjs.org/">React</a> provides fast
 performance, easy ways to create shared components, and a plethora of
-libraries. [Redux][<a href="https://redux.js.org/">https://redux.js.org/</a>] lets you simplify state management in your
+libraries. <a href="https://redux.js.org/">Redux</a> lets you simplify state management in your
 application, but it has serious drawbacks.</p>
 
-<p>In large projects, (Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>] bloat your project with repetitive code. To
+<p>In large projects, <a href="https://redux.js.org/">Redux</a> bloat your project with repetitive code. To
 support a single store update, you need to create a reducer that handles an
 action type which is dispatched from an action called inside a component. If
 that process sounds tedious and confusing, that&rsquo;s because it is. You end up
@@ -191,23 +191,23 @@ with tons of simple actions and reducers that all look alike.</p>
 
 <p>People went to great lengths to combat this problem. Suggestions range from using
 a new state management library, such as Mobx, to abandoning
-[React][<a href="https://reactjs.org/">https://reactjs.org/</a>] completely for
+<a href="https://reactjs.org/">React</a> completely for
 something like Vue. These suggestions are like throwing the baby out
 with the bath water. That&rsquo;s why I was happy to find
-(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] which didn&rsquo;t make me
+<a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> which didn&rsquo;t make me
 leave these libraries behind.</p>
 
 <h1 id="enter-redux-easy">Enter Redux-Easy</h1>
 
-<p>(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] doesn&rsquo;t try to replace (Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>] or [React][<a href="https://reactjs.org/">https://reactjs.org/</a>]. Instead, it removes the boilerplate and provides helper functions. You don&rsquo;t need to replace your entire code base. You can incrementally integrate (Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>]</p>
+<p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> doesn&rsquo;t try to replace <a href="https://redux.js.org/">Redux</a> or <a href="https://reactjs.org/">React</a>. Instead, it removes the boilerplate and provides helper functions. You don&rsquo;t need to replace your entire code base. You can incrementally integrate <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
 
 <p>To see how well it delivered on these promises, I decided to try it with the
-classic Todo MVC application. The (Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>] library even comes with an idiomatic
+classic Todo MVC application. The <a href="https://redux.js.org/">Redux</a> library even comes with an idiomatic
 example, which I used as a starting point.</p>
 
 <h2 id="reducing-boilerplate-code">Reducing Boilerplate Code</h2>
 
-<p>(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] simplifies the creation of the store. Instead of manually creating
+<p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> simplifies the creation of the store. Instead of manually creating
 the store, passing it to the <code>Provider</code>, and wrapping your app in the
 <code>Provider</code>. You use <code>reduxSetup</code> to do all those steps for you:</p>
 
@@ -247,9 +247,9 @@ addReducer('addToAge', (state, years) =&gt; {
 });
 </code></pre>
 
-<p>In vanilla (Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>], you have to use <code>mapDispatchToProps</code> and
+<p>In vanilla <a href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
 <code>mapStateToProps</code> to pass in the dispatch actions and state.
-(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>]
+<a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
 provides helpers that interact directly with the store.</p>
 
 <p>Instead of <code>mapDispatchToProps</code>, you use the provided <code>dispatch</code> function
@@ -283,12 +283,12 @@ export default watch(MyComponent, {
 </code></pre>
 
 <p>These tools provide a way to reduce the setup of
-(Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>]. However, (Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>]
+<a href="https://redux.js.org/">Redux</a>. However, <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
 doesn&rsquo;t stop there.</p>
 
 <h2 id="helpers-for-common-actions">Helpers for Common Actions</h2>
 
-<p>(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] provided <code>dispatchSet</code>, <code>dispatchTransform</code>, and <code>dispatchDelete</code>.
+<p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> provided <code>dispatchSet</code>, <code>dispatchTransform</code>, and <code>dispatchDelete</code>.
 These are simple and flexible ways to manage simple modifications to your
 state. For actions dealing with arrays, there are <code>dispatchPush</code>,
 <code>dispatchFilter</code>, and <code>dispatchMap</code>.</p>
@@ -311,11 +311,11 @@ spread cross 4 files, to a single function defined on the component using it:</p
 <p><code>completeTodo</code> is an example of modifying an array. It takes the store path
 and a function. Then it maps the function over the array pulled from the path.
 The dispatch, action, and reducer are all taken care of by
-(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>]</p>
+<a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
 
 <h1 id="conclusion">Conclusion</h1>
 
-<p>(Redux-Easy)[<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] delivered on its promise of making (Redux)[<a href="https://redux.js.org/">https://redux.js.org/</a>] development shorter and
+<p>[Redux-Easy][<a href="https://github.com/mvolkmann/redux-easy">https://github.com/mvolkmann/redux-easy</a>] delivered on its promise of making <a href="https://redux.js.org/">Redux</a> development shorter and
 simpler. Using it, I removed 5 out of 7 action handlers. I reduce the lines of
 code by 10% from 503 to 447, and the number of files by 30% from 20 to 14.</p>
 
