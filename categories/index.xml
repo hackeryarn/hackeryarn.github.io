@@ -57,6 +57,33 @@
     </item>
     
     <item>
+      <title>Express</title>
+      <link>https://hackeryarn.com/categories/express/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/express/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://hackeryarn.com/categories/go/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://hackeryarn.com/categories/golang/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Haskell</title>
       <link>https://hackeryarn.com/categories/haskell/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
@@ -66,11 +93,47 @@
     </item>
     
     <item>
+      <title>JS</title>
+      <link>https://hackeryarn.com/categories/js/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>JavaScript</title>
       <link>https://hackeryarn.com/categories/javascript/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/categories/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lambda</title>
+      <link>https://hackeryarn.com/categories/lambda/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node</title>
+      <link>https://hackeryarn.com/categories/node/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/node/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nodejs</title>
+      <link>https://hackeryarn.com/categories/nodejs/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/nodejs/</guid>
       <description></description>
     </item>
     
@@ -107,6 +170,15 @@
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/categories/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Serverless</title>
+      <link>https://hackeryarn.com/categories/serverless/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/categories/serverless/</guid>
       <description></description>
     </item>
     
