@@ -41,9 +41,27 @@
     <item>
       <title>Guide</title>
       <link>https://hackeryarn.com/tags/guide/</link>
-      <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/tags/guide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hakyll</title>
+      <link>https://hackeryarn.com/tags/hakyll/</link>
+      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/tags/hakyll/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Haskell</title>
+      <link>https://hackeryarn.com/tags/haskell/</link>
+      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/tags/haskell/</guid>
       <description></description>
     </item>
     

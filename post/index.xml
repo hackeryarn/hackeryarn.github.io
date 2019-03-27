@@ -6,10 +6,20 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hierarchies In a Hakyll Blog</title>
+      <link>https://hackeryarn.com/post/hierarchies-in-hakyll/</link>
+      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
+      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+    </item>
     
     <item>
       <title>The Right Abstraction for Lambdas</title>
