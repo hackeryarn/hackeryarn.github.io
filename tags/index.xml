@@ -6,49 +6,31 @@
     <description>Recent content in Tags on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 13 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hackeryarn.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Book</title>
-      <link>https://hackeryarn.com/tags/book/</link>
-      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      <title>emacs</title>
+      <link>https://hackeryarn.com/tags/emacs/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://hackeryarn.com/tags/book/</guid>
+      <guid>https://hackeryarn.com/tags/emacs/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Experience</title>
-      <link>https://hackeryarn.com/tags/experience/</link>
-      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://hackeryarn.com/tags/experience/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Experiment</title>
-      <link>https://hackeryarn.com/tags/experiment/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://hackeryarn.com/tags/experiment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Guide</title>
+      <title>guide</title>
       <link>https://hackeryarn.com/tags/guide/</link>
-      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/tags/guide/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Hakyll</title>
+      <title>hakyll</title>
       <link>https://hackeryarn.com/tags/hakyll/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -57,7 +39,7 @@
     </item>
     
     <item>
-      <title>Haskell</title>
+      <title>haskell</title>
       <link>https://hackeryarn.com/tags/haskell/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
@@ -66,7 +48,7 @@
     </item>
     
     <item>
-      <title>Opinion</title>
+      <title>opinion</title>
       <link>https://hackeryarn.com/tags/opinion/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
       
@@ -75,25 +57,34 @@
     </item>
     
     <item>
-      <title>Setup</title>
-      <link>https://hackeryarn.com/tags/setup/</link>
-      <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
+      <title>experiment</title>
+      <link>https://hackeryarn.com/tags/experiment/</link>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://hackeryarn.com/tags/setup/</guid>
+      <guid>https://hackeryarn.com/tags/experiment/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Talk</title>
-      <link>https://hackeryarn.com/tags/talk/</link>
-      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
+      <title>book</title>
+      <link>https://hackeryarn.com/tags/book/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://hackeryarn.com/tags/talk/</guid>
+      <guid>https://hackeryarn.com/tags/book/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Testing</title>
+      <title>experience</title>
+      <link>https://hackeryarn.com/tags/experience/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/tags/experience/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
       <link>https://hackeryarn.com/tags/testing/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
       
@@ -102,7 +93,25 @@
     </item>
     
     <item>
-      <title>Video</title>
+      <title>setup</title>
+      <link>https://hackeryarn.com/tags/setup/</link>
+      <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/tags/setup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>talk</title>
+      <link>https://hackeryarn.com/tags/talk/</link>
+      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/tags/talk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>video</title>
       <link>https://hackeryarn.com/tags/video/</link>
       <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
       

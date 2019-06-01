@@ -1,3 +1,12 @@
+
+
+There are two possible situations that led to this error:
+  1. You haven&#39;t copied the config.toml yet. See https://github.com/olOwOlo/hugo-theme-even#installation 
+  2. You have an incompatible update. See https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#400-2018-11-06 
+
+有两种可能的情况会导致这个错误发生:
+  1. 你还没有复制 config.toml 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/README-zh.md#installation 
+  2. 你进行了一次不兼容的更新 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#400-2018-11-06 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,23 +25,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" />
-  <meta name="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure." />
-
-  <meta name="keywords" content="blog, tech, ideas" />
+Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure." /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
-<meta name="google-site-verification" content="48lVad14itLkhEimujuIJU1bqw99BMi23iy_h4WpPl4" />
 
 
-<meta name="generator" content="Hugo 0.47.1" />
+
+<meta name="generator" content="Hugo 0.55.4 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/clojurescript-setup/" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,14 +45,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
-
-
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
 
 
 
@@ -56,8 +54,10 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
 Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/clojurescript-setup/" /><meta property="article:published_time" content="2017-07-15T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://hackeryarn.com/post/clojurescript-setup/" />
+<meta property="article:published_time" content="2017-07-15T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2017-07-15T00:00:00&#43;00:00"/>
+
 <meta itemprop="name" content="ClojureScript Setup for Leiningen Project With Emacs">
 <meta itemprop="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
@@ -147,20 +147,14 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
       <div class="post-meta">
         <span class="post-time"> 2017-07-15 </span>
         <div class="post-category">
-            
-              <a href="/categories/clojurescript/"> ClojureScript </a>
-            
-          </div>
-        
+            <a href="/categories/clojurescript/"> ClojureScript </a>
+            </div>
         
       </div>
     </header>
 
-    
-    
-<div class="post-toc" id="post-toc">
+    <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
-  
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
@@ -173,11 +167,6 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 </nav>
   </div>
 </div>
-
-    
-    
-
-    
     <div class="post-content">
       
 
@@ -252,31 +241,18 @@ and you will have your two REPLs setup.</p>
 
     </div>
 
-    
-    
-
-    
-    
-
     <footer class="post-footer">
       <div class="post-tags">
-          
           <a href="/tags/setup/">setup</a>
-          
           <a href="/tags/guide/">guide</a>
-          
-        </div>
-
-      
+          </div>
       <nav class="post-nav">
-        
-          <a class="prev" href="/post/universally-testable-dependencies/">
+        <a class="prev" href="/post/universally-testable-dependencies/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">Universally Testable Dependencies in JavaScript</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
-        
-          <a class="next" href="/post/lodash/">
+        <a class="next" href="/post/lodash/">
             <span class="next-text nav-default">How Lodash Worked Itself Out of a Job</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
@@ -285,8 +261,7 @@ and you will have your two REPLs setup.</p>
     </footer>
   </article>
         </div>
-        
-  <div id="disqus_thread"></div>
+        <div id="disqus_thread"></div>
     <script type="text/javascript">
     (function() {
       
@@ -300,8 +275,6 @@ and you will have your two REPLs setup.</p>
     })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  
 
       </div>
     </main>
@@ -328,8 +301,7 @@ and you will have your two REPLs setup.</p>
 
   <span class="copyright-year">
     &copy; 
-    
-      2018 - 
+    2018 - 
     2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
@@ -343,13 +315,10 @@ and you will have your two REPLs setup.</p>
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-
-
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
 <script type="application/javascript">

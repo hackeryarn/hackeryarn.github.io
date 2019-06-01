@@ -1,3 +1,12 @@
+
+
+There are two possible situations that led to this error:
+  1. You haven&#39;t copied the config.toml yet. See https://github.com/olOwOlo/hugo-theme-even#installation 
+  2. You have an incompatible update. See https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#400-2018-11-06 
+
+有两种可能的情况会导致这个错误发生:
+  1. 你还没有复制 config.toml 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/README-zh.md#installation 
+  2. 你进行了一次不兼容的更新 参考 https://github.com/olOwOlo/hugo-theme-even/blob/master/CHANGELOG.md#400-2018-11-06 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,22 +25,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" />
-  <meta name="description" content="A blog by Artem Chernyak" />
-  <meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="A blog by Artem Chernyak" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
-<meta name="google-site-verification" content="48lVad14itLkhEimujuIJU1bqw99BMi23iy_h4WpPl4" />
 
 
-<meta name="generator" content="Hugo 0.47.1" />
+
+<meta name="generator" content="Hugo 0.55.4 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/" />
-<link href="https://hackeryarn.com/index.xml" rel="alternate" type="application/rss+xml" title="hackeryarn" />
+  <link href="https://hackeryarn.com/index.xml" rel="alternate" type="application/rss+xml" title="hackeryarn" />
   <link href="https://hackeryarn.com/index.xml" rel="feed" type="application/rss+xml" title="hackeryarn" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,14 +45,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
-
-
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
 
 
 
@@ -54,7 +53,9 @@
 <meta property="og:description" content="A blog by Artem Chernyak" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hackeryarn.com/" />
-<meta property="og:updated_time" content="2018-08-19T00:00:00&#43;00:00"/>
+
+<meta property="og:updated_time" content="2019-06-01T00:00:00&#43;00:00"/>
+
 <meta itemprop="name" content="hackeryarn">
 <meta itemprop="description" content="A blog by Artem Chernyak">
 
@@ -124,22 +125,37 @@
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          
-  <section id="posts" class="posts">
-    
-    
-    
-      <article class="post">
+          <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/why-i-built-a-static-site-in-clojure/">Why I Built a Static Site in Clojure</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-15 </span>
+      <div class="post-category">
+          <a href="/categories/clojure/"> Clojure </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn't know was that I haven't built a static site in nearly a decade. However I couldn't let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
+We started coming up with ideas right away over a couple of beers.
+    </div>
+    <div class="read-more">
+      <a href="/post/why-i-built-a-static-site-in-clojure/" class="read-more-link">Read more..</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/your-job-isnt-writing-code/">Your Job Isn&#39;t Writing Code</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-08-19 </span>
       <div class="post-category">
-          
-            <a href="/categories/development/"> Development </a>
-          
-        </div>
-      
+          <a href="/categories/development/"> Development </a>
+          </div>
     </div>
   </header>
   
@@ -155,20 +171,15 @@ Users don&rsquo;t care what your class hierarchy looks like.
   </div>
 </article>
 
-    
-      <article class="post">
+    <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/universally-testable-dependencies/">Universally Testable Dependencies in JavaScript</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-06-01 </span>
       <div class="post-category">
-          
-            <a href="/categories/javascript/"> JavaScript </a>
-          
-            <a href="/categories/testing/"> Testing </a>
-          
-        </div>
-      
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/testing/"> Testing </a>
+          </div>
     </div>
   </header>
   
@@ -184,18 +195,14 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
   </div>
 </article>
 
-    
-      <article class="post">
+    <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/clojurescript-setup/">ClojureScript Setup for Leiningen Project With Emacs</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2017-07-15 </span>
       <div class="post-category">
-          
-            <a href="/categories/clojurescript/"> ClojureScript </a>
-          
-        </div>
-      
+          <a href="/categories/clojurescript/"> ClojureScript </a>
+          </div>
     </div>
   </header>
   
@@ -211,18 +218,14 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
   </div>
 </article>
 
-    
-      <article class="post">
+    <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/lodash/">How Lodash Worked Itself Out of a Job</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2017-06-25 </span>
       <div class="post-category">
-          
-            <a href="/categories/javascript/"> JavaScript </a>
-          
-        </div>
-      
+          <a href="/categories/javascript/"> JavaScript </a>
+          </div>
     </div>
   </header>
   
@@ -237,51 +240,18 @@ I gravitated towards using Lodash because the first language I learned was Schem
   </div>
 </article>
 
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/rails-csv-imports/">Efficient CSV Imports in Rails</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2017-06-11 </span>
-      <div class="post-category">
-          
-            <a href="/categories/ruby/"> Ruby </a>
-          
-            <a href="/categories/rails/"> Rails </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
-We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.
-    </div>
-    <div class="read-more">
-      <a href="/post/rails-csv-imports/" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-  </section>
+    </section>
   
   <nav class="pagination">
-    
-      <a class="prev" href="/">
+    <a class="prev" href="/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text">Prev</span>
       </a>
-    
-      <a class="next" href="/page/3/">
+    <a class="next" href="/page/3/">
         <span class="next-text">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
   </nav>
-
         </div>
         
 
@@ -310,8 +280,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 
   <span class="copyright-year">
     &copy; 
-    
-      2018 - 
+    2018 - 
     2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
@@ -325,13 +294,10 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-
-
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
 
 
 <script type="application/javascript">
