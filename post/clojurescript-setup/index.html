@@ -36,7 +36,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -57,7 +57,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 
 <meta itemprop="datePublished" content="2017-07-15T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-07-15T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="389">
+<meta itemprop="wordCount" content="397">
 
 
 
@@ -194,33 +194,50 @@ required to get everything running smoothly.</p>
 because they are not needed in production.</p>
 
 <p>You will need to add the following to your <code>project.clj</code>:</p>
-
-<pre><code>:profiles
-{:dev {:dependencies [[com.cemerick/piggieback &quot;0.2.1&quot;]
-                      [figwheel-sidecar &quot;0.5.0-2&quot;]]
-       :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">:profiles
+{:dev {:dependencies [[com.cemerick/piggieback &#34;0.2.1&#34;]
+                      [figwheel-sidecar &#34;0.5.0-2&#34;]]
+       :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}</pre></td></tr></table>
+</div>
+</div>
 <p>With your <code>project.clj</code> updated, you can to run <code>cider-jack-in-clojurescript</code>
 (<code>C-c M-J</code>) to start up your clojurescript REPL.</p>
 
 <p>Inside the new REPL session, you can start <a href="https://github.com/bhauman/lein-figwheel">Figwheel</a> with:</p>
-
-<pre><code>(use 'fighweel-sidecar.repl-api)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(use &#39;fighweel-sidecar.repl-api)
 (start-figwheel!)
-(cljs-repl)
-</code></pre>
-
+(cljs-repl)</pre></td></tr></table>
+</div>
+</div>
 <p>These commands will start up a new ClojureScript REPL. You now have two REPL
 session running. One for Clojure and one for ClojureScript.</p>
 
 <p>The above is a nice way to get started but gets tedious very quickly, took me
 two start-ups took 2 start-ups. Therefore I recommend you add the following to your Emacs
 config:</p>
-
-<pre><code>(setq cider-cljs-lein-repl &quot;(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))&quot;)
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(setq cider-cljs-lein-repl &#34;(do (use &#39;figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))&#34;)</pre></td></tr></table>
+</div>
+</div>
 <p>As you can see this is just a wrapper for the commands you were running
 by hand. Now, every time you execute <code>cider-jack-in-clojurescript</code>, these commands are run
 and you will have your two REPLs setup.</p>
@@ -309,7 +326,7 @@ and you will have your two REPLs setup.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

@@ -36,7 +36,7 @@ Traditional methods included:
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -57,7 +57,7 @@ Traditional methods included:
 
 <meta itemprop="datePublished" content="2016-02-06T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-02-06T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="568">
+<meta itemprop="wordCount" content="571">
 
 
 
@@ -184,22 +184,34 @@ Traditional methods included:
 <p>Now let&rsquo;s crack open the terminal and configure our environment. All the commands will remain the same regardless of your operating system.</p>
 
 <p>Let&rsquo;s start by installing Haskell, or GHC to be more specific. Stack does not come GHC but it does come with an easy way to install it.</p>
-
-<pre><code class="language-bash">$ stack setup
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ stack setup</code></pre></td></tr></table>
+</div>
+</div>
 <p>Now you have a working version of GHC and you can drop into the repl at any time. Feel free to try this out with <code>stack repl</code>.</p>
 
 <p>Next let&rsquo;s install all our atom packages. Which is just one line! These packages include everything you would expect. Syntax highlights, code completion, linting, and even some auto formatting.</p>
-
-<pre><code class="language-bash">$ apm install language-haskell haskell-ghc-mod ide-haskell-cabal ide-haskell autocomplete-haskell
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ apm install language-haskell haskell-ghc-mod ide-haskell-cabal ide-haskell autocomplete-haskell</code></pre></td></tr></table>
+</div>
+</div>
 <p><strong>You must be outside of any stack project to run this command!</strong> This installs the binaries using your global configuration and not project specific setup. Which will make updating things in the future a little easier.</p>
-
-<pre><code class="language-bash">$ stack install ghc-mod stylish-haskell
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ stack install ghc-mod stylish-haskell</code></pre></td></tr></table>
+</div>
+</div>
 <p><code>ghc-mod</code> will do all heavy lifting for your setup. It&rsquo;s the backend for all the auto completion, linting, code validation, etc. While <code>stylish-haskell</code> will prettify your code.</p>
 
 <p>At this point you need to check the output from stack to ensure that the binary install location has been added to your path. If it hasn&rsquo;t you will see a message instructing you on the exact folder that needs to be added.</p>
@@ -283,7 +295,7 @@ Traditional methods included:
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

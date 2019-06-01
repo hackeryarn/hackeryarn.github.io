@@ -35,7 +35,7 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -54,7 +54,7 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 
 <meta itemprop="datePublished" content="2019-02-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="846">
+<meta itemprop="wordCount" content="900">
 
 
 
@@ -192,32 +192,66 @@ comes with an idiomatic example, which I used as a starting point.</p>
 <p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> simplifies the creation of the store. Instead of manually creating
 the store, passing it to the <code>Provider</code>, and wrapping your app in the
 <code>Provider</code>. You use <code>reduxSetup</code> to do all those steps for you:</p>
-
-<pre><code>import React from 'react';
-import {reduxSetup} from 'redux-easy';
-import App from './App';
-import './reducers'; // described next
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import React from &#39;react&#39;;
+import {reduxSetup} from &#39;redux-easy&#39;;
+import App from &#39;./App&#39;;
+import &#39;./reducers&#39;; // described next
 
 const initialState = {
-  user: {firstName: ''}
+  user: {firstName: &#39;&#39;}
 };
 
 // The specified component is rendered in the element with
-// id &quot;root&quot; unless the &quot;target&quot; option is specified.
-reduxSetup({component: &lt;App /&gt;, initialState});
-</code></pre>
-
+// id &#34;root&#34; unless the &#34;target&#34; option is specified.
+reduxSetup({component: &lt;App /&gt;, initialState});</pre></td></tr></table>
+</div>
+</div>
 <p>You no longer manually group the actions handled by the reducer, nor combine
 the reducers into to a single root reducer. Instead, you use <code>addReducer</code>. It
 manages the root reducer for you, and you can add the handler from anywhere:</p>
-
-<pre><code>import {addReducer} from 'redux-easy';
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">import {addReducer} from &#39;redux-easy&#39;;
 
 // Call addReducer once for each action type, giving it the
 // function to be invoked when that action type is dispatched.
 // These functions must return the new state
 // and cannot modify the existing state.
-addReducer('addToAge', (state, years) =&gt; {
+addReducer(&#39;addToAge&#39;, (state, years) =&gt; {
   const {user} = state;
   return {
     ...state,
@@ -226,9 +260,9 @@ addReducer('addToAge', (state, years) =&gt; {
       age: user.age + years
     }
   };
-});
-</code></pre>
-
+});</pre></td></tr></table>
+</div>
+</div>
 <p>In vanilla <a href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
 <code>mapStateToProps</code> to pass in the dispatch actions and state.
 <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
@@ -236,34 +270,59 @@ provides helpers that interact directly with the store.</p>
 
 <p>Instead of <code>mapDispatchToProps</code>, you use the provided <code>dispatch</code> function
 to fire off action:</p>
-
-<pre><code>onFirstNameChange = event =&gt; {
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">onFirstNameChange = event =&gt; {
   // assumes value comes from an input
   const {value} = event.target;
-  dispatch('setFirstName', value);
+  dispatch(&#39;setFirstName&#39;, value);
 
   // If the setFirstName action just sets a value in the state,
   // perhaps user.firstName, the following can be used instead.
   // There is no need to implement simple reducer functions.
-  dispatchSet('user.firstName', value);
-};
-</code></pre>
-
+  dispatchSet(&#39;user.firstName&#39;, value);
+};</pre></td></tr></table>
+</div>
+</div>
 <p>Instead of <code>mapStateToProps</code>, you wrap your component in a <code>watch</code>
 function. This functions lets you map object from the state using the state
 path:</p>
-
-<pre><code>// The second argument to watch is a map of property names
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// The second argument to watch is a map of property names
 // to state paths where path parts are separated by periods.
-// For example, zip: 'user.address.zipCode'.
+// For example, zip: &#39;user.address.zipCode&#39;.
 // When the value for a prop comes from a top-level state property
 // with the same name, the path can be an empty string, null, or
 // undefined and `watch` will use the prop name as the path.
 export default watch(MyComponent, {
-  user: '' // path will be 'user'
-});
-</code></pre>
-
+  user: &#39;&#39; // path will be &#39;user&#39;
+});</pre></td></tr></table>
+</div>
+</div>
 <p>These tools provide a way to reduce the setup of
 <a href="https://redux.js.org/">Redux</a>. However, <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
 doesn&rsquo;t stop there.</p>
@@ -280,16 +339,26 @@ you need to perform on the store.</p>
 
 <p>With actions like <code>completeTodo</code>, I reduced the traditional flow,
 spread cross 4 files, to a single function defined on the component using it:</p>
-
-<pre><code>completeTodo = (id) =&gt; {
-  dispatchMap('todos', todo =&gt;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">completeTodo = (id) =&gt; {
+  dispatchMap(&#39;todos&#39;, todo =&gt;
     todo.id === id ?
       { ...todo, completed: !todo.completed } :
       todo
   )
-}
-</code></pre>
-
+}</pre></td></tr></table>
+</div>
+</div>
 <p><code>completeTodo</code> is an example of modifying an array. It takes the store path
 and a function. Then it maps the function over the array pulled from the path.
 The dispatch, action, and reducer are all taken care of by
@@ -387,7 +456,7 @@ closer to where it&rsquo;s being used and is easier to follow.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

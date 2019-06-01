@@ -36,7 +36,7 @@ The only problem is that I am an Emacs user." /><meta name="keywords" content="b
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -57,7 +57,7 @@ The only problem is that I am an Emacs user.">
 
 <meta itemprop="datePublished" content="2019-06-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-06-01T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1107">
+<meta itemprop="wordCount" content="1142">
 
 
 
@@ -174,16 +174,28 @@ replacing the region with the command's output.</p>
 ~align-equals~. To see the full implementation and learn a little Haskell, 
 you can read his <a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html" title="article">article</a>. Or you can follow along while keeping the below
 command's usage in mind:</p>
-
-<p>$ align-equals
-  foo = 1
-  a = 2
-  asdf = 3
-  <Ctrl-D>
-  foo  = 1
-  a    = 2
-  asdf = 3</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ align-equals
+  <span class="nv">foo</span> <span class="o">=</span> <span class="m">1</span>
+  <span class="nv">a</span> <span class="o">=</span> <span class="m">2</span>
+  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span>
+  &lt;Ctrl-D&gt;
+  <span class="nv">foo</span>  <span class="o">=</span> <span class="m">1</span>
+  <span class="nv">a</span>    <span class="o">=</span> <span class="m">2</span>
+  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>Emacs has a built in command, <code>shell-command-on-region</code>, which executes the
 specified command on the selected region. This would work for our example, but
 it requires two commands. First you execute <code>shell-command-on-region</code>, then you
@@ -204,11 +216,18 @@ options</a>, which I encourage you to explore on your own.</p>
 executes a shell command on a region specified by the beginning(<code>b</code>) and
 ending(<code>e</code>) arguments. We also supply the shell command to execute, and two
 flags which make the command replace the selected region.</p>
-
-<p>(defun align-equals (b e) 
-  (interactive "r")
-  (shell-command-on-region b e "align-equals" t t))</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-equals</span> <span class="p">(</span><span class="nv">b</span> <span class="nv">e</span><span class="p">)</span> 
+  <span class="p">(</span><span class="nb">interactive</span> <span class="s">&#34;r&#34;</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="nv">b</span> <span class="nv">e</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>We can expand the CLI command in this wrapper to take any number or arguments
 and flags. No matter how we change it, we can still invoke it with one command:
 ~<M-x> align-equals~.</p>
@@ -228,11 +247,18 @@ our shell commands.</p>
 <p>This time, we don't need to pass any arguments to <code>interactive</code>. Instead, we use
 ~shell-command-on-region~ with the results of calling <code>point-min</code> and
 ~point-max~ -- the start and end of the buffer, respectively.</p>
-
-<p>(defun align-buffer ()
-  (interactive)
-  (shell-command-on-region (point-min) (point-max) "align-equals" t t))</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-buffer</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">)</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></code></pre></td></tr></table>
+</div>
+</div>
 <p><code>align-buffer</code> aligns the entire buffer without the need to manually select a
 region. This makes the it less error prone and easier to execute. We can't
 select the region incorrectly, because we don't need to anymore. We only need to
@@ -240,7 +266,8 @@ execute <code>&lt;M-x&gt; align-buffer</code>.</p>
 
 <h2 id="displaying-the-output-of-a-shell-command">Displaying The Output of a Shell Command</h2>
 
-<p>code.</p>
+<p>For this examples, let's use <code>eslint</code>, a popular tool for linting JavaScript
+code.</p>
 
 <p><code>eslint</code> is different from our previous command. It takes a file name, not the
 buffer contents. This means we will need to use some new functions.</p>
@@ -249,12 +276,20 @@ buffer contents. This means we will need to use some new functions.</p>
 get the buffer name by using the <code>buffer-name</code> function. Once we have the name,
 we merge it with the string <code>eslint</code> to create the final command, and pass it to
 ~shell-command~. This logs the output to a dedicate shell command buffer.</p>
-
-<p>(defun run-eslint ()
-  (interactive)
-  (let ((current-file (buffer-name (current-buffer))))
-    (shell-command (concat "eslint " current-file))))</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">run-eslint</span> <span class="p">()</span>
+  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">current-file</span> <span class="p">(</span><span class="nf">buffer-name</span> <span class="p">(</span><span class="nf">current-buffer</span><span class="p">))))</span>
+    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint &#34;</span> <span class="nv">current-file</span><span class="p">))))</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>Now we can execute <code>run-eslint</code> in any JavaScript file and see the results of
 executing the command.</p>
 
@@ -262,9 +297,14 @@ executing the command.</p>
 that automatically fixes simple problems.</p>
 
 <p>To add this flag you only need to change the string you pass to <code>shell-command</code>.</p>
-
-<p>(shell-command (concat "eslint --fix" current-file))))</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>With that change, the simple issues get fixed automatically and we get a
 log of the complex issues to fix manually.</p>
 
@@ -295,11 +335,18 @@ above. <code>js-mode-hook</code> only needs the function to execute when the mod
 activated. But <code>before-save-hook</code> needs the <code>LOCAL</code> option. This only runs the
 action in the buffer it was activated in. Without this flag, <code>eslint</code> would run
 on every file after we opened any JavaScript file.</p>
-
-<p>(add-hook 'js-mode-hook
-            (lambda ()
-              (add-hook 'before-save-hook 'run-eslint nil t)))</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-elisp" data-lang="elisp">  <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;js-mode-hook</span>
+            <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
+              <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;run-eslint</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span></code></pre></td></tr></table>
+</div>
+</div>
 <h1 id="going-further">Going Further</h1>
 
 <p>I only scratched the surface of what's possible with Elisp. Projects like <a href="https://magit.vc/" title="magit">magit</a>
@@ -387,7 +434,7 @@ hacking.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

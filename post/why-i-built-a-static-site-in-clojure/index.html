@@ -35,7 +35,7 @@ We started coming up with ideas right away over a couple of beers." /><meta name
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -54,7 +54,7 @@ We started coming up with ideas right away over a couple of beers.">
 
 <meta itemprop="datePublished" content="2018-09-15T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-15T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="461">
+<meta itemprop="wordCount" content="484">
 
 
 
@@ -169,44 +169,76 @@ complexity for a website that didn't need dynamic content. Also, <code>Next.js</
 
 <p>That's when I decided to reach for <a href="https://github.com/weavejester/hiccup" title="hiccup">hiccup</a>, a Clojure library for generating
 server side content. <code>hiccup</code> let me use Clojure data structures to build my pages.</p>
-
-<pre><code class="language-clojure">;; generating a span element with the class `foo` and content of `bar`
-(html [:span.foo  &quot;bar&quot;])
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; generating a span element with the class `foo` and content of `bar`</span>
+<span class="p">(</span><span class="nv">html</span> <span class="p">[</span><span class="ss">:span.foo</span>  <span class="s">&#34;bar&#34;</span><span class="p">])</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>This short syntax let me express more with less code. I also had components.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; defining an `h1` variable with the content `Welcome`</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">header</span> <span class="p">[</span><span class="ss">:h1</span> <span class="s">&#34;Welcome&#34;</span><span class="p">])</span>
 
-<pre><code class="language-clojure">;; defining an `h1` variable with the content `Welcome`
-(def header [:h1 &quot;Welcome&quot;])
-
-;; using `header` variable inside a `div` with an additional paragraph
-(html [:div.content
-       header
-       [:p &quot;more content&quot;]])
-</code></pre>
-
+<span class="c1">;; using `header` variable inside a `div` with an additional paragraph</span>
+<span class="p">(</span><span class="nv">html</span> <span class="p">[</span><span class="ss">:div.content</span>
+       <span class="nv">header</span>
+       <span class="p">[</span><span class="ss">:p</span> <span class="s">&#34;more content&#34;</span><span class="p">]])</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>I could define functions or plain variables, then use them as components in my
 templates.</p>
 
 <p>On top of that, I didn't have to learn a special syntax for working with data. I
 had the full power of Clojure to interact with data and components themselves.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; defining data for the menu</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">menu-items</span>
+  <span class="p">[</span><span class="s">&#34;Crab Rangoon&#34;</span>
+   <span class="s">&#34;Pot Stickers&#34;</span>
+   <span class="s">&#34;Miso Soup&#34;</span><span class="p">])</span>
 
-<pre><code class="language-clojure">;; defining data for the menu
-(def menu-items
-  [&quot;Crab Rangoon&quot;
-   &quot;Pot Stickers&quot;
-   &quot;Miso Soup&quot;])
+<span class="c1">;; creating a function to generate a list elment from the provided `menu-item`</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">create-menu-item</span> <span class="p">[</span><span class="nv">menu-item</span><span class="p">]</span>
+  <span class="p">[</span><span class="ss">:li.menu-item</span> <span class="nv">menu-item</span><span class="p">])</span>
 
-;; creating a function to generate a list elment from the provided `menu-item`
-(defn create-menu-item [menu-item]
-  [:li.menu-item menu-item])
-
-;; generating an unordered list by mapping over the `menu-items` data
-(def menu
-  [:ul
-   (map create-menu-item menu-items)])
-</code></pre>
-
+<span class="c1">;; generating an unordered list by mapping over the `menu-items` data</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">menu</span>
+  <span class="p">[</span><span class="ss">:ul</span>
+   <span class="p">(</span><span class="nb">map </span><span class="nv">create-menu-item</span> <span class="nv">menu-items</span><span class="p">)])</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>I could do all this with a concise syntax that is simpler than Wordpress
 templates, and shorter than React components.</p>
 
@@ -292,7 +324,7 @@ matter what features we dream up, they will be possible with this general purpos
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

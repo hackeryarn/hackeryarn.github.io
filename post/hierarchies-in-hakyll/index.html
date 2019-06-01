@@ -35,7 +35,7 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -54,7 +54,7 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
 
 <meta itemprop="datePublished" content="2019-03-27T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-27T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="777">
+<meta itemprop="wordCount" content="822">
 
 
 
@@ -173,14 +173,22 @@ of the book inside the <code>posts</code> directory. This naming convention allo
 link the book's page to the folder containing the posts.</p>
 
 <p>Our directory structure should have the following layout:</p>
-
-<pre><code class="language-text">posts
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">posts
 +-- book-title.md
 +-- book-title
 |   +-- post1.md
-|   +-- post2.md
-</code></pre>
-
+|   +-- post2.md</code></pre></td></tr></table>
+</div>
+</div>
 <h1 id="matching-the-routes">Matching the Routes</h1>
 
 <p>With the directory structure in place, we can proceed to creating matchers for
@@ -197,18 +205,30 @@ tells ~match</code> to look inside any directory within <code>posts</code>. The 
 written in markdown and need their extension set to <code>html</code>.</p>
 
 <p>The matchers with extensions look like this:</p>
-
-<pre><code class="language-haskell">main :: IO ()
-main =
-hakyll $ do
-match &quot;posts/*&quot; $ do
-  route $ setExtension &quot;html&quot;
-  ...
-match &quot;posts/*/*&quot;
-  route $ setExtension &quot;html&quot;
-  ...
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span>
+<span class="nf">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+<span class="nf">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+  <span class="nf">route</span> <span class="o">$</span> <span class="nf">setExtension</span> <span class="s">&#34;html&#34;</span>
+  <span class="o">...</span>
+<span class="nf">match</span> <span class="s">&#34;posts/*/*&#34;</span>
+  <span class="nf">route</span> <span class="o">$</span> <span class="nf">setExtension</span> <span class="s">&#34;html&#34;</span>
+  <span class="o">...</span></code></pre></td></tr></table>
+</div>
+</div>
 <h1 id="getting-the-posts-for-a-book">Getting the Posts for a Book</h1>
 
 <p>Now that we are matching the books and posts pages, we need to group
@@ -218,28 +238,46 @@ function.</p>
 
 <p>Our function takes the file path for the book page, strips out everything
 but the file name, and add a glob pattern to the end.</p>
-
-<pre><code class="language-haskell">getBookFolder :: FilePath -&gt; Pattern
-getBookFolder = fromGlob . (++ &quot;/*&quot;) . takeWhile (/= '.') . drop 3 . show
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">getBookFolder</span> <span class="ow">::</span> <span class="kt">FilePath</span> <span class="ow">-&gt;</span> <span class="kt">Pattern</span>
+<span class="nf">getBookFolder</span> <span class="ow">=</span> <span class="nf">fromGlob</span> <span class="o">.</span> <span class="p">(</span><span class="o">++</span> <span class="s">&#34;/*&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="nf">takeWhile</span> <span class="p">(</span><span class="o">/=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nf">drop</span> <span class="mi">3</span> <span class="o">.</span> <span class="nf">show</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>We use this function in the books pages matcher to get a list of the book's posts
 as an input for the newly created <code>bookCtx</code>.</p>
 
 <p>Creating the <code>bookCtx</code> goes in the <code>compile</code> block:</p>
-
-<pre><code class="language-haskell">main :: IO ()
-main =
-  hakyll $ do
-    match &quot;posts/*&quot; $ do
-      route $ setExtension &quot;html&quot;
-      compile $ do
-        filepath &lt;- getResourceFilePath
-        posts &lt;- recentFirst =&lt;&lt; loadAll (getBookFolder filepath)
-        let bookCtx = listField &quot;posts&quot; defaultContext (return posts)
-        ...
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span>
+  <span class="nf">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+    <span class="nf">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+      <span class="nf">route</span> <span class="o">$</span> <span class="nf">setExtension</span> <span class="s">&#34;html&#34;</span>
+      <span class="nf">compile</span> <span class="o">$</span> <span class="kr">do</span>
+        <span class="nf">filepath</span> <span class="ow">&lt;-</span> <span class="nf">getResourceFilePath</span>
+        <span class="nf">posts</span> <span class="ow">&lt;-</span> <span class="nf">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="nf">loadAll</span> <span class="p">(</span><span class="nf">getBookFolder</span> <span class="nf">filepath</span><span class="p">)</span>
+        <span class="kr">let</span> <span class="nf">bookCtx</span> <span class="ow">=</span> <span class="nf">listField</span> <span class="s">&#34;posts&#34;</span> <span class="nf">defaultContext</span> <span class="p">(</span><span class="nf">return</span> <span class="nf">posts</span><span class="p">)</span>
+        <span class="o">...</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>This <code>compile</code> block is similar to the auto generated example that lists all the
 posts. Except, we generate the path for the posts relatively to the current file.</p>
 
@@ -252,28 +290,50 @@ the individual templates, both the matchers will need the default template and t
 ~relativizeUrls~ helper.</p>
 
 <p>The final output of the two matchers looks like this:</p>
-
-<pre><code class="language-haskell">main :: IO ()
-main =
-  hakyll $ do
-    match &quot;posts/*&quot; $ do
-      route $ setExtension &quot;html&quot;
-      compile $ do
-        filepath &lt;- getResourceFilePath
-        posts &lt;- recentFirst =&lt;&lt; loadAll (getBookFolder filepath)
-        let bookCtx = listField &quot;posts&quot; defaultContext (return posts)
-        getResourceBody &gt;&gt;= applyAsTemplate bookCtx &gt;&gt;=
-          loadAndApplyTemplate &quot;templates/book.html&quot; bookCtx &gt;&gt;=
-          loadAndApplyTemplate &quot;templates/default.html&quot; bookCtx &gt;&gt;=
-          relativizeUrls
-    match &quot;posts/*/*&quot; $ do
-      route $ setExtension &quot;html&quot;
-      compile $
-        pandocCompiler &gt;&gt;= loadAndApplyTemplate &quot;templates/post.html&quot; postCtx &gt;&gt;=
-        loadAndApplyTemplate &quot;templates/default.html&quot; postCtx &gt;&gt;=
-        relativizeUrls
-</code></pre>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span>
+  <span class="nf">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+    <span class="nf">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+      <span class="nf">route</span> <span class="o">$</span> <span class="nf">setExtension</span> <span class="s">&#34;html&#34;</span>
+      <span class="nf">compile</span> <span class="o">$</span> <span class="kr">do</span>
+        <span class="nf">filepath</span> <span class="ow">&lt;-</span> <span class="nf">getResourceFilePath</span>
+        <span class="nf">posts</span> <span class="ow">&lt;-</span> <span class="nf">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="nf">loadAll</span> <span class="p">(</span><span class="nf">getBookFolder</span> <span class="nf">filepath</span><span class="p">)</span>
+        <span class="kr">let</span> <span class="nf">bookCtx</span> <span class="ow">=</span> <span class="nf">listField</span> <span class="s">&#34;posts&#34;</span> <span class="nf">defaultContext</span> <span class="p">(</span><span class="nf">return</span> <span class="nf">posts</span><span class="p">)</span>
+        <span class="nf">getResourceBody</span> <span class="o">&gt;&gt;=</span> <span class="nf">applyAsTemplate</span> <span class="nf">bookCtx</span> <span class="o">&gt;&gt;=</span>
+          <span class="nf">loadAndApplyTemplate</span> <span class="s">&#34;templates/book.html&#34;</span> <span class="nf">bookCtx</span> <span class="o">&gt;&gt;=</span>
+          <span class="nf">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="nf">bookCtx</span> <span class="o">&gt;&gt;=</span>
+          <span class="nf">relativizeUrls</span>
+    <span class="nf">match</span> <span class="s">&#34;posts/*/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+      <span class="nf">route</span> <span class="o">$</span> <span class="nf">setExtension</span> <span class="s">&#34;html&#34;</span>
+      <span class="nf">compile</span> <span class="o">$</span>
+        <span class="nf">pandocCompiler</span> <span class="o">&gt;&gt;=</span> <span class="nf">loadAndApplyTemplate</span> <span class="s">&#34;templates/post.html&#34;</span> <span class="nf">postCtx</span> <span class="o">&gt;&gt;=</span>
+        <span class="nf">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="nf">postCtx</span> <span class="o">&gt;&gt;=</span>
+        <span class="nf">relativizeUrls</span></code></pre></td></tr></table>
+</div>
+</div>
 <h1 id="wrapping-up">Wrapping up</h1>
 
 <p>With these matchers in place, we have a hierarchy of books containing the posts
@@ -364,7 +424,7 @@ code for <a href="https://dailyreadingnotes.com/" title="Daily Reading Notes">Da
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">

@@ -35,7 +35,7 @@ However, the single function per lambda approach can become too granular. Shared
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link href="/dist/even.6d4a48d7.min.css" rel="stylesheet">
 
 
 
@@ -54,7 +54,7 @@ However, the single function per lambda approach can become too granular. Shared
 
 <meta itemprop="datePublished" content="2019-02-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-24T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="675">
+<meta itemprop="wordCount" content="704">
 
 
 
@@ -236,44 +236,80 @@ servers.</p>
 
 <p>If you want to use this technique with Go, <a href="https://github.com/apex/gateway">Apex gateway</a> provides an easy way to translate lambda bound requests. You create your router as normal, pass the router to the <code>http.Handle</code> function, and use the gateway to start your server. Everything
 else is taken care of by the library.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-<pre><code class="language-go">package main
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
 
-import (
-	&quot;log&quot;
+	<span class="s">&#34;github.com/apex/gateway&#34;</span>
+	<span class="s">&#34;github.com/gorilla/mux&#34;</span>
+<span class="p">)</span>
 
-	&quot;github.com/apex/gateway&quot;
-	&quot;github.com/gorilla/mux&quot;
-)
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">mux</span><span class="p">.</span><span class="nf">NewRouter</span><span class="p">()</span>
 
-func main() {
-	r := mux.NewRouter()
+	<span class="nx">r</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/sample&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
 
-	r.HandleFunc(&quot;/sample&quot;, handler)
-
-  http.Handle(&quot;/&quot;, r)
-	log.Fatal(gateway.ListenAndServe(&quot;:8080&quot;, nil))
-}
-</code></pre>
-
+  <span class="nx">http</span><span class="p">.</span><span class="nf">Handle</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">gateway</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
 <h3 id="node-js-and-express">Node.js and Express</h3>
 
 <p>For Express, there is the <a href="https://github.com/awslabs/aws-serverless-express">aws-serverless-express</a> library. It allows you to wrap your normal express app is a server, and proxy it from a serverless handler.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+<span class="k">const</span> <span class="nx">awsServerlessExpress</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-serverless-express&#39;</span><span class="p">);</span>
 
-<pre><code class="language-javascript">const express = require('express')
-const awsServerlessExpress = require('aws-serverless-express');
+<span class="k">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
 
-const app = express()
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/sample&#39;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
 
-app.get('/sample', handler)
+<span class="k">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
 
-const server = awsServerlessExpress.createServer(app);
-
-exports.handler = (event,context) =&gt; {
-  awsServerlessExpress.proxy(server, event, context)
-}
-</code></pre>
-
+<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">server</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
     </div>
 
     <footer class="post-footer">
@@ -353,7 +389,7 @@ exports.handler = (event,context) =&gt; {
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
 
 
 <script type="application/javascript">
