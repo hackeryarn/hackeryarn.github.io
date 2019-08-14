@@ -6,10 +6,19 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Embrace The Constraints</title>
+      <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
+      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?</description>
+    </item>
     
     <item>
       <title>CLI Commands in Emacs</title>
@@ -17,9 +26,7 @@
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
-I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
-The only problem is that I am an Emacs user.</description>
+      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.  I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
     
     <item>
@@ -28,8 +35,7 @@ The only problem is that I am an Emacs user.</description>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
-My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.  My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
     
     <item>
@@ -69,8 +75,7 @@ I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right plac
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
-      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&#39;t know was that I haven&#39;t built a static site in nearly a decade. However I couldn&#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
-We started coming up with ideas right away over a couple of beers.</description>
+      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.  We started coming up with ideas right away over a couple of beers.</description>
     </item>
     
     <item>
