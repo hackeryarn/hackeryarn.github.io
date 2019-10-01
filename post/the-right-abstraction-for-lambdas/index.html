@@ -53,7 +53,7 @@ However, the single function per lambda approach can become too granular. Shared
 
 <meta itemprop="datePublished" content="2019-02-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-24T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="704">
+<meta itemprop="wordCount" content="924">
 
 
 
@@ -161,6 +161,7 @@ However, the single function per lambda approach can become too granular. Shared
 <li><a href="#go">Go</a></li>
 <li><a href="#node-js-and-express">Node.js and Express</a></li>
 </ul></li>
+<li><a href="#a-word-of-warning">A Word of Warning</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -309,6 +310,34 @@ else is taken care of by the library.</p>
 </code></pre></td></tr></table>
 </div>
 </div>
+<h2 id="a-word-of-warning">A Word of Warning</h2>
+
+<p>There is a scenario where this approach performs worse than multiple lambdas:
+rapid calls to different routes shared by a the same resource.</p>
+
+<p>Let&rsquo;s say we have a shopping app that models multiple actions on a <code>cart</code>
+resource.</p>
+
+<p>When a user checks out, two requests simultaneously fire for every item. The
+first, gets the current price. The second, gets the quantity ordered.</p>
+
+<p>For now, we will ignore the glaring architecture issues with this implementation
+and focus on the performance implications for the lambdas. Both these scenarios
+assume identical conditions and warm lambdas at the start.</p>
+
+<p>If we have a single lambda managing all the actions on the <code>cart</code>, as I
+suggested, we will incur a cold start penalty on our second request. Because
+lambda can only process a single request at a time, the second request has to
+spin up a brand new instance of the lambda.</p>
+
+<p>If we have a lambda per action, then each request will get an already warm
+lambda and we will have no performance penalty.</p>
+
+<p>This is a weakness of my proposed solutions. Just like most, it&rsquo;s not a silver
+bullet. None the less, I still suggest sticking to the approach of multiple
+resources per lambda. Just be aware that if performance is key, you need to
+profile for this scenario.</p>
+
     </div>
 
     

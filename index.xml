@@ -154,5 +154,15 @@ Traditional methods included:
  Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
+      <description>Table of Contents  Not Enough Time Missing or Changing Requirements Unrealistic Expectations The Right Tool for the Job Technological Limitations Wrap Up  Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome.</description>
+    </item>
+    
   </channel>
 </rss>
