@@ -24,7 +24,7 @@ However, the single function per lambda approach can become too granular. Shared
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/the-right-abstraction-for-lambdas/" />
@@ -35,7 +35,7 @@ However, the single function per lambda approach can become too granular. Shared
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.f133bd26.min.css" rel="stylesheet">
+<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
 
 
 
@@ -49,16 +49,13 @@ However, the single function per lambda approach can become too granular. Shared
 <meta itemprop="name" content="The Right Abstraction for Lambdas">
 <meta itemprop="description" content="Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
 However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.">
-
-
 <meta itemprop="datePublished" content="2019-02-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-24T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="924">
 
 
 
-<meta itemprop="keywords" content="opinion,guide," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="opinion,guide," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="The Right Abstraction for Lambdas"/>
 <meta name="twitter:description" content="Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
 However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together."/>
@@ -151,94 +148,73 @@ However, the single function per lambda approach can become too granular. Shared
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#the-right-abstractions">The Right Abstractions</a></li>
-<li><a href="#other-benefits">Other Benefits</a></li>
-<li><a href="#creating-a-multi-route-lambdas">Creating a Multi-Route Lambdas</a>
-<ul>
-<li><a href="#go">Go</a></li>
-<li><a href="#node-js-and-express">Node.js and Express</a></li>
-</ul></li>
-<li><a href="#a-word-of-warning">A Word of Warning</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#the-right-abstractions">The Right Abstractions</a></li>
+    <li><a href="#other-benefits">Other Benefits</a></li>
+    <li><a href="#creating-a-multi-route-lambdas">Creating a Multi-Route Lambdas</a>
+      <ul>
+        <li><a href="#go">Go</a></li>
+        <li><a href="#nodejs-and-express">Node.js and Express</a></li>
+        <li><a href="#a-word-of-warning">A Word of Warning</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p>Serverless functions are a great alternative for many light tasks that would
+      <p>Serverless functions are a great alternative for many light tasks that would
 traditionally required a server. They allow you to split up work across
 mutiple small functions, and you only pay
 for what you use. On top of that, they require less maintenance than managing your own
 server or Kubernetes cluster.</p>
-
 <p>However, the single function per lambda approach can become too granular. Shared
 functionality becomes hard to group together. You only have hard to enforce naming convention
 for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?</p>
-
 <p>I side with <a href="https://www.sandimetz.com/blog/2016/1/20/the-wrong-abstraction">Sandy
 Metz</a> in that
 &ldquo;duplication is far cheaper than the wrong abstraction&rdquo;. But that doesn&rsquo;t mean
 you should give up the search for the right abstraction.</p>
-
 <p><a href="https://serverless.com/">The Serverless Framework</a> addresses some of these issues by letting you share code in the same project. However, it requires you to completely change how you process
 requests. You can&rsquo;t rely on the same set of battle tested libraries that you
 use would use elsewhere. If you later decide to switch to a microservice
 architecture, you need to change large portions of your handlers. <a href="https://serverless.com/">The Serverless
 Framework</a> alone isn&rsquo;t enough.</p>
-
 <h2 id="the-right-abstractions">The Right Abstractions</h2>
-
 <p>I think having one action per lambda function is too granular. It
 gets rid of all the tooling built around handling web requests and routing.</p>
-
 <p>A single lambda should handle all the actions on a single resource. The
 function should know how to perform a Create, Read, Update, Delete, along with specialty methods.</p>
-
 <p>With this in place, you share the most appropriate logic without needless
 indirection. It creates space to break up your code. The actions that
 deal with the same resource are put together in one package. Everything else is
 either tied with its resource or abstracted into a general package.</p>
-
 <h2 id="other-benefits">Other Benefits</h2>
-
 <p>Having a single lambda handle all the actions of a resource has a hidden
 performance advantage. You see it when users perform multple actions on a single resource - a common scenario. The first action warms up the lambda, so subsequent request have better performance.</p>
-
 <p>The best part is that the majority of your app can still follow the same pattern as
 a microservice. If you need to move to a traditional server, the only thing you
 need to change is a small wrapper around your router.</p>
-
 <p>Lambdas give you great power, but you need to use them correctly to take
 full advantage of it. An abstraction that adds to your code portability and
 usability is what you need to successfully work with lambdas.</p>
-
 <h2 id="creating-a-multi-route-lambdas">Creating a Multi-Route Lambdas</h2>
-
 <p>You will run into a problem when trying to create lambdas that handle multiple
 routes. There isn&rsquo;t a built in mechanism for handling more than one actions in the
 context of a lambda. Luckily, there are many efforts in the community to make
 this scenario possible.</p>
-
 <p>No matter the technology you use, the communities create gateways that all work in a similar way.
 They translate the requests intended for a lambda into requests
 that a router can handle. You get to use the router and handlers
 approach you are used to while running your code in a lambda.</p>
-
 <p>The following section shows how to apply this technique across Go and Node.js
 servers.</p>
-
 <h3 id="go">Go</h3>
-
 <p>If you want to use this technique with Go, <a href="https://github.com/apex/gateway">Apex gateway</a> provides an easy way to translate lambda bound requests. You create your router as normal, pass the router to the <code>http.Handle</code> function, and use the gateway to start your server. Everything
 else is taken care of by the library.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -273,15 +249,14 @@ else is taken care of by the library.</p>
 
   <span class="nx">http</span><span class="p">.</span><span class="nf">Handle</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">gateway</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="node-js-and-express">Node.js and Express</h3>
-
+</div><h3 id="nodejs-and-express">Node.js and Express</h3>
 <p>For Express, there is the <a href="https://github.com/awslabs/aws-serverless-express">aws-serverless-express</a> library. It allows you to wrap your normal express app is a server, and proxy it from a serverless handler.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -295,44 +270,36 @@ else is taken care of by the library.</p>
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
-<span class="k">const</span> <span class="nx">awsServerlessExpress</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-serverless-express&#39;</span><span class="p">);</span>
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">awsServerlessExpress</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-serverless-express&#39;</span><span class="p">);</span>
 
-<span class="k">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
+<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
 
 <span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/sample&#39;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
 
-<span class="k">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
 
 <span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">server</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="a-word-of-warning">A Word of Warning</h2>
-
+</div><h3 id="a-word-of-warning">A Word of Warning</h3>
 <p>There is a scenario where this approach performs worse than multiple lambdas:
 rapid calls to different routes shared by a the same resource.</p>
-
 <p>Let&rsquo;s say we have a shopping app that models multiple actions on a <code>cart</code>
 resource.</p>
-
 <p>When a user checks out, two requests simultaneously fire for every item. The
 first, gets the current price. The second, gets the quantity ordered.</p>
-
 <p>For now, we will ignore the glaring architecture issues with this implementation
 and focus on the performance implications for the lambdas. Both these scenarios
 assume identical conditions and warm lambdas at the start.</p>
-
 <p>If we have a single lambda managing all the actions on the <code>cart</code>, as I
 suggested, we will incur a cold start penalty on our second request. Because
 lambda can only process a single request at a time, the second request has to
 spin up a brand new instance of the lambda.</p>
-
 <p>If we have a lambda per action, then each request will get an already warm
 lambda and we will have no performance penalty.</p>
-
 <p>This is a weakness of my proposed solutions. Just like most, it&rsquo;s not a silver
 bullet. None the less, I still suggest sticking to the approach of multiple
 resources per lambda. Just be aware that if performance is key, you need to
@@ -406,7 +373,7 @@ profile for this scenario.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -422,7 +389,7 @@ profile for this scenario.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
 
 
 <script type="application/javascript">

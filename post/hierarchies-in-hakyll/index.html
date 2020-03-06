@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/hierarchies-in-hakyll/" />
@@ -34,7 +34,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.f133bd26.min.css" rel="stylesheet">
+<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
 
 
 
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-03-27T00:00:00+00:00" />
 <meta itemprop="name" content="Hierarchies In a Hakyll Blog">
 <meta itemprop="description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.  My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.">
-
-
 <meta itemprop="datePublished" content="2019-03-27T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-27T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="822">
 
 
 
-<meta itemprop="keywords" content="guide,haskell,hakyll," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="guide,haskell,hakyll," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hierarchies In a Hakyll Blog"/>
 <meta name="twitter:description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.  My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date."/>
 
@@ -174,9 +171,9 @@ time I added a new book.
 <a href="https://jaspervdj.be/hakyll/">Hakyll</a> didn&#39;t support this out of the box, and I didn&#39;t find examples of anyone
 using similar layouts. So, I created my own approach which I am now sharing.
 </p>
-<h1 id="headline-1">
+<h2 id="headline-1">
 Structuring the posts directory
-</h1>
+</h2>
 <p>
 In order to build a dynamic hierarchy, the directory structures needs to support
 association of the books with their related posts.
@@ -192,7 +189,7 @@ Our directory structure should have the following layout:
 <div class="src src-text">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-text" data-lang="text"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -207,9 +204,9 @@ Our directory structure should have the following layout:
 </div>
 </div>
 </div>
-<h1 id="headline-2">
+<h2 id="headline-2">
 Matching the Routes
-</h1>
+</h2>
 <p>
 With the directory structure in place, we can proceed to creating matchers for
 the books and posts pages.
@@ -232,7 +229,7 @@ The matchers with extensions look like this:
 <div class="src src-haskell">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -255,9 +252,9 @@ The matchers with extensions look like this:
 </div>
 </div>
 </div>
-<h1 id="headline-3">
+<h2 id="headline-3">
 Getting the Posts for a Book
-</h1>
+</h2>
 <p>
 Now that we are matching the books and posts pages, we need to group
 the posts by their respective book. For this purpose, we write a small
@@ -271,7 +268,7 @@ but the file name, and add a glob pattern to the end.
 <div class="src src-haskell">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
@@ -290,7 +287,7 @@ Creating the <code>bookCtx</code> goes in the <code>compile</code> block:
 <div class="src src-haskell">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -319,9 +316,9 @@ Creating the <code>bookCtx</code> goes in the <code>compile</code> block:
 This <code>compile</code> block is similar to the auto generated example that lists all the
 posts. Except, we generate the path for the posts relatively to the current file.
 </p>
-<h1 id="headline-4">
+<h2 id="headline-4">
 Applying Templates
-</h1>
+</h2>
 <p>
 In the final step, we apply templates to both outputs. The book pages need a new
 template that uses the <code>posts</code> list context field we generated in the previous
@@ -335,7 +332,7 @@ The final output of the two matchers looks like this:
 <div class="src src-haskell">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-haskell" data-lang="haskell"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -378,9 +375,9 @@ The final output of the two matchers looks like this:
 </div>
 </div>
 </div>
-<h1 id="headline-5">
+<h2 id="headline-5">
 Wrapping up
-</h1>
+</h2>
 <p>
 With these matchers in place, we have a hierarchy of books containing the posts
 related to them. We can add books by creating a new page and folder with the
@@ -461,7 +458,7 @@ code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is ava
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -477,7 +474,7 @@ code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is ava
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
 
 
 <script type="application/javascript">

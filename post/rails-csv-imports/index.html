@@ -25,7 +25,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/rails-csv-imports/" />
@@ -36,7 +36,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.f133bd26.min.css" rel="stylesheet">
+<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
 
 
 
@@ -52,16 +52,13 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 <meta itemprop="description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
 Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.">
-
-
 <meta itemprop="datePublished" content="2017-06-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-06-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="628">
+<meta itemprop="wordCount" content="581">
 
 
 
-<meta itemprop="keywords" content="guide," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="guide," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Efficient CSV Imports in Rails"/>
 <meta name="twitter:description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
@@ -147,130 +144,73 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#examining-csv-import">Examining CSV Import</a></li>
-<li><a href="#better-parsing-method">Better Parsing Method</a></li>
-<li><a href="#reducing-the-number-of-creates">Reducing the Number of Creates</a></li>
-</ul>
-</nav>
+    <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p>Rails has great capabilities for working CSV files. However, like with many
+      <p>Rails has great capabilities for working CSV files. However, like with many
 things, the most obvious way is not the most efficient.</p>
-
 <p>We noticed this when our server had major fluctuations in memory consumption.
 After digging through metrics, made easy thanks to
 <a href="https://prometheus.io">Prometheus</a> and <a href="https://grafana.com">Grafana</a>. We noticed that the spikes were due to our CSV
 uploads.</p>
-
 <h1 id="examining-csv-import">Examining CSV Import</h1>
-
 <p>Our processor is responsible for bringing in coordinates
 from legacy systems and ones that cannot support our API.</p>
-
 <p>The original code:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">require &#39;csv&#39;
+<pre><code>require 'csv'
 
 class CsvProcessor
   def self.import_locations(file)
     CSV.parse(file.read) do |row|
       Location.create(
-        name: row[&#39;Name&#39;],
-        lat: row[&#39;Lat&#39;],
-        lon: row[&#39;Lon&#39;]
+        name: row['Name'],
+        lat: row['Lat'],
+        lon: row['Lon']
       )
     end
   end
-end</pre></td></tr></table>
-</div>
-</div>
+end
+</code></pre>
 <p>Looking at this code, I quickly came to the assumption that
 <code>read</code> was storing the entire file in memory before parsing.
 Which sent me on a search for a more efficient parsing method.</p>
-
 <h1 id="better-parsing-method">Better Parsing Method</h1>
-
 <p>Through my search, I came across an amazingly detailed <a href="https://dalibornasevic.com/posts/68-processing-large-csv-files-with-ruby">article</a> on how to get the
 most memory efficient reads possible. It turns out, we were using the least
 efficient method to parse CSV files. I won&rsquo;t put all the statistics here because
 the original article does a great deep dive on all the possibilities.
 I will only include the most efficient method, and the one we used.</p>
-
 <p>Efficient read code:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">require &#39;csv&#39;
+<pre><code>require 'csv'
 
 class CsvProcessor
   def self.import_locations(file)
     CSV.foreach(file) do |row|
       Location.create(
-        name: row[&#39;Name&#39;],
-        lat: row[&#39;Lat&#39;],
-        lon: row[&#39;Lon&#39;]
+        name: row['Name'],
+        lat: row['Lat'],
+        lon: row['Lon']
       )
     end
   end
-end</pre></td></tr></table>
-</div>
-</div>
+end
+</code></pre>
 <p>The change was minor. I had to use <code>CSV.foreach</code> instead of <code>CSV.parse</code> which
 performs a line by line streaming traversal of the file. When working with files
 it is beneficial to have a stream. Streams only stores as much information as
 needed during each cycle. In this case, it only needs one line.</p>
-
 <p>I also got to eliminate the manual read. This cleaned up my code a bit, and I was
 more than happy to let <code>CSV.foreach</code> handle the reading for me.</p>
-
 <p>This one change eliminated our memory spikes. Making CSV imports a
 minor event for the server.</p>
-
 <h1 id="reducing-the-number-of-creates">Reducing the Number of Creates</h1>
-
 <p>However, while looking a the metrics around CSV imports I also noticed that it
 took a long time to import a CSV. The most glaring suspect was the <code>create</code> on
 every row.</p>
-
 <p>Rails libraries come to the rescue! There is a great library,
 <a href="https://github.com/zdennis/activerecord-import">activerecord-import</a>, which allows for a singe database transaction for multiple
 creates and doesn&rsquo;t complicate the code much.</p>
-
 <p>I eagerly tried to insert all the records in a single transaction. Although this
 had some speed improvement, it shot up our memory consumption again. So I started
 experimenting with intervals. With some trial and error, I arrived at 200
@@ -278,43 +218,17 @@ records per transaction. It didn&rsquo;t consume too much memory and was actuall
 fastest. Anything below 200 created too many transactions and the efficiency
 dropped. Anything above 200 was creating too large of transactions for them to
 be efficiently saved.</p>
-
 <p>My final code:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">require &#39;csv&#39;
+<pre><code>require 'csv'
 
 class CsvProcessor
   def self.import_locations(file)
     locations = []
     CSV.foreach(file) do |row|
       locations &lt;&lt; Location.new(
-        name: row[&#39;Name&#39;],
-        lat: row[&#39;Lat&#39;],
-        lon: row[&#39;Lon&#39;]
+        name: row['Name'],
+        lat: row['Lat'],
+        lon: row['Lon']
       )
 
       if locations.length &gt; 200
@@ -325,17 +239,14 @@ class CsvProcessor
 
     Location.import locations
   end
-end</pre></td></tr></table>
-</div>
-</div>
+end
+</code></pre>
 <p>This change required a bit more code. I had to maintain a list of locations to
 import. Which I checked for the appropriate length, 200, every
 iteration.</p>
-
 <p>Once the file read was complete. I performed a final import to save
 any remaining locations. If the list was empty, it would
 result in no import.</p>
-
 <p>This final change improved our import time over 10x and made this small project
 much more worth it!</p>
 
@@ -406,7 +317,7 @@ much more worth it!</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -422,7 +333,7 @@ much more worth it!</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
 
 
 <script type="application/javascript">

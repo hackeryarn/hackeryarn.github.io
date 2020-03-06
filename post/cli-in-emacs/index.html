@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/cli-in-emacs/" />
@@ -34,7 +34,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.f133bd26.min.css" rel="stylesheet">
+<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
 
 
 
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-06-01T00:00:00+00:00" />
 <meta itemprop="name" content="CLI Commands in Emacs">
 <meta itemprop="description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.  I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.">
-
-
 <meta itemprop="datePublished" content="2019-06-01T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-06-01T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="1142">
 
 
 
-<meta itemprop="keywords" content="guide,emacs," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="guide,emacs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CLI Commands in Emacs"/>
 <meta name="twitter:description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.  I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy."/>
 
@@ -175,9 +172,9 @@ The only problem is that I am an Emacs user. So in this article, I wanted to
 show how I get the same effect in Emacs. And demonstrating how to
 take CLI interaction in the text editor even further.
 </p>
-<h1 id="headline-1">
+<h2 id="headline-1">
 Take Action on a Region
-</h1>
+</h2>
 <p>
 In his article, Gabriel uses the command he created to take action on a region.
 This involves selecting text and executing a CLI command on it&#39;s contents –
@@ -192,7 +189,7 @@ command&#39;s usage in mind:
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -240,7 +237,7 @@ flags which make the command replace the selected region.
 <div class="src src-elisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
@@ -256,9 +253,9 @@ We can expand the CLI command in this wrapper to take any number or arguments
 and flags. No matter how we change it, we can still invoke it with one command:
 <code>&lt;M-x&gt; align-equals</code>.
 </p>
-<h1 id="headline-2">
+<h2 id="headline-2">
 Take Action on a Buffer
-</h1>
+</h2>
 <p>
 A common scenario I run into, is wanting to run a tool on the whole file. This
 normally comes in two variants. I either want to modify the content of the file
@@ -269,9 +266,9 @@ the file content, like getting totals or showing lint errors.
 Again, there are built in ways to do this, but a wrapper lets us do more with
 our shell commands.
 </p>
-<h2 id="headline-3">
+<h3 id="headline-3">
 Replacing Buffer Contents
-</h2>
+</h3>
 <p>
 This time, we don&#39;t need to pass any arguments to <code>interactive</code>. Instead, we use
 <code>shell-command-on-region</code> with the results of calling <code>point-min</code> and
@@ -280,7 +277,7 @@ This time, we don&#39;t need to pass any arguments to <code>interactive</code>. 
 <div class="src src-elisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
@@ -297,9 +294,9 @@ region. This makes the it less error prone and easier to execute. We can&#39;t
 select the region incorrectly, because we don&#39;t need to anymore. We only need to
 execute <code>&lt;M-x&gt; align-buffer</code>.
 </p>
-<h2 id="headline-4">
+<h3 id="headline-4">
 Displaying The Output of a Shell Command
-</h2>
+</h3>
 <p>
 For this examples, let&#39;s use <code>eslint</code>, a popular tool for linting JavaScript
 code. 
@@ -317,7 +314,7 @@ we merge it with the string <code>eslint</code> to create the final command, and
 <div class="src src-elisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -344,7 +341,7 @@ To add this flag you only need to change the string you pass to <code>shell-comm
 <div class="src src-elisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-elisp" data-lang="elisp">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span></code></pre></td></tr></table>
@@ -355,9 +352,9 @@ To add this flag you only need to change the string you pass to <code>shell-comm
 With that change, the simple issues get fixed automatically and we get a
 log of the complex issues to fix manually.
 </p>
-<h1 id="headline-5">
+<h2 id="headline-5">
 Running Command Automatically
-</h1>
+</h2>
 <p>
 From the last example we have a useful <code>run-eslint</code> function. But we need to
 remember to run it every time we want to check a file. Let&#39;s reduce our mental
@@ -393,7 +390,7 @@ on every file after we opened any JavaScript file.
 <div class="src src-elisp">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-elisp" data-lang="elisp"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
@@ -404,9 +401,9 @@ on every file after we opened any JavaScript file.
 </div>
 </div>
 </div>
-<h1 id="headline-6">
+<h2 id="headline-6">
 Going Further
-</h1>
+</h2>
 <p>
 I only scratched the surface of what&#39;s possible with Elisp. Projects like <a href="https://magit.vc/">magit</a>
 provide amazing examples of extending basic CLI tools.
@@ -489,7 +486,7 @@ hacking.
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -505,7 +502,7 @@ hacking.
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
 
 
 <script type="application/javascript">

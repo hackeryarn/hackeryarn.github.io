@@ -24,7 +24,7 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/making-redux-easy/" />
@@ -35,7 +35,7 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.f133bd26.min.css" rel="stylesheet">
+<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
 
 
 
@@ -49,16 +49,13 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 <meta itemprop="name" content="Making Redux Easy">
 <meta itemprop="description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
 In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.">
-
-
 <meta itemprop="datePublished" content="2019-02-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-11T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="900">
 
 
 
-<meta itemprop="keywords" content="opinion,experiment,guide," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="opinion,experiment,guide," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Making Redux Easy"/>
 <meta name="twitter:description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
 In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component."/>
@@ -145,31 +142,23 @@ In large projects, Redux bloat your project with repetitive code. To support a s
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#enter-redux-easy">Enter Redux-Easy</a>
-<ul>
-<li><a href="#reducing-boilerplate-code">Reducing Boilerplate Code</a></li>
-<li><a href="#helpers-for-common-actions">Helpers for Common Actions</a></li>
-</ul></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul>
+  <ul>
+    <li><a href="#reducing-boilerplate-code">Reducing Boilerplate Code</a></li>
+    <li><a href="#helpers-for-common-actions">Helpers for Common Actions</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<p><a href="https://reactjs.org/">React</a> and <a href="https://redux.js.org/">Redux</a> are a top choice for front end projects. <a href="https://reactjs.org/">React</a> provides fast
+      <p><a href="https://reactjs.org/">React</a> and <a href="https://redux.js.org/">Redux</a> are a top choice for front end projects. <a href="https://reactjs.org/">React</a> provides fast
 performance, easy ways to create shared components, and a plethora of
 libraries. <a href="https://redux.js.org/">Redux</a> lets you simplify state management in your
 application, but it has serious drawbacks.</p>
-
 <p>In large projects, <a href="https://redux.js.org/">Redux</a> bloat your project with repetitive code. To
 support a single store update, you need to create a reducer that handles an
 action type which is dispatched from an action called inside a component. If
 that process sounds tedious and confusing, that&rsquo;s because it is. You end up
 with tons of simple actions and reducers that all look alike.</p>
-
 <p>People went to great lengths to combat this problem. Suggestions range from using
 a new state management library, such as Mobx, to abandoning
 <a href="https://reactjs.org/">React</a> completely for
@@ -177,23 +166,18 @@ something like Vue. These suggestions are like throwing the baby out
 with the bath water. That&rsquo;s why I was happy to find
 <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> which didn&rsquo;t make me
 leave these libraries behind.</p>
-
 <h1 id="enter-redux-easy">Enter Redux-Easy</h1>
-
 <p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> doesn&rsquo;t try to replace <a href="https://redux.js.org/">Redux</a> or <a href="https://reactjs.org/">React</a>. Instead, it removes the boilerplate and provides helper functions. You don&rsquo;t need to replace your entire code base. You can incrementally integrate <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
-
 <p>To see how well it delivered on these promises, I decided to try it with the
 classic Todo MVC application. The <a href="https://redux.js.org/">Redux</a> library even
 comes with an idiomatic example, which I used as a starting point.</p>
-
 <h2 id="reducing-boilerplate-code">Reducing Boilerplate Code</h2>
-
 <p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> simplifies the creation of the store. Instead of manually creating
 the store, passing it to the <code>Provider</code>, and wrapping your app in the
 <code>Provider</code>. You use <code>reduxSetup</code> to do all those steps for you:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -205,9 +189,9 @@ the store, passing it to the <code>Provider</code>, and wrapping your app in the
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">import React from &#39;react&#39;;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">import React from &#39;react&#39;;
 import {reduxSetup} from &#39;redux-easy&#39;;
 import App from &#39;./App&#39;;
 import &#39;./reducers&#39;; // described next
@@ -218,15 +202,15 @@ const initialState = {
 
 // The specified component is rendered in the element with
 // id &#34;root&#34; unless the &#34;target&#34; option is specified.
-reduxSetup({component: &lt;App /&gt;, initialState});</pre></td></tr></table>
+reduxSetup({component: &lt;App /&gt;, initialState});
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>You no longer manually group the actions handled by the reducer, nor combine
+</div><p>You no longer manually group the actions handled by the reducer, nor combine
 the reducers into to a single root reducer. Instead, you use <code>addReducer</code>. It
 manages the root reducer for you, and you can add the handler from anywhere:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -242,9 +226,9 @@ manages the root reducer for you, and you can add the handler from anywhere:</p>
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">import {addReducer} from &#39;redux-easy&#39;;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">import {addReducer} from &#39;redux-easy&#39;;
 
 // Call addReducer once for each action type, giving it the
 // function to be invoked when that action type is dispatched.
@@ -259,19 +243,18 @@ addReducer(&#39;addToAge&#39;, (state, years) =&gt; {
       age: user.age + years
     }
   };
-});</pre></td></tr></table>
+});
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>In vanilla <a href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
+</div><p>In vanilla <a href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
 <code>mapStateToProps</code> to pass in the dispatch actions and state.
 <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
 provides helpers that interact directly with the store.</p>
-
 <p>Instead of <code>mapDispatchToProps</code>, you use the provided <code>dispatch</code> function
 to fire off action:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -281,9 +264,9 @@ to fire off action:</p>
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">onFirstNameChange = event =&gt; {
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">onFirstNameChange = event =&gt; {
   // assumes value comes from an input
   const {value} = event.target;
   dispatch(&#39;setFirstName&#39;, value);
@@ -292,15 +275,15 @@ to fire off action:</p>
   // perhaps user.firstName, the following can be used instead.
   // There is no need to implement simple reducer functions.
   dispatchSet(&#39;user.firstName&#39;, value);
-};</pre></td></tr></table>
+};
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Instead of <code>mapStateToProps</code>, you wrap your component in a <code>watch</code>
+</div><p>Instead of <code>mapStateToProps</code>, you wrap your component in a <code>watch</code>
 function. This functions lets you map object from the state using the state
 path:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -309,9 +292,9 @@ path:</p>
 </span><span class="lnt">7
 </span><span class="lnt">8
 </span><span class="lnt">9
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">// The second argument to watch is a map of property names
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">// The second argument to watch is a map of property names
 // to state paths where path parts are separated by periods.
 // For example, zip: &#39;user.address.zipCode&#39;.
 // When the value for a prop comes from a top-level state property
@@ -319,59 +302,51 @@ path:</p>
 // undefined and `watch` will use the prop name as the path.
 export default watch(MyComponent, {
   user: &#39;&#39; // path will be &#39;user&#39;
-});</pre></td></tr></table>
+});
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>These tools provide a way to reduce the setup of
+</div><p>These tools provide a way to reduce the setup of
 <a href="https://redux.js.org/">Redux</a>. However, <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
 doesn&rsquo;t stop there.</p>
-
 <h2 id="helpers-for-common-actions">Helpers for Common Actions</h2>
-
 <p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> provided <code>dispatchSet</code>, <code>dispatchTransform</code>, and <code>dispatchDelete</code>.
 These are simple and flexible ways to manage simple modifications to your
 state. For actions dealing with arrays, there are <code>dispatchPush</code>,
 <code>dispatchFilter</code>, and <code>dispatchMap</code>.</p>
-
 <p>These helpers do what you would expect. They cover 80% of the actions
 you need to perform on the store.</p>
-
 <p>With actions like <code>completeTodo</code>, I reduced the traditional flow,
 spread cross 4 files, to a single function defined on the component using it:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">completeTodo = (id) =&gt; {
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">completeTodo = (id) =&gt; {
   dispatchMap(&#39;todos&#39;, todo =&gt;
     todo.id === id ?
       { ...todo, completed: !todo.completed } :
       todo
   )
-}</pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><code>completeTodo</code> is an example of modifying an array. It takes the store path
+</div><p><code>completeTodo</code> is an example of modifying an array. It takes the store path
 and a function. Then it maps the function over the array pulled from the path.
 The dispatch, action, and reducer are all taken care of by
 <a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
-
 <h1 id="conclusion">Conclusion</h1>
-
 <p><a href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> delivered on its promise of making <a href="https://redux.js.org/">Redux</a> development shorter and
 simpler. Using it, I removed 5 out of 7 action handlers. I reduce the lines of
 code by 10% from 503 to 447, and the number of files by 30% from 20 to 14.</p>
-
 <p>Most importantly, organize the code became simpler. The state logic is
 closer to where it&rsquo;s being used and is easier to follow.</p>
-
 <p>You can find the full version of my TodoMVC using Redux-Easy
 <a href="https://github.com/hackeryarn/redux-easy-todomvc">here</a>.</p>
 
@@ -444,7 +419,7 @@ closer to where it&rsquo;s being used and is easier to follow.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2019
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
@@ -460,7 +435,7 @@ closer to where it&rsquo;s being used and is easier to follow.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.f79f403f.min.js"></script>
+<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
 
 
 <script type="application/javascript">
