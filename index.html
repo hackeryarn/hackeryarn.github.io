@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.65.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.65.3 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/" />
@@ -115,19 +115,114 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/">Posts</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/hy-django/">Hy Django</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-03-01 </span>
+      <div class="post-category">
+          <a href="/categories/python/"> Python </a>
+          <a href="/categories/hy/"> Hy </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.  Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
+    </div>
+    <div class="read-more">
+      <a href="/post/hy-django/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/embrace-the-constraints/">Embrace Your Constraints</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-08-14 </span>
       
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      
+      Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?
     </div>
     <div class="read-more">
-      <a href="/post/" class="read-more-link">Read more..</a>
+      <a href="/post/embrace-the-constraints/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cli-in-emacs/">CLI Commands in Emacs</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-06-01 </span>
+      <div class="post-category">
+          <a href="/categories/emacs/"> Emacs </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.  I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
+    </div>
+    <div class="read-more">
+      <a href="/post/cli-in-emacs/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/hierarchies-in-hakyll/">Hierarchies In a Hakyll Blog</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-03-27 </span>
+      <div class="post-category">
+          <a href="/categories/haskell/"> Haskell </a>
+          <a href="/categories/hakyll/"> Hakyll </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.  My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.
+    </div>
+    <div class="read-more">
+      <a href="/post/hierarchies-in-hakyll/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/the-right-abstraction-for-lambdas/">The Right Abstraction for Lambdas</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-02-24 </span>
+      <div class="post-category">
+          <a href="/categories/go/"> Go </a>
+          <a href="/categories/golang/"> Golang </a>
+          <a href="/categories/js/"> JS </a>
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/nodejs/"> Nodejs </a>
+          <a href="/categories/node/"> Node </a>
+          <a href="/categories/express/"> Express </a>
+          <a href="/categories/lambda/"> Lambda </a>
+          <a href="/categories/serverless/"> Serverless </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
+However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.
+    </div>
+    <div class="read-more">
+      <a href="/post/the-right-abstraction-for-lambdas/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
@@ -136,7 +231,10 @@
   
   <nav class="pagination">
     
-    
+    <a class="next" href="/page/2/">
+        <span class="next-text">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
         </div>
         
