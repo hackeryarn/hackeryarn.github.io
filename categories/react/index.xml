@@ -6,11 +6,7 @@
     <description>Recent content in React on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://hackeryarn.com/categories/react/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/react/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Making Redux Easy</title>
       <link>https://hackeryarn.com/post/making-redux-easy/</link>

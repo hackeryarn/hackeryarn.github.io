@@ -6,18 +6,25 @@
     <description>Recent content on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://hackeryarn.com/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Type safe Django app, Part 1</title>
+      <link>https://hackeryarn.com/post/django-returns-1/</link>
+      <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/django-returns-1/</guid>
+      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+    </item>
     
     <item>
-      <title>Hy Django</title>
+      <title>Django With Hy</title>
       <link>https://hackeryarn.com/post/hy-django/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/hy-django/</guid>
-      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.  Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.</description>
+      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
+ Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.</description>
     </item>
     
     <item>
@@ -26,7 +33,8 @@
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
-      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?</description>
+      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+ These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
     </item>
     
     <item>
@@ -35,7 +43,8 @@
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.  I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
+ I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
     
     <item>
@@ -44,7 +53,8 @@
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.  My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
+ My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
     
     <item>
@@ -84,7 +94,8 @@ I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right plac
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
-      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.  We started coming up with ideas right away over a couple of beers.</description>
+      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
+ We started coming up with ideas right away over a couple of beers.</description>
     </item>
     
     <item>
@@ -161,6 +172,18 @@ In this talk, I cover some of the best features of Phoenix:
       <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
 Traditional methods included:
  Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+    </item>
+    
+    <item>
+      <title>Django Returns, Part 2</title>
+      <link>https://hackeryarn.com/post/django-returns-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/django-returns-2/</guid>
+      <description>Into the database   Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.
+1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
+ polls/models.py:
+1 2 3 4 5 6 7 8 9 10 11 12  from django.</description>
     </item>
     
   </channel>

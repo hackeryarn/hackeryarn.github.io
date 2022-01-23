@@ -25,7 +25,7 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
 
 
 
-<meta name="generator" content="Hugo 0.65.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/universally-testable-dependencies/" />
@@ -36,7 +36,8 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
 
 
 
@@ -45,19 +46,16 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
 This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
 The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/universally-testable-dependencies/" />
+<meta property="og:url" content="https://hackeryarn.com/post/universally-testable-dependencies/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2018-06-01T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-06-01T00:00:00+00:00" />
+
 <meta itemprop="name" content="Universally Testable Dependencies in JavaScript">
 <meta itemprop="description" content="JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
 This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
-The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.">
-<meta itemprop="datePublished" content="2018-06-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-06-01T00:00:00&#43;00:00" />
+The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them."><meta itemprop="datePublished" content="2018-06-01T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2018-06-01T00:00:00+00:00" />
 <meta itemprop="wordCount" content="649">
-
-
-
 <meta itemprop="keywords" content="guide,testing," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Universally Testable Dependencies in JavaScript"/>
 <meta name="twitter:description" content="JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
@@ -99,12 +97,21 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
         <li class="mobile-menu-item">Donate</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">hackeryarn</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -121,6 +128,7 @@ The technique I am going to demonstrate is arguably not true DI, since the depen
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -174,7 +182,7 @@ you can easily adapt this technique to any JavaScript setup.</em></p>
 a test into an exported <code>deps</code> object.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -182,7 +190,7 @@ a test into an exported <code>deps</code> object.</p>
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="nx">longRunningFunction</span> <span class="nx">from</span> <span class="s1">&#39;longRunningFunctions&#39;</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="nx">longRunningFunction</span> <span class="nx">from</span> <span class="s1">&#39;longRunningFunctions&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="kr">const</span> <span class="nx">deps</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">longRunningFunction</span>
@@ -194,12 +202,12 @@ a test into an exported <code>deps</code> object.</p>
 directly. Instead, you call the appropriate dependency on the <code>deps</code> object.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">longRunningFunction</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
@@ -213,7 +221,7 @@ the ES6 <code>import</code> syntax without extra code.</p>
 easily mock or replace anything in the <code>deps</code> object.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -236,7 +244,7 @@ easily mock or replace anything in the <code>deps</code> object.</p>
 </span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">myModule</span> <span class="nx">from</span> <span class="s1">&#39;./myModule&#39;</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">myModule</span> <span class="nx">from</span> <span class="s1">&#39;./myModule&#39;</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">deps</span> <span class="o">=</span> <span class="nx">myModule</span><span class="p">.</span><span class="nx">deps</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">4</span>
@@ -346,13 +354,10 @@ approach useful and less complicated than other DI approaches.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Artem Chernyak</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -362,7 +367,10 @@ approach useful and less complicated than other DI approaches.</p>
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
 
 
 <script type="application/javascript">

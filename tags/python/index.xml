@@ -6,18 +6,25 @@
     <description>Recent content in python on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://hackeryarn.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 22 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Type safe Django app, Part 1</title>
+      <link>https://hackeryarn.com/post/django-returns-1/</link>
+      <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/django-returns-1/</guid>
+      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+    </item>
     
     <item>
-      <title>Hy Django</title>
+      <title>Django With Hy</title>
       <link>https://hackeryarn.com/post/hy-django/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/hy-django/</guid>
-      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.  Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.</description>
+      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
+ Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.</description>
     </item>
     
   </channel>

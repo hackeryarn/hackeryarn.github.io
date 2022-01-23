@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Type safe Django app, Part 1 - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety)." /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/django-returns-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Type safe Django app, Part 1" />
+<meta property="og:description" content="Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hackeryarn.com/post/django-returns-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-01-22T00:00:00+00:00" />
+
+<meta itemprop="name" content="Type safe Django app, Part 1">
+<meta itemprop="description" content="Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety)."><meta itemprop="datePublished" content="2022-01-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-01-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1190">
+<meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Type safe Django app, Part 1"/>
+<meta name="twitter:description" content="Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
+ Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety)."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Type safe Django app, Part 1</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-01-22 </span>
+        <div class="post-category">
+            <a href="/categories/python/"> Python </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">What makes code safe?</a>
+<ul>
+<li><a href="#headline-2">What kind of thing does <code>get_two()</code> return?</a>
+</li>
+<li><a href="#headline-3">Does <code>get_two()</code> always return the same thing?</a>
+</li>
+<li><a href="#headline-4">Can <code>get_two()</code> fail?</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">Starting the project</a>
+</li>
+<li><a href="#headline-6">Polls app</a>
+</li>
+<li><a href="#headline-7">Wrap up</a>
+</li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+<p>
+Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.</p>
+<p>
+Throughout this series we will follow the <a href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">official Django tutorial</a> while making the code safer and easier to reason about. We will accomplish this by enlist the help of <a href="http://mypy-lang.org/">mypy</a> (for general type checking) and <a href="https://github.com/dry-python/returns">returns</a> (for containers that will provide safety).</p>
+<p>
+I will not cover the basics of Django or Python. If you ever feel like you don&#39;t fully understand the Django portion, you can refer to the official tutorial. The parts of this tutorial will directly correspond to the parts of the official tutorial.</p>
+<p>
+I will explain how we&#39;re integrating <code>returns</code> and the benefits of jumping through some of the extra hoops that it requires. I will not cover the underlying theory behind returns. For that, you can read their excellent documentation.</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+What makes code safe?
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+There are two properties that make a piece of code safe. It has to be <strong>pure</strong> and <strong>complete</strong>.</p>
+<p>
+As an example, <code>2 + 2</code> is a pure and complete piece of code. Every time we run this code, we will always get back <code>4</code>. If we wanted to, we could even replace this code with <code>4</code> itself. This is easy to reason about, easy to understand, and easy to test. These properties make a piece of code <strong>pure</strong> and <strong>complete</strong>.</p>
+<p>
+Things get complicated, however, once we introduce functions calls. If we have <code>get_two() + get_two()</code>, some questions immediately start to arise: What kind of thing does <code>get_two()</code> return? Does <code>get_two()</code> always return the same thing? Can <code>get_two()</code> fail?</p>
+<p>
+We can, of course, read the source code to answer these questions. This gives us full understanding of what the abstraction does, but it quickly becomes time consuming and after going a few layers deep it becomes hard to keep everything in our heads. The other option is to blindly trust that the name of the function fully states what it does. This options lets us proceed with using the abstraction, but it could easily get us into trouble – see the questions above. So what&#39;s the solution?</p>
+<p>
+Let us address these problems one at a time.</p>
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+What kind of thing does <code>get_two()</code> return?
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>
+As the code stands, we have not way know that <code>get_two()</code> returns a <code>2</code>, a <code>&#34;2.0&#34;</code>, a <code>100, 200</code>, or any other crazy thing.</p>
+<p>
+<code>mypy</code> can help here:</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_two</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="o">...</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+This one additions lets us know, right away, that we will get an <code>int</code>. No accidental strings or tuple can sneak into our code.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Does <code>get_two()</code> always return the same thing?
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+This question becomes harder to answer and reason about. This function could return 2 on the first call, but on the second call returns something totally different. This will often happen if a function gets the value from a database, calculates the value based on time, or grabs a random number. If it does any of these things, we have no way of knowing without reading the body.</p>
+<p>
+Let&#39;s assume that in this case, we are doing one of the <strong>impure</strong> things mentioned above. So what can we do about it? Well, we can mark the value as impure by using a special container called <code>IO</code>.</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_two</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">IO</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="o">...</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+This container tell all the caller that the function does something more than simply calculate a value. It also requires that any function that uses this return value also returns an <code>IO</code> container. This is a good thing. It lets us know, without reading the source, that we can&#39;t depend on the result always being the same. Although, it should still make us want to read the source to figure out what impure thing a function called <code>get_two()</code> could be doing.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Can <code>get_two()</code> fail?
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+The final question is especially troubling in Python. Python a lot of python code can throw exceptions without warning. Even simple things like dividing by zero could throw an exception that crashes our applications – if not handled properly.</p>
+<p>
+We could wrap everything in a giant <code>try</code> statement, but wouldn&#39;t it be nice to know ahead of time that this function could result in an exception?</p>
+<p>
+Throwing an error makes a function <strong>incomplete</strong> because it cannot always return the promised value. Just like with <code>IO</code> we can use the type system to let all the callers know this. The new container we will use is <code>Result</code>.</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_two</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Result</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">]:</span>
+    <span class="o">...</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+This container lets the callers know that we could expect an <code>int</code> or and <code>Exception</code>. Better yet, it forces the caller to also return a <code>Result</code> container or to handle the exception.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+Starting the project
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p>Use your favorite method to install Django, and let&#39;s dive in right where part <a href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">the official tutorial</a> starts.</p>
+<p>
+We will start the project just like a typical Django project:</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ django-admin startproject django_returns</code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+Next we need to install some dependencies that will allow us to use the type system to its fullest:</p>
+<ul>
+<li><code>mypy</code> provides our type system and integrates well with the rest of our dependencies.</li>
+<li><code>django-stubs</code> provides type stubs for Django.</li>
+<li><code>returns</code> provides type safe functional programming facilities.</li>
+</ul>
+<p>Once we have the dependencies installed, we need to configure <code>returns</code> and Django to work smoothly with <code>mypy</code>.</p>
+<p>
+<code>setup.cfg</code>:</p>
+<div class="src src-ini">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[mypy]</span>
+<span class="na">plugins</span> <span class="o">=</span><span class="s">
+</span><span class="s">  returns.contrib.mypy.returns_plugin,
+</span><span class="s">  mypy_django_plugin.main</span>
+
+<span class="k">[mypy.plugins.django-stubs]</span>
+<span class="na">django_settings_module</span> <span class="o">=</span> <span class="s">&#34;django_returns.settings&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+Polls app
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>We will follow the django tutorial and create the Polls app:</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ python manage.py startapp polls</code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+The index view function will look almost the same, except we will add some types.</p>
+<p>
+<code>polls/view.py</code>:</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&#34;Hello, world&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+Giving the <code>request</code> a type might seem excessive right now, but when we pass it to a function later on, this will make sure that we pass the right thing.</p>
+<p>
+Before we can access our new view, we need to update a couple <code>urls.py</code> files:</p>
+<p>
+<code>polls/urls.py</code>:</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">),</span>
+<span class="p">]</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+<code>django_returns/urls.py</code>:</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">path</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;polls/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;polls.urls&#39;</span><span class="p">)),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;admin/&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+<span class="p">]</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+After these steps, we can access the site at <a href="http://localhost:8000/polls/">http://localhost:8000/polls/</a> after running:</p>
+<div class="src src-bash">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ python manage.py runserver</code></pre></td></tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-2">
+<h2 id="headline-7">
+Wrap up
+</h2>
+<div id="outline-text-headline-7" class="outline-text-2">
+<p>
+We covered the goal of this tutorial series along with some basic terminology that we will use throughout. We also setup the base application and got all our dependencies setup. In part2, we will actually use the types introduced int <code>returns</code> and get a glimpse at how they can lead to cleaner code.</p>
+<p>
+If this is your first time using <code>mypy</code>, you should start seeing some nice type hints coming through. This is already a benefit without needing to do anything different in the code. And if you haven&#39;t done so already, make sure to get your editor fully setup for types to work properly.</p>
+</div>
+</div>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/django/">django</a>
+          <a href="/tags/python/">python</a>
+          <a href="/tags/types/">types</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/hy-django/">
+            <span class="next-text nav-default">Django With Hy</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

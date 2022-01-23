@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.65.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/" />
@@ -36,7 +36,8 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
 
 
 
@@ -44,7 +45,7 @@
 <meta property="og:description" content="A blog by Artem Chernyak" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hackeryarn.com/" />
-<meta property="og:updated_time" content="2020-03-01T00:00:00+00:00" />
+
 <meta itemprop="name" content="hackeryarn">
 <meta itemprop="description" content="A blog by Artem Chernyak"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="hackeryarn"/>
@@ -85,12 +86,21 @@
         <li class="mobile-menu-item">Donate</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">hackeryarn</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -107,12 +117,37 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/universally-testable-dependencies/">Universally Testable Dependencies in JavaScript</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-06-01 </span>
+      <div class="post-category">
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/testing/"> Testing </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
+This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
+The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.
+    </div>
+    <div class="read-more">
+      <a href="/post/universally-testable-dependencies/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/clojurescript-setup/">ClojureScript Setup for Leiningen Project With Emacs</a></h1>
@@ -205,29 +240,6 @@ In this talk, I cover some of the best features of Phoenix:
   </div>
 </article>
 
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/universal-haskell-dev-enviornment/">Easy Universal Haskell Development Environment</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2016-02-06 </span>
-      <div class="post-category">
-          <a href="/categories/haskell/"> Haskell </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
-Traditional methods included:
- Installing The Haskell Platform, which was a great project in it&rsquo;s time but always seems to lag a few GHC versions behind.
-    </div>
-    <div class="read-more">
-      <a href="/post/universal-haskell-dev-enviornment/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
     </section>
   
   <nav class="pagination">
@@ -235,7 +247,10 @@ Traditional methods included:
         <i class="iconfont icon-left"></i>
         <span class="prev-text">Prev</span>
       </a>
-    
+    <a class="next" href="/page/4/">
+        <span class="next-text">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
   </nav>
         </div>
         
@@ -266,13 +281,10 @@ Traditional methods included:
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Artem Chernyak</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -282,7 +294,10 @@ Traditional methods included:
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
 
 
 <script type="application/javascript">

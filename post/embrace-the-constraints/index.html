@@ -16,14 +16,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?" /><meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+ These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.65.3 with theme even" />
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/embrace-the-constraints/" />
@@ -34,27 +35,28 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.5dc93bb1.min.css" rel="stylesheet">
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
 
 
 
 <meta property="og:title" content="Embrace Your Constraints" />
-<meta property="og:description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?" />
+<meta property="og:description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+ These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/embrace-the-constraints/" />
+<meta property="og:url" content="https://hackeryarn.com/post/embrace-the-constraints/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-08-14T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-08-14T00:00:00+00:00" />
+
 <meta itemprop="name" content="Embrace Your Constraints">
-<meta itemprop="description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?">
-<meta itemprop="datePublished" content="2019-08-14T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-08-14T00:00:00&#43;00:00" />
+<meta itemprop="description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+ These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:"><meta itemprop="datePublished" content="2019-08-14T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-08-14T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1351">
-
-
-
 <meta itemprop="keywords" content="thoughts,practices," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Embrace Your Constraints"/>
-<meta name="twitter:description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.  These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:    Did my work deliver measurable change?"/>
+<meta name="twitter:description" content="Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
+ These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -91,12 +93,21 @@
         <li class="mobile-menu-item">Donate</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">hackeryarn</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -113,6 +124,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -156,230 +168,188 @@
 <p>
 Engineers want to measure the quality and effectiveness of their work. They
 turn to code coverage, burn down charts, and yearly goals, with the best
-intention.
-</p>
+intention.</p>
 <p>
 These measurements provide quantitative data about how much planned work was
 delivered, but they fail to tie the work to outcome. What good are 1,000
 lines of code if the users never use the feature? These metrics distract from
-the two question every professional should ask:
-</p>
+the two question every professional should ask:</p>
 <ul>
-<li>
-<p>
-Did my work deliver measurable change?
-</p>
-</li>
-<li>
-<p>
-Did I stay within the constraints?
-</p>
-</li>
+<li>Did my work deliver measurable change?</li>
+<li>Did I stay within the constraints?</li>
 </ul>
-<p>
-Everyone is familiar with the concept of measurable results. Others have written
-and talked extensively on how to measure the right thing: 
-</p>
+<p>Everyone is familiar with the concept of measurable results. Others have written
+and talked extensively on how to measure the right thing: </p>
 <ul>
-<li>
-<p>
-<a href="https://blog.ycombinator.com/product-development-cycle-fundamentals/">Product Development Cycle Fundamentals</a>
-</p>
-</li>
-<li>
-<p>
-<a href="https://www.thoughtworks.com/insights/blog/how-measure-value">How to Measure Value</a>
-</p>
-</li>
-<li>
-<p>
-<a href="https://medium.com/@LyndhurstGroup/measuring-effectiveness-fe84b08d9035">Measuring Effectiveness</a>
-</p>
-</li>
-<li>
-<p>
-<a href="https://www.agilealliance.org/resources/videos/whats-the-story-about-agile-data/">What&#39;s the Story About Agile Data</a>
-</p>
-</li>
+<li><a href="https://blog.ycombinator.com/product-development-cycle-fundamentals/">Product Development Cycle Fundamentals</a></li>
+<li><a href="https://www.thoughtworks.com/insights/blog/how-measure-value">How to Measure Value</a></li>
+<li><a href="https://medium.com/@LyndhurstGroup/measuring-effectiveness-fe84b08d9035">Measuring Effectiveness</a></li>
+<li><a href="https://www.agilealliance.org/resources/videos/whats-the-story-about-agile-data/">What&#39;s the Story About Agile Data</a></li>
 </ul>
-<p>
-But the second question, around constraints, may come as a surprise. As
+<p>But the second question, around constraints, may come as a surprise. As
 engineers we have an aversion to constraints. We think they limit the quality of
-the solutions we deliver.
-</p>
+the solutions we deliver.</p>
 <p>
 In reality, it&#39;s not the engineer that finds the best new tool that&#39;s highly
 regarded, it&#39;s the one that gets the results with what&#39;s right in front of
-him. The developer that mastered his domain brings more value.
-</p>
+him. The developer that mastered his domain brings more value.</p>
 <p>
 As we dive down the rabbit hole of new tools in search of perfection: timelines
 double, bugs get introduced, and the whole project comes to a screeching halt
-because of the mountain of tech debt.
-</p>
+because of the mountain of tech debt.</p>
 <p>
 The expert engineer, on the other hand, is careful about introducing new tools.
 She doesn&#39;t pull in a library for left pad because she knows how to write
 that code. Her scope for new bugs is small so when she introduces one she
-quickly finds it, in her own code.
-</p>
+quickly finds it, in her own code.</p>
 <p>
 OK, most of the time the search for new tools doesn&#39;t get that bad, and the expert
 engineer is a myth. But the price of looking for a way around the constraints is
-very real, and we should strive to be more like the expert engineer.
-</p>
+very real, and we should strive to be more like the expert engineer.</p>
 <p>
 In this article I want to cover the most common constraints I come against 
-and provide the techniques I found to dealing with them.
-</p>
+and provide the techniques I found to dealing with them.</p>
+<div id="outline-container-headline-1" class="outline-3">
 <h3 id="headline-1">
 Not Enough Time
 </h3>
-<p>
-Whether a bug came up, an outage happened, or we just underestimated the work,
+<div id="outline-text-headline-1" class="outline-text-3">
+<p>Whether a bug came up, an outage happened, or we just underestimated the work,
 we constantly come up against time constraints. It&#39;s the nature of a job in a
-highly complex domain.
-</p>
+highly complex domain.</p>
 <p>
 The easy solution is pushing back the feature. We can finish it at the beginning of
-next sprint because we work in small increments… Right?
-</p>
+next sprint because we work in small increments… Right?</p>
 <p>
 In my experience, time constraints rarely become an issue if the tasks are kept
 small. As long as the tasks are kept small, features get delivered every
-iteration and no one gets upset because the application progresses forward.
-</p>
+iteration and no one gets upset because the application progresses forward.</p>
 <p>
 Time constraints become an issue when we take on too much work at once. When the
 timeline is up and we have nothing to show. We might be one bug away from
 delivering the features, but that doesn&#39;t matter if the stake holders get
-nothing.
-</p>
+nothing.</p>
 <p>
 To prevent this situation, you have to break the all or nothing mentality. When
 you realize the task you&#39;re working on is too much; stop. Reevaluate the
-requirement.
-</p>
+requirement.</p>
 <p>
 Go back to the stakeholders with the goal of figuring out smaller chunks hidden
 in the details. Pareto principle states that 20% of the work holds 80% of the
 value. When features bloat, it&#39;s up to you to figure out the 20% that will
-deliver 80% of the value. You can revisit the rest later, if needed.
-</p>
+deliver 80% of the value. You can revisit the rest later, if needed.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-3">
 <h3 id="headline-2">
 Missing or Changing Requirements
 </h3>
+<div id="outline-text-headline-2" class="outline-text-3">
+<p>Before you can be effective you need to have clarity of the expectations. To get
+clarity you need to ask questions.</p>
 <p>
-Before you can be effective you need to have clarity of the expectations. To get
-clarity you need to ask questions.
-</p>
-<p>
-Your question will result in one of three outcomes:
-</p>
+Your question will result in one of three outcomes:</p>
 <p>
 If the feature is high priority, you will get to have the needed conversation 
 and gain clarity. This will let you start work with a better idea of what&#39;s
-expected and minimum down time.
-</p>
+expected and minimum down time.</p>
 <p>
 A much worse outcome, but all too possible, is that you can&#39;t get anyone to look
 at the feature. When this happens you should question the priorities. If it&#39;s
 not a high enough priority to define well, it&#39;s not high enough priority to work
 on. The work is endless, your time isn&#39;t. See what else is needed and select
-a task you can accomplish.
-</p>
+a task you can accomplish.</p>
 <p>
 The third option, and the one you stand to gain the most from, is that the
 feature is high priority but the users aren&#39;t sure what they want. When this
 happens, you get the chance to create low fidelity prototypes, explore new
 approaches, and get into a creative mindset. Working through this process with
 users allows you to learn about them which result in better understanding on all
-future work. The return on the time you investment is enormous.
-</p>
+future work. The return on the time you investment is enormous.</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-3">
 <h3 id="headline-3">
 Unrealistic Expectations
 </h3>
-<p>
-If your stake holders are non-technical, like they often are, you will
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>If your stake holders are non-technical, like they often are, you will
 inevitably come up against ridiculous expectations. &#34;It will only take a couple
 hours to add authorization, right?&#34; These expectation may even be your own
 doing. If your application is well build and easy to use, it becomes
-indistinguishable from magic. Everything seems easy from the outside.
-</p>
+indistinguishable from magic. Everything seems easy from the outside.</p>
 <p>
 But don&#39;t get frustrated by these requests. They provide another chance to
 connect with the stake holders. This time, allow them to understand more about
 your work. Compare and contrast features and explain why this feature might take
-longer than another.
-</p>
+longer than another.</p>
 <p>
 Once the stake holders know the work required, they will give you more time or
 pick a feature they can have sooner. The important part is, to educated the
-stake holders so next time they know the scope of a similar feature.
-</p>
+stake holders so next time they know the scope of a similar feature.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
 <h3 id="headline-4">
 The Right Tool for the Job
 </h3>
-<p>
-The notion of &#34;the right tool for the job&#34; echoes through every office.
-Unfortunately, it&#39;s misunderstood almost as often as it&#39;s uttered.
-</p>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>The notion of &#34;the right tool for the job&#34; echoes through every office.
+Unfortunately, it&#39;s misunderstood almost as often as it&#39;s uttered.</p>
 <p>
 <strong>Right</strong> doesn&#39;t mean perfect. It means the tool that enables you to accomplish
-the job without wasting time. It even changes depending on the person or team.
-</p>
+the job without wasting time. It even changes depending on the person or team.</p>
 <p>
 If a team knows nothing about a language used to implement the perfect tool,
 they could spend weeks learning enough to implement the solution. Sure future
-work may get easier, but will the amount of future work justify the investment?
-</p>
+work may get easier, but will the amount of future work justify the investment?</p>
 <p>
 On the other hand, if they use the language they know and add library that gets
 them 80% of the way, they can give the users results now. Then you can come back
-to evaluate that perfect tool with a better knowledge of the alternative.
-</p>
+to evaluate that perfect tool with a better knowledge of the alternative.</p>
 <p>
 No matter which option you pick, remember that every new dependency needs careful
 consideration. Your team has to learn the tool. You have to make sure the
 tool is maintained, or has clean code so you could take on the maintenance. You
 have to verify that it works with the rest of your dependencies. If this sounds
-like too much work, consider implementing the features you need yourself.
-</p>
+like too much work, consider implementing the features you need yourself.</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
 <h3 id="headline-5">
 Technological Limitations
 </h3>
-<p>
-This is the most surprising area of frustration. Many of us have gone to school,
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>This is the most surprising area of frustration. Many of us have gone to school,
 or spent vast amount of time, to learn about optimizations, data structures, and
-algorithms. We learned about these so we could deal with technological limitation.
-</p>
+algorithms. We learned about these so we could deal with technological limitation.</p>
 <p>
 When you come up against this limitation – like processing speed, memory
 limits, rendering speed – it&#39;s not time to dispaire. It&#39;s time to celebrate.
-You finally get to dust off that old book and figure out a tough problem.
-</p>
+You finally get to dust off that old book and figure out a tough problem.</p>
 <p>
 The important part, for those around you is that you set realistic expectations.
-There won&#39;t be a quick solution. It will take a significant time investment.
-</p>
+There won&#39;t be a quick solution. It will take a significant time investment.</p>
 <p>
 Once the expectations are set and you get to start the work, consider yourself
 lucky. These challenges don&#39;t come along often. So dive in and enjoy the
-learning.
-</p>
+learning.</p>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-3">
 <h3 id="headline-6">
 Wrap Up
 </h3>
-<p>
-This isn&#39;t an exhaustive list of constraints. These are just the once I fight
+<div id="outline-text-headline-6" class="outline-text-3">
+<p>This isn&#39;t an exhaustive list of constraints. These are just the once I fight
 with most often. Still, I hope it serves as a reminder, to you and me, about how
 lucky we are to work in a field that allows us to solve problems every day. To
 enjoy the process, we just have to expand our scope of what problems we are
-solving.
-</p>
+solving.</p>
 <p>
-Finally, I would like to thank Seth Godin for the <a href="https://seths.blog/2019/06/constraints-and-measurement/">inspiration</a> for this article.
-</p>
+Finally, I would like to thank Seth Godin for the <a href="https://seths.blog/2019/06/constraints-and-measurement/">inspiration</a> for this article.</p>
+</div>
+</div>
 
     </div>
 
@@ -392,7 +362,7 @@ Finally, I would like to thank Seth Godin for the <a href="https://seths.blog/20
       <nav class="post-nav">
         <a class="prev" href="/post/hy-django/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Hy Django</span>
+            <span class="prev-text nav-default">Django With Hy</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/cli-in-emacs/">
@@ -449,13 +419,10 @@ Finally, I would like to thank Seth Godin for the <a href="https://seths.blog/20
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Artem Chernyak</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -465,7 +432,10 @@ Finally, I would like to thank Seth Godin for the <a href="https://seths.blog/20
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.bd00e4ee.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
 
 
 <script type="application/javascript">

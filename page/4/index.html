@@ -16,22 +16,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" />
-  <meta name="description" content="A blog by Artem Chernyak" />
-  <meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="A blog by Artem Chernyak" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.47.1" />
+<meta name="generator" content="Hugo 0.92.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/" />
-<link href="https://hackeryarn.com/index.xml" rel="alternate" type="application/rss+xml" title="hackeryarn" />
+  <link href="https://hackeryarn.com/index.xml" rel="alternate" type="application/rss+xml" title="hackeryarn" />
   <link href="https://hackeryarn.com/index.xml" rel="feed" type="application/rss+xml" title="hackeryarn" />
-
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -40,13 +37,7 @@
 
 
 
-
-
-
-
-<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
-
-
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
 
 
 
@@ -54,11 +45,9 @@
 <meta property="og:description" content="A blog by Artem Chernyak" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hackeryarn.com/" />
-<meta property="og:updated_time" content="2018-12-14T00:00:00&#43;00:00"/>
-<meta itemprop="name" content="hackeryarn">
-<meta itemprop="description" content="A blog by Artem Chernyak">
 
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="name" content="hackeryarn">
+<meta itemprop="description" content="A blog by Artem Chernyak"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="hackeryarn"/>
 <meta name="twitter:description" content="A blog by Artem Chernyak"/>
 
@@ -93,14 +82,25 @@
         <li class="mobile-menu-item">Tags</li>
       </a><a href="/categories/">
         <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
       </a>
   </ul>
+
+  
+
+
 </nav>
+
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
   <a href="/" class="logo">hackeryarn</a>
 </div>
+
+
+
+
 
 <nav class="site-navbar">
   <ul id="menu" class="menu">
@@ -112,165 +112,72 @@
         <a class="menu-item-link" href="/tags/">Tags</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
       <div class="content-wrapper">
         <div id="content" class="content">
-          
-  <section id="posts" class="posts">
-    
-    
-    
-      <article class="post">
+          <section id="posts" class="posts">
+    <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day4">Principles - Day 4</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/universal-haskell-dev-enviornment/">Easy Universal Haskell Development Environment</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2018-12-14 </span>
+      <span class="post-time"> 2016-02-06 </span>
       <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
+          <a href="/categories/haskell/"> Haskell </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
+Traditional methods included:
+ Installing The Haskell Platform, which was a great project in it&rsquo;s time but always seems to lag a few GHC versions behind.
+    </div>
+    <div class="read-more">
+      <a href="/post/universal-haskell-dev-enviornment/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/django-returns-2/">Django Returns, Part 2</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 0001-01-01 </span>
       
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      If you want to be successful, you need to leverage everything around you. Your intuition, technology, and the knowledge of others melded together. With more input you can make better decision.
-However, no matter how much input you get, remember to not get greedy. When you want ever more and get out of balance you run the risk of losing more than you can handle. Instead, make intelligent adjustment. You will still have a huge upside but with the assurance that you won&rsquo;t lose it all.
+      Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
+1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
+ polls/models.py:
+1 2 3 4 5 6 7 8 9 10 11 12  from django.
     </div>
     <div class="read-more">
-      <a href="/books/principles/day4" class="read-more-link">Read more..</a>
+      <a href="/post/django-returns-2/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
 
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day3">Principles - Day 3</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-12 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Making many balanced and uncorrelated bets is the best way to minimize your risk while keeping the gains. If your bets become correlated, you lose the benefit of diversification because more of your portfolio can be effected by a single event.
-In order to understand correlations, you won&rsquo;t only need to understand markets. You will need to understand people. Try to understand why opinions differ, even if they are at complete odds with you.
-    </div>
-    <div class="read-more">
-      <a href="/books/principles/day3" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day2">Principles - Day 2</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-11 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      No matter how prepared you are, fate is unpredictable and you will face a loss. It&rsquo;s unavoidable.
-The import thing is to make sure you can handle a loss. Minimizing your down sides by finding your neutral point. An equilibrium where you are not loosing anything and you can sustain indefinitely. Once you identify this point, you can take calculated risks outside of it. Knowing that you have a cushion at your neutral point.
-    </div>
-    <div class="read-more">
-      <a href="/books/principles/day2" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/principles/day1">Principles - Day 1</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-10 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Principles define how you make decisions in your life. Every day you are faced with thousands of decisions. The choices you make are driven by your principles whether you realize it or not.
-When you take the time to understand your principles, you will understand how you make decision. This understand lets you make better decisions, change habits, and see patterns where others would miss them.
-You can better develop your principles by understand the principles of others.
-    </div>
-    <div class="read-more">
-      <a href="/books/principles/day1" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-      <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/books/getting-to-yes/day9">Getting to Yes - Day 9</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-12-07 </span>
-      <div class="post-category">
-          
-            <a href="/categories/books/"> Books </a>
-          
-        </div>
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Conclusion on negotiation In every negotiation you should address emotions, strive to understand the other side, and use facts. This gives you more than an argument. It gives you a way to get a better outcome in any situation, even with people who are the complete opposites of you.
-To make the negotiation go smoothly, prepare yourself for the negotiation. Thoroughly research the subject so you can present strong reasoning for your arguments.
-    </div>
-    <div class="read-more">
-      <a href="/books/getting-to-yes/day9" class="read-more-link">Read more..</a>
-    </div>
-  </div>
-</article>
-
-    
-  </section>
+    </section>
   
   <nav class="pagination">
-    
-      <a class="prev" href="/page/3/">
+    <a class="prev" href="/page/3/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text">Prev</span>
       </a>
     
-      <a class="next" href="/page/5/">
-        <span class="next-text">Next</span>
-        <i class="iconfont icon-right"></i>
-      </a>
   </nav>
-
         </div>
         
 
@@ -299,28 +206,24 @@ To make the negotiation go smoothly, prepare yourself for the negotiation. Thoro
 
   <span class="copyright-year">
     &copy; 
-    
-      2018 - 
-    2019
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">Artem Chernyak</span>
+    2018 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
       <i class="iconfont icon-up"></i>
     </div>
   </div>
-  
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
 
 
-<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
 
 
 <script type="application/javascript">

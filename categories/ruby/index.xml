@@ -6,11 +6,7 @@
     <description>Recent content in Ruby on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 11 Jun 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://hackeryarn.com/categories/ruby/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 11 Jun 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/ruby/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Efficient CSV Imports in Rails</title>
       <link>https://hackeryarn.com/post/rails-csv-imports/</link>
