@@ -16,17 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="Into the database   Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.
-1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
- polls/models.py:
-1 2 3 4 5 6 7 8 9 10 11 12  from django." /><meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+ In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database   Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part." /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.92.0 with theme even" />
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/django-returns-2/" />
@@ -43,28 +42,25 @@
 
 
 <meta property="og:title" content="Django Returns, Part 2" />
-<meta property="og:description" content="Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
-1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
- polls/models.py:
-1 2 3 4 5 6 7 8 9 10 11 12  from django." />
+<meta property="og:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+ In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hackeryarn.com/post/django-returns-2/" /><meta property="article:section" content="post" />
 
 
 
 <meta itemprop="name" content="Django Returns, Part 2">
-<meta itemprop="description" content="Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
-1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
- polls/models.py:
-1 2 3 4 5 6 7 8 9 10 11 12  from django.">
+<meta itemprop="description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+ In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.">
 
-<meta itemprop="wordCount" content="429">
+<meta itemprop="wordCount" content="1064">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Django Returns, Part 2"/>
-<meta name="twitter:description" content="Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
-1  $ python manage.py migrate     Create models for our Polls app. Nothing new here, but notice the nice type hits you get for all the fields thanks to django-stubs.
- polls/models.py:
-1 2 3 4 5 6 7 8 9 10 11 12  from django."/>
+<meta name="twitter:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+ In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -167,6 +163,10 @@
 </div>
     <div class="post-content">
       
+<p>
+In <a href="https://hackeryarn.com/post/django-returns-1/">Part 1</a> of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.</p>
+<p>
+In this part we will start working with the database, implement custom database methods, and look at how to use <code>returns</code> to improve the safety of those methods.</p>
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
 Into the database
@@ -240,11 +240,13 @@ Before we can apply these migrations, we need to let Django know about our Polls
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="o">...</span>
 
 <span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># add this</span>
     <span class="s1">&#39;polls.apps.PollsConfig&#39;</span><span class="p">,</span>
     <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
     <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
@@ -259,7 +261,7 @@ Before we can apply these migrations, we need to let Django know about our Polls
 </div>
 </div>
 <p>
-Now, we can run our migrations:</p>
+Now, we need to generate and run the migrations for our new models:</p>
 <div class="src src-bash">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -280,13 +282,49 @@ Model methods
 </h2>
 <div id="outline-text-headline-2" class="outline-text-2">
 <p>
-When we write model methods, or any methods for that matter, note that we do not add a type to <code>self</code>. We do, however, add a return type to all methods. This isn&#39;t much of an advantage for functions like <code>__str__</code> but becomes helpful with <code>was_published_recently</code>.</p>
+We will start a little out of order by improving <code>was_published_recently</code>. Since <code>__str__</code> is a magic method, it will require a little extra work and build on what we will learn when we write <code>was_published_recently</code>.</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">returns.io</span> <span class="kn">import</span> <span class="n">impure_safe</span>
+
+<span class="k">class</span> <span class="nc">Questions</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="nd">@impure_safe</span>
+    <span class="k">def</span> <span class="nf">was_published_recently</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">&gt;=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
 <p>
-<code>was_published_recently</code> also depends on time and a database call. This means that the function can fail and is not mathematically pure. Because of this we use the <code>impure_safe</code> decorator.</p>
+First off, note that when we write methods, we do not add a type to <code>self</code>. We do, however, add a return type to all methods. This one lets us know that we will get back a boolean value.</p>
 <p>
-This decorator will change the type from <code>bool</code> to <code>IOResultE[bool, Exception]</code>. This additional wrapper means that we can&#39;t use the value without first unwrapping it and handling the exception. Later, we will see how to handle all this elegantly.</p>
+We also added the <code>impure_safe</code> decorator. As the name implies, this decorator helps us mark functions that are impure and unsafe. <code>was_published_recently</code> is impure because it reaches out to the database, where we can&#39;t guarantee what we get back, and relies on time, which constantly changes.</p>
 <p>
-Also, notice that we did not wrap <code>__str__</code> despite it being an impure function that touches the database. Since we declared it as a magic method, Python won&#39;t know how to handle our nice wrapper.</p>
+<code>was_published_recently</code> is also unsafe because of the dependency on the database. All kinds of things can go wrong when we try to get a value out of a database: the database could be down, the table might not exist, the model fields could have changed, we forgot to run our migrations, etc.</p>
+<p>
+<code>impure_safe</code> doesn&#39;t fix these issues, but it lets the caller know that this is no longer a simple function that returns a <code>bool</code>.</p>
+<p>
+If we try to call this functions, we will see that <code>impure_safe</code> changed our <code>bool</code> return type to <code>IOResultE[bool, Exception]</code>. This wrapper puts two layers around the <code>bool</code> value. The first layer, <code>Result</code>, prevents us from getting the value without first checking and handling the <code>Exception</code>. The second layer, <code>IO</code>, prevents us from using the value outside of other <code>IO</code> functions (we don&#39;t want to mix pure and impure code).</p>
+<p>
+Next, we will start our implementation <code>__str__</code>. As mentioned earlier, magic methods are a little tricky to handle. It would be nice if we could just annotate <code>__str__</code> with <code>impure_safe</code>, but python won&#39;t know how to handle our <code>IOResultE</code> wrapper. So we have to come to a compromise.</p>
 <p>
 <code>polls/models.py</code>:</p>
 <div class="src src-python">
@@ -311,49 +349,79 @@ Also, notice that we did not wrap <code>__str__</code> despite it being an impur
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
-<span class="kn">from</span> <span class="nn">returns.io</span> <span class="kn">import</span> <span class="n">impure_safe</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1">#...</span>
+
 <span class="kn">from</span> <span class="nn">returns.unsafe</span> <span class="kn">import</span> <span class="n">unsafe_perform_io</span>
 
 
 <span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="o">...</span>
+    <span class="c1">#...</span>
 
     <span class="nd">@impure_safe</span>
-    <span class="k">def</span> <span class="nf">_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">safe_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_text</span>
+
+
+<span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1">#...</span>
+
+    <span class="nd">@impure_safe</span>
+    <span class="k">def</span> <span class="nf">safe_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_text</span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+<p>
+We create a <code>safe_str</code> function with the <code>impure_safe</code> decorator. When we need to get a string representation in our code, we should default to using this function since it has all of our safety improvements.</p>
+<p>
+<code>safe_str</code> helps our code, but we will still need a proper <code>__str__</code> implementation so we can get nice output at our shell.</p>
+<p>
+Since this functionality is mainly for the shell, this is a good time to fire up a shell session. If we run <code>safe_str</code> or <code>was_published_recentrly</code>, we will notice that the return value is <code>&lt;IOResult: &lt;Success: ...&gt;&gt;</code> this is the printable representation of the two wrappers.</p>
+<p>
+We can take off the <code>Result</code> wrapper by running <code>value_or(&#34;error message&#34;)</code>. This gives us back a <code>&lt;IO: ...&gt;</code> value. Unlike <code>Result</code> which we can unwrap and inspect in a safe manner (as long as we handle any failures), <code>IO</code> is always unsafe. In order to remove the <code>IO</code> wrapper we need to run the ominously named <code>unsafe_perform_io</code>.</p>
+<p>
+We should be very careful with <code>unsafe_perform_io</code>. Running <code>unsafe_perform_io</code> removes all the safety that we worked so hard building up. But because python is, by its nature, unsafe we will need to use it. In order to keep as much safety as possible, however, we must limit its usage to the places where we need to hand off the value to python, Django, or any library outside our control. The <code>__str__</code> magic method is exactly this kind of place, so it&#39;s ok to use <code>unsafe_perform_io</code> there.</p>
+<p>
+The use of <code>unsafe_perform_io</code> on the edges of our application is the basis of a common design patter known as imperative shell and functional core. <code>returns</code> automatically pushes us towards this pattern, and we will see how to further utilize it in the next part.</p>
+<p>
+Now that we know how to remove the our wrappers, we can implement <code>__str__</code> in the safest possible manner.</p>
+<p>
+<code>polls/models.py</code>:</p>
+<div class="src src-python">
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1">#...</span>
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1">#...</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_str</span><span class="p">()</span><span class="o">.</span><span class="n">value_or</span><span class="p">(</span><span class="s2">&#34;No question_text found&#34;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="nd">@impure_safe</span>
-    <span class="k">def</span> <span class="nf">was_published_recently</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">&gt;=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
 
 <span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="o">...</span>
-
-    <span class="nd">@impure_safe</span>
-    <span class="k">def</span> <span class="nf">_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_text</span>
+    <span class="c1">#...</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">safe_str</span><span class="p">()</span><span class="o">.</span><span class="n">value_or</span><span class="p">(</span><span class="s2">&#34;No choice_text available&#34;</span><span class="p">)</span>
@@ -369,7 +437,9 @@ Wrap up
 </h2>
 <div id="outline-text-headline-3" class="outline-text-2">
 <p>
-That&#39;s it for part two. We saw some more benefits of using <code>mypy</code> and <code>django-stubs</code>, and we got to see how to declare types for methods.</p>
+This part of the Django tutorial introduced the simplest way to work with <code>returns</code>. The benefits seem marginal, if any for now, but the real power of <code>returns</code> and this type safe approach comes throw when we need to compose multiple functions with different wrappers and properties. That will be the focus of the next part of this tutorial.</p>
+<p>
+In the meantime, I encourage you to go through at least all the shell examples in <a href="https://docs.djangoproject.com/en/4.0/intro/tutorial02/">the official tutorial</a> and explore how our changes made these functions work differently than what you see in the tutorial.</p>
 </div>
 </div>
 
