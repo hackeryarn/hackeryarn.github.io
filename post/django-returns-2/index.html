@@ -55,7 +55,7 @@ Into the database   Let&#39;s run our initial migrations and get rid of the erro
  In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
 Into the database   Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part."><meta itemprop="datePublished" content="2022-02-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-02-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1064">
+<meta itemprop="wordCount" content="1065">
 <meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Type safe Django app, Part 2"/>
 <meta name="twitter:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
@@ -285,6 +285,8 @@ Model methods
 <div id="outline-text-headline-2" class="outline-text-2">
 <p>
 We will start a little out of order by improving <code>was_published_recently</code>. Since <code>__str__</code> is a magic method, it will require a little extra work and build on what we will learn when we write <code>was_published_recently</code>.</p>
+<p>
+<code>polls/models.py</code>:</p>
 <div class="src src-python">
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
