@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Type safe Django app, Part 3 - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="In Part 2 we got a taste of using returns and created a few model methods.
+In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions." /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.1 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/django-returns-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Type safe Django app, Part 3" />
+<meta property="og:description" content="In Part 2 we got a taste of using returns and created a few model methods.
+In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hackeryarn.com/post/django-returns-3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-04-16T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-04-16T00:00:00+00:00" />
+
+<meta itemprop="name" content="Type safe Django app, Part 3">
+<meta itemprop="description" content="In Part 2 we got a taste of using returns and created a few model methods.
+In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions."><meta itemprop="datePublished" content="2022-04-16T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-04-16T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1440">
+<meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Type safe Django app, Part 3"/>
+<meta name="twitter:description" content="In Part 2 we got a taste of using returns and created a few model methods.
+In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Type safe Django app, Part 3</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2022-04-16 </span>
+        <div class="post-category">
+            <a href="/categories/python/"> Python </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#using-a-template">Using a template</a></li>
+    <li><a href="#a-shortcut-render">A shortcut: render()</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>In <a href="https://hackeryarn.com/post/django-returns-2/">Part 2</a> we got a taste of using <code>returns</code> and created a few model methods.</p>
+<p>In this part, we will build out views that interact with databases and learn how to combine <code>returns</code> containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.</p>
+<h1 id="writ-views-that-actually-do-something">Writ views that actually do something</h1>
+<p>The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions. Writing individual functions will help us give names to the actions that we take, bring the types to the forefront, and clearly demonstrate how to compose small functions.</p>
+<p>First off the view needs to get the last 5 questions:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@impure_safe</span>
+<span class="k">def</span> <span class="nf">_latest_question_list</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QuerySet</span><span class="p">[</span><span class="n">Model</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&#34;-pub_date&#34;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>As we&rsquo;ve seen before, this operation is impure and unsafe because it reaches out to the database.</p>
+<p>The next actions extracts the text from each question.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@impure_safe</span>
+<span class="k">def</span> <span class="nf">_questions_text</span><span class="p">(</span><span class="n">questions_list</span><span class="p">:</span> <span class="n">QuerySet</span><span class="p">[</span><span class="n">Question</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">question_text</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">questions_list</span><span class="p">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Surprisingly, this simple function is also impure and unsafe. We need to mark it as unsafe because it will take a <code>QuerySet</code> and execute a lookup on it for <code>question_text</code>. When the lookup gets executed, Django will hit the database, unless we have retrieved the data before. Since, we have no way to know if we have the data already, it&rsquo;s safer to mark it as impure and unsafe.</p>
+<p>Lastly, we create a display string from the list of strings retrieved by <code>_question_text</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">_list_to_string</span><span class="p">(</span><span class="n">list_of_strings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&#34;, &#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">list_of_strings</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This function is pure, safe, and straight forward.</p>
+<p>With the individual pieces working, we can combine them:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="n">questions_string</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span><span class="p">(</span>
+        <span class="n">Question</span><span class="p">,</span>
+        <span class="n">_latest_question_list</span><span class="p">,</span>
+        <span class="n">bind</span><span class="p">(</span><span class="n">_questions_text</span><span class="p">),</span>
+        <span class="n">map_</span><span class="p">(</span><span class="n">_list_to_string</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">questions_string</span><span class="o">.</span><span class="n">value_or</span><span class="p">(</span><span class="s2">&#34;No questions found.&#34;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>That&rsquo;s a lot of new functions. Let&rsquo;s break them down one by one.</p>
+<p><code>flow</code> composes any number single argument functions. The first argument must have the same type as the argument of the next function, which must return the same type as the argument of the function following it, and so on.</p>
+<p>This process helps clearly show a pipeline of the transformations our data goes through. If we need to add or remove a step, we only modify one line and we&rsquo;re done.</p>
+<p><code>bind</code> is a little trickier. If we carefully inspect the types of the functions that we&rsquo;re trying to use in <code>flow</code>, we will notice that something doesn&rsquo;t quite line up with our earlier observation o how <code>flow</code> works. <code>_latest_question_list</code> returns a <code>IOResultE[QuerySet[Question]]</code> but <code>_questions_text</code> expects <code>QuerySet[Question]</code>; the types don&rsquo;t match.</p>
+<p><code>bind</code> handles this exact scenario. When applied to <code>IOResultE</code>, it will check the output. If the result is a <code>Success</code>, <code>bind</code> will unwrap <code>IOResultE</code> and pass it&rsquo;s contents to <code>_questions_text</code>. If the <code>Result</code> is a <code>Failure</code>, <code>bind</code> will skip calling <code>questions_text</code> and move on to the next step in the pipeline.</p>
+<p><code>map_</code> performs the same steps as <code>bind</code>. It  unwraps <code>IOResultE</code> and passes the value to <code>_list_to_string</code>, but instead of returning the value that <code>_list_to_string</code> returns, it wraps the value from <code>_list_to_string</code> in the <code>IOResultE</code> container (or <code>Success</code> to be more exact.)</p>
+<p><code>bind</code> and <code>_map</code> are closely related. Some languages/libraries even call <code>bind</code> <code>flat_map</code>. It&rsquo;s often called <code>flat_map</code> because it does the same thing as <code>_map</code> but removes one of the layers.</p>
+<p>If we ran <code>_map(_questions_text)</code> instead of <code>bind(_questions_text)</code>, we would ended up with a return value of <code>IOResultE[IOResultE[...]]</code>. This happens because both <code>_last_question_list</code> and <code>_questions_text</code> return a value wrapped in a <code>IOResultE</code>. Since this type communicates success or failure, we don&rsquo;t need to know or care about how many times it had to succeed. We only care that all the action succeeded, which a single <code>Success</code> can communicate as well as 2 <code>Success</code> wrappers.</p>
+<p>We can follow a general rule on when to use <code>bind</code> vs. <code>_map</code>. If both functions work inside the same context (return the same container type), use <code>bind</code>. If the functions work in a different context, and the latter function is pure and safe, use <code>_map</code>.</p>
+<p>To wrap up the view function, we unwrap the value and return it as an <code>HttpResponse</code>.</p>
+<p>This process required learning a lot of new concepts, but we will use them again and again. Soon enough, they will become second nature.</p>
+<h2 id="using-a-template">Using a template</h2>
+<p>Using a template introduces a new challenge. We can no longer use <code>flow</code> since <code>template.render</code> requires two arguments.</p>
+<p>Let&rsquo;s see how we can make this work without unwrapping twice.</p>
+<p>First we create a small wrapper around <code>loader.get_template</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@impure_safe</span>
+<span class="k">def</span> <span class="nf">_get_template</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Template</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This simply ensure that we get back the correct type. Since loading a template
+require IO, we need to mark it as <code>impure_safe</code>.</p>
+<p>This gives us all the pieces that we need to create the template:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="n">IndexContext</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span><span class="p">(</span>
+        <span class="n">Question</span><span class="p">,</span>
+        <span class="n">_latest_question_list</span><span class="p">,</span>
+        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lql</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;latest_question_list&#34;</span><span class="p">:</span> <span class="n">lql</span><span class="p">})</span>
+    <span class="p">)</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="n">Template</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_template</span><span class="p">(</span><span class="s2">&#34;polls/index.html&#34;</span><span class="p">)</span>
+    <span class="n">template_string</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">template</span><span class="p">:</span> <span class="n">context</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+        <span class="p">))</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">template_string</span><span class="o">.</span><span class="n">value_or</span><span class="p">(</span><span class="s2">&#34;No questions found.&#34;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>First we get the two arguments we need to pass to <code>template.render</code>. Both of these values are wrapped in an <code>IOResultE</code>. Luckily, all the wrapper types also have methods corresponding to the helper functions we&rsquo;ve used in <code>flow</code>.</p>
+<p>We can get the raw value by calling <code>bind</code> on the template and inside it calling <code>map</code> on the context. Then we just pass both the values to <code>template.render</code>.</p>
+<p>We have to call <code>bind</code> because the inner <code>map</code> application will return an <code>IOResultE</code> and we don&rsquo;t want to end up with a double wrapper type. If we had to unwrap more layers, we would call <code>bind</code> on all the layers except the last.</p>
+<p>That was a pretty complex process just to call a function with two arguments. Usually, having to jump through this many hoops indicates that we could use a better abstractions. In this case, Django has us covered.</p>
+<h2 id="a-shortcut-render">A shortcut: render()</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="n">template_string</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span><span class="p">(</span>
+        <span class="n">Question</span><span class="p">,</span>
+        <span class="n">_latest_question_list</span><span class="p">,</span>
+        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">lql</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;latest_question_list&#34;</span><span class="p">:</span> <span class="n">lql</span><span class="p">}),</span>
+        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;polls/index.html&#39;</span><span class="p">,</span> <span class="n">context</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">template_string</span><span class="o">.</span><span class="n">value_or</span><span class="p">(</span><span class="s2">&#34;No questions found.&#34;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>That looks much simpler. It&rsquo;s a straight forward <code>flow</code> pipeline that we can easily follow. We can also start using lambdas instead of explicit helper functions as we become more comfortable with abstractions.</p>
+<p>This example provides a more realistic example of how using <code>returns</code> looks likes.</p>
+<h1 id="raising-a-404-error">Raising a 404 error</h1>
+<p>We have to deviate slightly from the official tutorial here. <code>get_object_or_404</code> doesn&rsquo;t buy us anything, so we will avoid using it. Instead, we will extend the example a bit and handle both <code>404</code> and <code>500</code> errors depending on the type of failure that we get:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">detail</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">question_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="n">template_string</span><span class="p">:</span> <span class="n">IOResultE</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow</span><span class="p">(</span>
+        <span class="n">question_id</span><span class="p">,</span>
+        <span class="n">_get_question</span><span class="p">,</span>
+        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">question</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">}),</span>
+        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&#34;polls/detail.html&#34;</span><span class="p">,</span> <span class="n">context</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">match</span> <span class="n">template_string</span><span class="p">:</span>
+        <span class="n">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">Question</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Http404</span><span class="p">(</span><span class="s2">&#34;Question does not exist&#34;</span><span class="p">)</span>
+        <span class="n">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Http500</span><span class="p">(</span><span class="s2">&#34;Trouble getting the question&#34;</span><span class="p">)</span>
+        <span class="n">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&#34;polls/detail.html&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The <code>flow</code> pipeline remains the same, we only add a new case statement to handle the final output. If you&rsquo;ve never seen case statements in python, that&rsquo;s to be expected.</p>
+<p>Pythons 3.10 introduces case statements. These are prefect for our use case. We can match the <code>IOResultE</code> type for either <code>Failure</code> or <code>Success</code>. We can event further destructure the <code>Failure</code> to inspect the type of error, and <code>Success</code> to access the <code>IO</code> action directly.</p>
+<p>One thing to remember here, is that no matter where we get an error inside <code>flow</code>, it will stop further computations and return that <code>Failure</code>. This gives us the ability only worry about the happy path inside <code>flow</code> and offload all the error handling to a single place.</p>
+<h1 id="wrap-up">Wrap up</h1>
+<p>With that, we covered all the major pieces needed to effectively use <code>returns</code> with Django.</p>
+<p><code>returns</code> provides quite a few more tools, but they require more complex scenarios and only provide slight variants of what we covered in this series.</p>
+<p>The rest of the Django tutorial focuses on Django specific details and we won&rsquo;t get to see anything new. Therefore, this is where I will stop the series. But I encourage you to continue with the tutorial on your own and try to use what you learned here.</p>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/django/">django</a>
+          <a href="/tags/python/">python</a>
+          <a href="/tags/types/">types</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/django-returns-2/">
+            <span class="next-text nav-default">Type safe Django app, Part 2</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

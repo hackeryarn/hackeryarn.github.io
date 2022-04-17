@@ -6,7 +6,18 @@
     <description>Recent content in types on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 27 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/types/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/types/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Type safe Django app, Part 3</title>
+      <link>https://hackeryarn.com/post/django-returns-3/</link>
+      <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/django-returns-3/</guid>
+      <description>In Part 2 we got a taste of using returns and created a few model methods.
+In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
+    </item>
+    
     <item>
       <title>Type safe Django app, Part 2</title>
       <link>https://hackeryarn.com/post/django-returns-2/</link>
