@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Managing local common lisp projects - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
+The biggest struggle that quicklisp brought was managing local packages." /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/local-common-lisp-projects/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Managing local common lisp projects" />
+<meta property="og:description" content="When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
+The biggest struggle that quicklisp brought was managing local packages." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hackeryarn.com/post/local-common-lisp-projects/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-01-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-01-11T00:00:00+00:00" />
+<meta itemprop="name" content="Managing local common lisp projects">
+<meta itemprop="description" content="When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
+The biggest struggle that quicklisp brought was managing local packages."><meta itemprop="datePublished" content="2023-01-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-01-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="345">
+<meta itemprop="keywords" content="commonlisp," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Managing local common lisp projects"/>
+<meta name="twitter:description" content="When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
+The biggest struggle that quicklisp brought was managing local packages."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Managing local common lisp projects</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-01-11 </span>
+        <div class="post-category">
+            <a href="/categories/micro/"> micro </a>
+            <a href="/categories/lisp/"> lisp </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across <code>quicklisp</code>. To my surprise, however, <code>quicklisp</code> worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.</p>
+<p>The biggest struggle that <code>quicklisp</code> brought was managing local packages. <code>quicklisp</code> had no way to reference a dependency at a certain path, and couldn&rsquo;t automatically import the project I was in. This is all for good reason since ASDF (the common lisp build system) allows a lot of freedom.</p>
+<p>I went looking for a better way to manage my local projects. I wanted a way to load local projects in a similar way to external dependencies while keeping things organized.</p>
+<p>It turns out that <code>quicklisp</code> will check multiple locations for local project before it tries to pull down a dependency. This means that as long as all local projects exist in one of these locations, they get treated no differently than external dependencies.</p>
+<p>One location that particularly appealed to me was the <code>\~/common-lisp</code> folder. This became where I store actual applications or scripts that will never become <code>quicklisp</code> libraries.</p>
+<p>If I want to modify a library or start my own, on the other hand, I prefer to use one of the directories in <code>ql:*local-project-directories*</code>. This variable holds a list of directories for local projects, and can be expanded in any way needed. I, however, stick with the default <code>\~/.quicklisp/local-projects/&quot;</code>.</p>
+<p>Keeping my projects split up in this manner allows for easy separation of concerns. When I work on a library, I can take the extra care needed to make sure I document things and keep the public api slim.</p>
+<p>When I start working on an application, especially a personal tool, these become less of a concern and I can just focus on getting it working.</p>
+<p>This simple scheme has helped me keep things organized while loading everything in the same manner with <code>ql:quickload</code>.</p>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/commonlisp/">commonlisp</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/django-returns-3/">
+            <span class="next-text nav-default">Type safe Django app, Part 3</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

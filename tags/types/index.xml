@@ -13,9 +13,9 @@
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/django-returns-3/</guid>
-      <description>In Part 2 we got a taste of using returns and created a few model methods.
+      <description>In Part 2 we got a taste of using returns and created our first model methods.
 In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
-Write views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
     </item>
     
     <item>
@@ -25,8 +25,8 @@ Write views that actually do something The first view introduced in the official
       
       <guid>https://hackeryarn.com/post/django-returns-2/</guid>
       <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
- In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database   Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
+In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/django-returns-1/</guid>
       <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
- Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
     </item>
     
   </channel>

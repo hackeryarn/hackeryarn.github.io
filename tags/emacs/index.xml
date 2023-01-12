@@ -14,7 +14,7 @@
       
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
       <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
     
   </channel>

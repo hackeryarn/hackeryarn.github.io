@@ -14,7 +14,7 @@
       
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
       <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
     
   </channel>

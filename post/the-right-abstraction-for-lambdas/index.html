@@ -24,7 +24,7 @@ However, the single function per lambda approach can become too granular. Shared
 
 
 
-<meta name="generator" content="Hugo 0.92.1 with theme even" />
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/the-right-abstraction-for-lambdas/" />
@@ -47,7 +47,6 @@ However, the single function per lambda approach can become too granular. Shared
 <meta property="og:url" content="https://hackeryarn.com/post/the-right-abstraction-for-lambdas/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-02-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-02-24T00:00:00+00:00" />
-
 <meta itemprop="name" content="The Right Abstraction for Lambdas">
 <meta itemprop="description" content="Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
 However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together."><meta itemprop="datePublished" content="2019-02-24T00:00:00+00:00" />
@@ -241,24 +240,24 @@ else is taken care of by the library.</p>
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-	<span class="s">&#34;log&#34;</span>
-
-	<span class="s">&#34;github.com/apex/gateway&#34;</span>
-	<span class="s">&#34;github.com/gorilla/mux&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">mux</span><span class="p">.</span><span class="nf">NewRouter</span><span class="p">()</span>
-
-	<span class="nx">r</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/sample&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
-
-  <span class="nx">http</span><span class="p">.</span><span class="nf">Handle</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">gateway</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/apex/gateway&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/gorilla/mux&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">mux</span><span class="p">.</span><span class="nf">NewRouter</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/sample&#34;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">http</span><span class="p">.</span><span class="nf">Handle</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">gateway</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="nodejs-and-express">Node.js and Express</h3>
 <p>For Express, there is the <a href="https://github.com/awslabs/aws-serverless-express">aws-serverless-express</a> library. It allows you to wrap your normal express app is a server, and proxy it from a serverless handler.</p>
@@ -278,19 +277,19 @@ else is taken care of by the library.</p>
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
-<span class="kr">const</span> <span class="nx">awsServerlessExpress</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-serverless-express&#39;</span><span class="p">);</span>
-
-<span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
-
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/sample&#39;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
-
-<span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">server</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">awsServerlessExpress</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;aws-serverless-express&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/sample&#39;</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">awsServerlessExpress</span><span class="p">.</span><span class="nx">proxy</span><span class="p">(</span><span class="nx">server</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="a-word-of-warning">A Word of Warning</h3>
 <p>There is a scenario where this approach performs worse than multiple lambdas:
@@ -381,7 +380,7 @@ profile for this scenario.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -397,7 +396,7 @@ profile for this scenario.</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

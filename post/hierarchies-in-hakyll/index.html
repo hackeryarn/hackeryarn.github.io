@@ -17,14 +17,14 @@
 
 
 <meta name="author" content="Artem Chernyak" /><meta name="description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date." /><meta name="keywords" content="blog, tech, ideas" />
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date." /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.92.1 with theme even" />
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/hierarchies-in-hakyll/" />
@@ -42,21 +42,20 @@
 
 <meta property="og:title" content="Hierarchies In a Hakyll Blog" />
 <meta property="og:description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date." />
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hackeryarn.com/post/hierarchies-in-hakyll/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-03-27T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-03-27T00:00:00+00:00" />
-
 <meta itemprop="name" content="Hierarchies In a Hakyll Blog">
 <meta itemprop="description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date."><meta itemprop="datePublished" content="2019-03-27T00:00:00+00:00" />
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date."><meta itemprop="datePublished" content="2019-03-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-03-27T00:00:00+00:00" />
 <meta itemprop="wordCount" content="822">
 <meta itemprop="keywords" content="guide,haskell,hakyll," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hierarchies In a Hakyll Blog"/>
 <meta name="twitter:description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date."/>
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -203,11 +202,11 @@ Our directory structure should have the following layout:</p>
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text">posts
-+-- book-title.md
-+-- book-title
-|   +-- post1.md
-|   +-- post2.md</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">posts
+</span></span><span class="line"><span class="cl">+-- book-title.md
+</span></span><span class="line"><span class="cl">+-- book-title
+</span></span><span class="line"><span class="cl">|   +-- post1.md
+</span></span><span class="line"><span class="cl">|   +-- post2.md</span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -246,15 +245,15 @@ The matchers with extensions look like this:</p>
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
-<span class="nf">main</span> <span class="ow">=</span>
-<span class="nf">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
-<span class="nf">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
-  <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-  <span class="o">...</span>
-<span class="nf">match</span> <span class="s">&#34;posts/*/*&#34;</span>
-  <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-  <span class="o">...</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl"><span class="nf">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl"><span class="nf">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">  <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="nf">match</span> <span class="s">&#34;posts/*/*&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -279,8 +278,8 @@ but the file name, and add a glob pattern to the end.</p>
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">getBookFolder</span> <span class="ow">::</span> <span class="kt">FilePath</span> <span class="ow">-&gt;</span> <span class="kt">Pattern</span>
-<span class="nf">getBookFolder</span> <span class="ow">=</span> <span class="n">fromGlob</span> <span class="o">.</span> <span class="p">(</span><span class="o">++</span> <span class="s">&#34;/*&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="n">takeWhile</span> <span class="p">(</span><span class="o">/=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="n">drop</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">show</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">getBookFolder</span> <span class="ow">::</span> <span class="kt">FilePath</span> <span class="ow">-&gt;</span> <span class="kt">Pattern</span>
+</span></span><span class="line"><span class="cl"><span class="nf">getBookFolder</span> <span class="ow">=</span> <span class="n">fromGlob</span> <span class="o">.</span> <span class="p">(</span><span class="o">++</span> <span class="s">&#34;/*&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="n">takeWhile</span> <span class="p">(</span><span class="o">/=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="n">drop</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">show</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -304,16 +303,16 @@ Creating the <code>bookCtx</code> goes in the <code>compile</code> block:</p>
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
-<span class="nf">main</span> <span class="ow">=</span>
-  <span class="n">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
-    <span class="n">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
-      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-      <span class="n">compile</span> <span class="o">$</span> <span class="kr">do</span>
-        <span class="n">filepath</span> <span class="ow">&lt;-</span> <span class="n">getResourceFilePath</span>
-        <span class="n">posts</span> <span class="ow">&lt;-</span> <span class="n">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="n">loadAll</span> <span class="p">(</span><span class="n">getBookFolder</span> <span class="n">filepath</span><span class="p">)</span>
-        <span class="kr">let</span> <span class="n">bookCtx</span> <span class="ow">=</span> <span class="n">listField</span> <span class="s">&#34;posts&#34;</span> <span class="n">defaultContext</span> <span class="p">(</span><span class="n">return</span> <span class="n">posts</span><span class="p">)</span>
-        <span class="o">...</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">compile</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filepath</span> <span class="ow">&lt;-</span> <span class="n">getResourceFilePath</span>
+</span></span><span class="line"><span class="cl">        <span class="n">posts</span> <span class="ow">&lt;-</span> <span class="n">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="n">loadAll</span> <span class="p">(</span><span class="n">getBookFolder</span> <span class="n">filepath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">let</span> <span class="n">bookCtx</span> <span class="ow">=</span> <span class="n">listField</span> <span class="s">&#34;posts&#34;</span> <span class="n">defaultContext</span> <span class="p">(</span><span class="n">return</span> <span class="n">posts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -358,25 +357,25 @@ The final output of the two matchers looks like this:</p>
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
-<span class="nf">main</span> <span class="ow">=</span>
-  <span class="n">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
-    <span class="n">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
-      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-      <span class="n">compile</span> <span class="o">$</span> <span class="kr">do</span>
-        <span class="n">filepath</span> <span class="ow">&lt;-</span> <span class="n">getResourceFilePath</span>
-        <span class="n">posts</span> <span class="ow">&lt;-</span> <span class="n">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="n">loadAll</span> <span class="p">(</span><span class="n">getBookFolder</span> <span class="n">filepath</span><span class="p">)</span>
-        <span class="kr">let</span> <span class="n">bookCtx</span> <span class="ow">=</span> <span class="n">listField</span> <span class="s">&#34;posts&#34;</span> <span class="n">defaultContext</span> <span class="p">(</span><span class="n">return</span> <span class="n">posts</span><span class="p">)</span>
-        <span class="n">getResourceBody</span> <span class="o">&gt;&gt;=</span> <span class="n">applyAsTemplate</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
-          <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/book.html&#34;</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
-          <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
-          <span class="n">relativizeUrls</span>
-    <span class="n">match</span> <span class="s">&#34;posts/*/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
-      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-      <span class="n">compile</span> <span class="o">$</span>
-        <span class="n">pandocCompiler</span> <span class="o">&gt;&gt;=</span> <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/post.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
-        <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
-        <span class="n">relativizeUrls</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">main</span> <span class="ow">=</span>
+</span></span><span class="line"><span class="cl">  <span class="n">hakyll</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">    <span class="n">match</span> <span class="s">&#34;posts/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">compile</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filepath</span> <span class="ow">&lt;-</span> <span class="n">getResourceFilePath</span>
+</span></span><span class="line"><span class="cl">        <span class="n">posts</span> <span class="ow">&lt;-</span> <span class="n">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="n">loadAll</span> <span class="p">(</span><span class="n">getBookFolder</span> <span class="n">filepath</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">let</span> <span class="n">bookCtx</span> <span class="ow">=</span> <span class="n">listField</span> <span class="s">&#34;posts&#34;</span> <span class="n">defaultContext</span> <span class="p">(</span><span class="n">return</span> <span class="n">posts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">getResourceBody</span> <span class="o">&gt;&gt;=</span> <span class="n">applyAsTemplate</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">          <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/book.html&#34;</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">          <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="n">bookCtx</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">          <span class="n">relativizeUrls</span>
+</span></span><span class="line"><span class="cl">    <span class="n">match</span> <span class="s">&#34;posts/*/*&#34;</span> <span class="o">$</span> <span class="kr">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">compile</span> <span class="o">$</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pandocCompiler</span> <span class="o">&gt;&gt;=</span> <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/post.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">        <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
+</span></span><span class="line"><span class="cl">        <span class="n">relativizeUrls</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -466,7 +465,7 @@ code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is ava
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -482,7 +481,7 @@ code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is ava
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

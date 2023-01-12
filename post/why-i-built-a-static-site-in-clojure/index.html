@@ -17,14 +17,14 @@
 
 
 <meta name="author" content="Artem Chernyak" /><meta name="description" content="At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
- We started coming up with ideas right away over a couple of beers." /><meta name="keywords" content="blog, tech, ideas" />
+We started coming up with ideas right away over a couple of beers." /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.92.1 with theme even" />
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/" />
@@ -42,21 +42,20 @@
 
 <meta property="og:title" content="Why I Built a Static Site in Clojure" />
 <meta property="og:description" content="At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&#39;t know was that I haven&#39;t built a static site in nearly a decade. However I couldn&#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
- We started coming up with ideas right away over a couple of beers." />
+We started coming up with ideas right away over a couple of beers." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2018-09-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2018-09-15T00:00:00+00:00" />
-
 <meta itemprop="name" content="Why I Built a Static Site in Clojure">
 <meta itemprop="description" content="At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&#39;t know was that I haven&#39;t built a static site in nearly a decade. However I couldn&#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
- We started coming up with ideas right away over a couple of beers."><meta itemprop="datePublished" content="2018-09-15T00:00:00+00:00" />
+We started coming up with ideas right away over a couple of beers."><meta itemprop="datePublished" content="2018-09-15T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2018-09-15T00:00:00+00:00" />
 <meta itemprop="wordCount" content="484">
 <meta itemprop="keywords" content="opinion,experience," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Why I Built a Static Site in Clojure"/>
 <meta name="twitter:description" content="At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&#39;t know was that I haven&#39;t built a static site in nearly a decade. However I couldn&#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
- We started coming up with ideas right away over a couple of beers."/>
+We started coming up with ideas right away over a couple of beers."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -181,8 +180,8 @@ server side content. <code>hiccup</code> let me use Clojure data structures to b
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; generating a span element with the class `foo` and content of `bar`</span>
-<span class="p">(</span><span class="nf">html</span> <span class="p">[</span><span class="ss">:span.foo</span>  <span class="s">&#34;bar&#34;</span><span class="p">])</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="line"><span class="cl"><span class="c1">;; generating a span element with the class `foo` and content of `bar`</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">html</span> <span class="p">[</span><span class="ss">:span.foo</span>  <span class="s">&#34;bar&#34;</span><span class="p">])</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -200,13 +199,13 @@ This short syntax let me express more with less code. I also had components.</p>
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; defining an `h1` variable with the content `Welcome`</span>
-<span class="p">(</span><span class="k">def </span><span class="nv">header</span> <span class="p">[</span><span class="ss">:h1</span> <span class="s">&#34;Welcome&#34;</span><span class="p">])</span>
-
-<span class="c1">;; using `header` variable inside a `div` with an additional paragraph</span>
-<span class="p">(</span><span class="nf">html</span> <span class="p">[</span><span class="ss">:div.content</span>
-       <span class="nv">header</span>
-       <span class="p">[</span><span class="ss">:p</span> <span class="s">&#34;more content&#34;</span><span class="p">]])</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="line"><span class="cl"><span class="c1">;; defining an `h1` variable with the content `Welcome`</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">def </span><span class="nv">header</span> <span class="p">[</span><span class="ss">:h1</span> <span class="s">&#34;Welcome&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">;; using `header` variable inside a `div` with an additional paragraph</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="nf">html</span> <span class="p">[</span><span class="ss">:div.content</span>
+</span></span><span class="line"><span class="cl">       <span class="nv">header</span>
+</span></span><span class="line"><span class="cl">       <span class="p">[</span><span class="ss">:p</span> <span class="s">&#34;more content&#34;</span><span class="p">]])</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -235,20 +234,20 @@ had the full power of Clojure to interact with data and components themselves.</
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="c1">;; defining data for the menu</span>
-<span class="p">(</span><span class="k">def </span><span class="nv">menu-items</span>
-  <span class="p">[</span><span class="s">&#34;Crab Rangoon&#34;</span>
-   <span class="s">&#34;Pot Stickers&#34;</span>
-   <span class="s">&#34;Miso Soup&#34;</span><span class="p">])</span>
-
-<span class="c1">;; creating a function to generate a list elment from the provided `menu-item`</span>
-<span class="p">(</span><span class="kd">defn </span><span class="nv">create-menu-item</span> <span class="p">[</span><span class="nv">menu-item</span><span class="p">]</span>
-  <span class="p">[</span><span class="ss">:li.menu-item</span> <span class="nv">menu-item</span><span class="p">])</span>
-
-<span class="c1">;; generating an unordered list by mapping over the `menu-items` data</span>
-<span class="p">(</span><span class="k">def </span><span class="nv">menu</span>
-  <span class="p">[</span><span class="ss">:ul</span>
-   <span class="p">(</span><span class="nb">map </span><span class="nv">create-menu-item</span> <span class="nv">menu-items</span><span class="p">)])</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-clojure" data-lang="clojure"><span class="line"><span class="cl"><span class="c1">;; defining data for the menu</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">def </span><span class="nv">menu-items</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="s">&#34;Crab Rangoon&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;Pot Stickers&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;Miso Soup&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">;; creating a function to generate a list elment from the provided `menu-item`</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kd">defn </span><span class="nv">create-menu-item</span> <span class="p">[</span><span class="nv">menu-item</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="ss">:li.menu-item</span> <span class="nv">menu-item</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">;; generating an unordered list by mapping over the `menu-items` data</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="k">def </span><span class="nv">menu</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="ss">:ul</span>
+</span></span><span class="line"><span class="cl">   <span class="p">(</span><span class="nb">map </span><span class="nv">create-menu-item</span> <span class="nv">menu-items</span><span class="p">)])</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -327,7 +326,7 @@ matter what features we dream up, they will be possible with this general purpos
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -343,7 +342,7 @@ matter what features we dream up, they will be possible with this general purpos
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

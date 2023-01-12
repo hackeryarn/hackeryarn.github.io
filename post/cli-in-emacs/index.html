@@ -17,14 +17,14 @@
 
 
 <meta name="author" content="Artem Chernyak" /><meta name="description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy." /><meta name="keywords" content="blog, tech, ideas" />
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy." /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.92.1 with theme even" />
+<meta name="generator" content="Hugo 0.108.0 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/cli-in-emacs/" />
@@ -42,21 +42,20 @@
 
 <meta property="og:title" content="CLI Commands in Emacs" />
 <meta property="og:description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy." />
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://hackeryarn.com/post/cli-in-emacs/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-06-01T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-06-01T00:00:00+00:00" />
-
 <meta itemprop="name" content="CLI Commands in Emacs">
 <meta itemprop="description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy."><meta itemprop="datePublished" content="2019-06-01T00:00:00+00:00" />
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy."><meta itemprop="datePublished" content="2019-06-01T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-06-01T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1142">
 <meta itemprop="keywords" content="guide,emacs," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="CLI Commands in Emacs"/>
 <meta name="twitter:description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy."/>
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -208,14 +207,14 @@ command&#39;s usage in mind:</p>
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ align-equals
-  <span class="nv">foo</span> <span class="o">=</span> <span class="m">1</span>
-  <span class="nv">a</span> <span class="o">=</span> <span class="m">2</span>
-  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span>
-  &lt;Ctrl-D&gt;
-  <span class="nv">foo</span>  <span class="o">=</span> <span class="m">1</span>
-  <span class="nv">a</span>    <span class="o">=</span> <span class="m">2</span>
-  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ align-equals
+</span></span><span class="line"><span class="cl">  <span class="nv">foo</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">a</span> <span class="o">=</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">  &lt;Ctrl-D&gt;
+</span></span><span class="line"><span class="cl">  <span class="nv">foo</span>  <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">a</span>    <span class="o">=</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -247,9 +246,9 @@ flags which make the command replace the selected region. </p>
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-equals</span> <span class="p">(</span><span class="nv">b</span> <span class="nv">e</span><span class="p">)</span> 
-  <span class="p">(</span><span class="nb">interactive</span> <span class="s">&#34;r&#34;</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="nv">b</span> <span class="nv">e</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-equals</span> <span class="p">(</span><span class="nv">b</span> <span class="nv">e</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span> <span class="s">&#34;r&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="nv">b</span> <span class="nv">e</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -289,9 +288,9 @@ This time, we don&#39;t need to pass any arguments to <code>interactive</code>. 
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-buffer</span> <span class="p">()</span>
-  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
-  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">)</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-buffer</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">)</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -327,10 +326,10 @@ we merge it with the string <code>eslint</code> to create the final command, and
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="p">(</span><span class="nb">defun</span> <span class="nv">run-eslint</span> <span class="p">()</span>
-  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
-  <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">current-file</span> <span class="p">(</span><span class="nf">buffer-name</span> <span class="p">(</span><span class="nf">current-buffer</span><span class="p">))))</span>
-    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint &#34;</span> <span class="nv">current-file</span><span class="p">))))</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">run-eslint</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">current-file</span> <span class="p">(</span><span class="nf">buffer-name</span> <span class="p">(</span><span class="nf">current-buffer</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint &#34;</span> <span class="nv">current-file</span><span class="p">))))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -348,7 +347,7 @@ To add this flag you only need to change the string you pass to <code>shell-comm
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -398,9 +397,9 @@ on every file after we opened any JavaScript file.</p>
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp">  <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;js-mode-hook</span>
-            <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
-              <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;run-eslint</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;js-mode-hook</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;run-eslint</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span></span></span></code></pre></td></tr></table>
 </div>
 </div>
 </div>
@@ -492,7 +491,7 @@ hacking.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -508,7 +507,7 @@ hacking.</p>
 
 
 
-<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
 
 <script type="application/javascript">

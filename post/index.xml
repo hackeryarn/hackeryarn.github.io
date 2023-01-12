@@ -6,16 +6,26 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Managing local common lisp projects</title>
+      <link>https://hackeryarn.com/post/local-common-lisp-projects/</link>
+      <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/local-common-lisp-projects/</guid>
+      <description>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
+The biggest struggle that quicklisp brought was managing local packages.</description>
+    </item>
+    
     <item>
       <title>Type safe Django app, Part 3</title>
       <link>https://hackeryarn.com/post/django-returns-3/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://hackeryarn.com/post/django-returns-3/</guid>
-      <description>In Part 2 we got a taste of using returns and created a few model methods.
+      <description>In Part 2 we got a taste of using returns and created our first model methods.
 In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
-Write views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
+Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
     </item>
     
     <item>
@@ -25,8 +35,8 @@ Write views that actually do something The first view introduced in the official
       
       <guid>https://hackeryarn.com/post/django-returns-2/</guid>
       <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
- In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database   Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
+In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
+Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
     </item>
     
     <item>
@@ -36,7 +46,7 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/django-returns-1/</guid>
       <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
- Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
     </item>
     
     <item>
@@ -46,7 +56,8 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/hy-django/</guid>
       <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
- Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.</description>
+Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
+To my surprise I only ran into minor issues.</description>
     </item>
     
     <item>
@@ -56,7 +67,7 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
       <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
- These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
+These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
     </item>
     
     <item>
@@ -66,7 +77,7 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
       <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
- I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
     
     <item>
@@ -76,7 +87,7 @@ Into the database   Let&amp;#39;s run our initial migrations and get rid of the 
       
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
       <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
- My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
     
     <item>
@@ -117,7 +128,7 @@ I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right plac
       
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
       <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
- We started coming up with ideas right away over a couple of beers.</description>
+We started coming up with ideas right away over a couple of beers.</description>
     </item>
     
     <item>
@@ -182,7 +193,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
       <guid>https://hackeryarn.com/post/phoenix-talk/</guid>
       <description>I recently gave a talk, at the local Fullstack Meetup, on the Phoenix Framework. Phoenix is the de facto web framework for Elixir.
 In this talk, I cover some of the best features of Phoenix:
- Erlang: The platmor which Elixir and Phoenix are build on. (albeit very brief overview of the major features) Plug: The specification for composable module design that gives Phoenix much of it&amp;rsquo;s power. Ecto: The database integration layer.</description>
+Erlang: The platmor which Elixir and Phoenix are build on. (albeit very brief overview of the major features) Plug: The specification for composable module design that gives Phoenix much of it&amp;rsquo;s power. Ecto: The database integration layer.</description>
     </item>
     
     <item>
@@ -193,7 +204,7 @@ In this talk, I cover some of the best features of Phoenix:
       <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
       <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
 Traditional methods included:
- Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
     </item>
     
   </channel>
