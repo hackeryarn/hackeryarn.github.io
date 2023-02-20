@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Picking a Linux Distro - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up to date software while maintaining a stable system. The results of my search surprised even me.
+Background I ran Ubuntu as my daily driver for over a decade from 2009 until 2014, and still use it as a base for my home lab server." /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/picking-a-linux-distro/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Picking a Linux Distro" />
+<meta property="og:description" content="I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up to date software while maintaining a stable system. The results of my search surprised even me.
+Background I ran Ubuntu as my daily driver for over a decade from 2009 until 2014, and still use it as a base for my home lab server." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hackeryarn.com/post/picking-a-linux-distro/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-02-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-02-20T00:00:00+00:00" />
+<meta itemprop="name" content="Picking a Linux Distro">
+<meta itemprop="description" content="I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up to date software while maintaining a stable system. The results of my search surprised even me.
+Background I ran Ubuntu as my daily driver for over a decade from 2009 until 2014, and still use it as a base for my home lab server."><meta itemprop="datePublished" content="2023-02-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1013">
+<meta itemprop="keywords" content="linux,opensuse,micoros," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Picking a Linux Distro"/>
+<meta name="twitter:description" content="I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up to date software while maintaining a stable system. The results of my search surprised even me.
+Background I ran Ubuntu as my daily driver for over a decade from 2009 until 2014, and still use it as a base for my home lab server."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Picking a Linux Distro</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-02-20 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#background">Background</a></li>
+    <li><a href="#the-criteria-for-a-new-distro">The criteria for a new distro</a></li>
+    <li><a href="#eliminating-the-distros">Eliminating the distros</a></li>
+    <li><a href="#enter-the-immutable-distros">Enter the immutable distros</a></li>
+    <li><a href="#microos">MicroOS</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up to date software while maintaining a stable system. The results of my search surprised even me.</p>
+<h2 id="background">Background</h2>
+<p>I ran Ubuntu as my daily driver for over a decade from 2009 until 2014, and still use it as a base for my home lab server. I switched from Ubuntu because their package release cycle, even on the latest version, is too slow for my liking. And around the same time, rolling release distros were gaining popularity. So I jumped on the Arch train.</p>
+<p>Throughout the years I ran vanilla Arch, Manjaro, and most recently EndeavourOS. All these flavours of Arch had their own trade offs, but none of them felt quite stable enough. No matter which one I used, a few times a year and update would go so badly that I had to restore my entire system from backup. This made my backup practices much better, but didn&rsquo;t make me excited to use any of them for a work machine.</p>
+<p>In the search for stability, I also tried running NixOS in-between Arch. NixOS had built in snapshots and easy restores, and the base system was overall more stable. Unfortunately, there were still times when I had multiple packages break and I would be stuck not updating my system because the system update process was an all or nothing choices. NixOS also came with its own configuration language and way of running programs that made it hard to use custom versions of software or anything outside the NixOS ecosystem.</p>
+<p>Although I got my arch setup to be good, I had a feeling that there had to be a better way. A way that would give me the best of both world. And now that I had a chance to really look, I was determined to find it.</p>
+<h2 id="the-criteria-for-a-new-distro">The criteria for a new distro</h2>
+<p>In this search for a new distribution, I had 3 main criteria:</p>
+<ul>
+<li>A stable base system. I didn&rsquo;t want to have to re-install my base system multiple times per year.</li>
+<li>A rolling release cycle. I still believe that rolling releases are essential to running a solid system and keeping software up to date.</li>
+<li>The ability to easily build fresh software and run packages. I did not want to jump through extra hoops to try out a new package or get obscure programs running.</li>
+</ul>
+<h2 id="eliminating-the-distros">Eliminating the distros</h2>
+<p>Arch and NixOS were quickly eliminated. Arch lacked the stability, and NixOS required extra steps to build and run anything.</p>
+<p>Ubuntu and many of the other stable distros were also eliminated because of the lack of rolling releases. Fedora came close with their Rawhide releases, but that turned out to be more of a testing branch and less of a true rolling release process.</p>
+<p>While looking at Fedora, however, I noticed that they had a version called SilverBlue. This version ran an immutable file system (similar to NixOS), but promised to avoid the added overhead of NixOS.</p>
+<h2 id="enter-the-immutable-distros">Enter the immutable distros</h2>
+<p>SilverBlue made strong stability promises. In fact, stability is a core value of the entire project. But with my previous experience with NixOS, I had to wonder if SilverBlue would succumb to the same complexity trap of building on top of an immutable file system.</p>
+<p>Turns out, that SilverBlue takes quite a different approach from NixOS. Instead of encouraging the users to always update the base image and install packages at the base of the system, SilverBlue discourages any updates to the base system and instead uses <code>flatpak</code> for GUI tools and <code>toolbox</code> for development tools.</p>
+<p><code>flatpak</code> should be familiar to anyone that has used a Mac or a smartphone. It allows installing Apps on the system. These apps and distributed in a manner that will run on any linux system, the applications ship with their dependencies, and you get to decide what access they get to your system. This seems to be the right way to run GUIs on any system.</p>
+<p><code>toolbox</code> was a more radical idea. It completely changed the way I thought about running my development environment. Instead of setting up your development environment on the machine you&rsquo;re using, <code>toolbox</code> uses containers to create an environment that won&rsquo;t impact the rest of the system (similar to what <code>flatpak</code> does for GUI apps). The container still get access to the user&rsquo;s home directory, the user&rsquo;s permissions, and even graphical sessions variables so the whole experience doesn&rsquo;t feel like it&rsquo;s running in a container.</p>
+<p>With these features, it seemed like I found the distro of my dreams. But it was still missing true rolling releases.</p>
+<h2 id="microos">MicroOS</h2>
+<p>That&rsquo;s when I noticed a distro very close to SilverBlue: MicroOS by OpenSUSE. It had all the same ideas behind an immutable OS running most applications through <code>flatpak</code>, but it used <code>dirstrobox</code> instead of <code>toolbox</code>.</p>
+<p><code>distrobox</code> has all the same features of <code>toolbox</code>, but takes it a step further. It allows creating a development environment using any Linux distribution. This means that if you have that one package on Arch that you just need to run. No problem. Just spin up a new <code>distrobox</code> running Arch and install your package.</p>
+<p>Finally, and most importantly, OpenSUSE and MicroOS have a strong rolling release distro (tumpleweed). The packages released to this distro are backed by an amazing testing suite of OpenQA, so I can get the latest packages with a high level of confidence that they won&rsquo;t break my system. And if they do, MicroOS has builtin snapshot that it will automatically roll back to. That means no time wasted trying to rebuild my system and no time wasted configuring software just to run on this system.</p>
+<p>So with this long journey, I landed on a distribution I never even heard of, with ideas I haven&rsquo;t considered. But all put together, this was the perfect distro for my use case.</p>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/opensuse/">opensuse</a>
+          <a href="/tags/micoros/">micoros</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/local-common-lisp-projects/">
+            <span class="next-text nav-default">Managing local common lisp projects</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -3,20 +3,69 @@
   
   <url>
     <loc>https://hackeryarn.com/categories/</loc>
-    <lastmod>2023-01-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/commonlisp/</loc>
-    <lastmod>2023-01-11T00:00:00+00:00</lastmod>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://hackeryarn.com/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/linux/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/categories/linux/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/micoros/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/opensuse/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/post/picking-a-linux-distro/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/post/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/commonlisp/</loc>
     <lastmod>2023-01-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -38,20 +87,6 @@
   
   <url>
     <loc>https://hackeryarn.com/categories/micro/</loc>
-    <lastmod>2023-01-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/post/</loc>
-    <lastmod>2023-01-11T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/</loc>
     <lastmod>2023-01-11T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
