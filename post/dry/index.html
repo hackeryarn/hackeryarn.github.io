@@ -36,7 +36,7 @@ Ok, maybe it&amp;rsquo;s not that bad, but many times DRY gets applied without m
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
 
 
 
@@ -391,7 +391,7 @@ Ok, maybe it&rsquo;s not that bad, but many times DRY gets applied without much 
 </div>
 </div><p>This version makes it even easier to see all the steps. We can now clearly see that there is no interaction between the two functions, and we could even add another step in-between them without going into a different function.</p>
 <p>Let&rsquo;s bring a little more focus to the point just mentioned because it is the biggest source of issues with optional arguments. If a function takes multiple optional arguments, it hides how their interactions with each other.</p>
-<p>If we go back to our original version, with multiple arguments, and add another argument to set a maximum bonus, it addition raises all kinds of questions: Do we cap the bonus amount before or after the yearly increase? Should we change the maximum bonus amount if a yearly increase is present? etc. And we can&rsquo;t answer these questions without looking into <code>calcualte_bonus</code>. That puts us back at keeping track of multiple functions just to understand how a single function works.</p>
+<p>If we go back to our original version, with multiple arguments, and add another argument to set a maximum bonus, it addition raises all kinds of questions: Do we cap the bonus amount before or after the yearly increase? Should we change the maximum bonus amount if a yearly increase is present? etc. And we can&rsquo;t answer these questions without looking into <code>calculate_bonus</code>. That puts us back at keeping track of multiple functions just to understand how a single function works.</p>
 <p>If we keep our functions small, on the other hand, we can easily see where a <code>cap_bonus</code> function gets applied. And we can understand the interaction without the need to dive into another function.</p>
 <h2 id="repetition-has-to-go-somewhere">Repetition has to go somewhere</h2>
 <p>I mentioned before that if you have to use an <code>and</code> to describe what a function does, than it is doing too much. If we stuck to this axiom everywhere, our programs wouldn&rsquo;t do a whole lot. We have to combine all our functions somewhere. But because repetition complicates our programs, we should strive to minimize where we use it.</p>
@@ -411,7 +411,11 @@ Ok, maybe it&rsquo;s not that bad, but many times DRY gets applied without much 
 <footer class="post-footer">
       
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/distrobox/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Distrobox in practice</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/picking-a-linux-distro/">
             <span class="next-text nav-default">Picking a Linux Distro</span>
             <span class="next-text nav-mobile">Next</span>

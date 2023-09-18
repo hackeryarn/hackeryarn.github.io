@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Distrobox in practice - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Artem Chernyak" /><meta name="description" content="Distrobox is the single piece of software that completely changed the way I work. If you&amp;rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&amp;rsquo;ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn&amp;rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better." /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.110.0 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/distrobox/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Distrobox in practice" />
+<meta property="og:description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hackeryarn.com/post/distrobox/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-09-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-17T00:00:00+00:00" />
+<meta itemprop="name" content="Distrobox in practice">
+<meta itemprop="description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better."><meta itemprop="datePublished" content="2023-09-17T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-09-17T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1083">
+<meta itemprop="keywords" content="linux,distrobox,containers,docker,podman," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Distrobox in practice"/>
+<meta name="twitter:description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Distrobox in practice</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-09-17 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-distrobox">What is Distrobox?</a></li>
+    <li><a href="#the-shared-environment">The shared environment</a></li>
+    <li><a href="#dont-containers-already-provide-isolation">Don&rsquo;t containers already provide isolation?</a></li>
+    <li><a href="#making-per-project-containers-efficient">Making per project containers efficient</a></li>
+    <li><a href="#using-graphical-applications-from-distrobox">Using graphical applications from Distrobox</a></li>
+    <li><a href="#distrobox-makes-an-immutable-os-practical">Distrobox makes an immutable OS practical</a>
+      <ul>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><a href="https://distrobox.privatedns.org/">Distrobox</a> is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used <a href="https://www.vagrantup.com/">Vagrant</a> and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.</p>
+<p>Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.</p>
+<h2 id="what-is-distrobox">What is Distrobox?</h2>
+<p>Distrobox is a wrapper around <a href="https://www.docker.com/">Docker</a> or <a href="https://podman.io/">Podman</a> that give access to any Linux distro from any other Linux distro.</p>
+<blockquote>
+<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p>
+</blockquote>
+<p>At this point, you might be thinking &ldquo;But can&rsquo;t I already use Podman to run any Linux distro locally?&rdquo; Well yes you can, but Distrobox takes this a step further.</p>
+<h2 id="the-shared-environment">The shared environment</h2>
+<p>The main benefit of Distrobox, over just using Containers on their own, is the integration with the base system. A Distrobox container will have access to your home directory, devices, and a few other things which combine to make it feel like you are working natively.</p>
+<p>But despite feeling like home, all the packages that you install remain safely i the container. The downside is that that you need to install all your dependencies in every environment. But, thanks to image layering, you can make this fairly efficient (more on this later).</p>
+<h2 id="dont-containers-already-provide-isolation">Don&rsquo;t containers already provide isolation?</h2>
+<p>If you&rsquo;ve only recently started using Podman, you might think that having a project run in a Podman container is enough to provide isolation. If you&rsquo;ve done this for a while, however, you&rsquo;ve probably run into issues with tools that you need for development.</p>
+<p>Linters, debuggers, completion servers, even the languages themselves can all require project specific versions. This puts you right back at needing to manage multiple versions of packages and languages in your development environment. And there are tools that try to solve this, but each only works with a part of your stack, and most don&rsquo;t even try to address the issue of system packages (NixOS and Guix are notable exceptions).</p>
+<p>In fact, I find this dev environment isolation so important that I spin up a new Distrobox container for every project.</p>
+<h2 id="making-per-project-containers-efficient">Making per project containers efficient</h2>
+<p>Having a container for every project might sound wasteful and time consuming, but you can actually make it pretty quick and efficient. This efficiency is possible thanks to image layering done by Podman.</p>
+<blockquote>
+<p>I will not cover how layering works, but if you are curious, refer to <a href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p>
+</blockquote>
+<p>Because underneath Distrobox just uses containers, you can easily create a base containers that has all the common tools for your dev environment. My base container looks something like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">FROM archlinux:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Update locale</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RUN echo &#34;en_US.UTF-8 UTF-8&#34; &gt;&gt; /etc/locale.gen &amp;&amp; locale-gen</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Update package repository</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RUN pacman -Syu</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Install dev tools</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RUN pacman -S --noconfirm git base-devel neovim zellij exa zoxide fd bat ripgrep stow rust nodejs go starship fzf wl-clipboard lazygit kubectl go-yq jq rsync man-db unzip plocate glibc python nodejs npm</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Use the host install of podman</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p>
+</blockquote>
+<p>This all gets saved into a single layer and referenced by every projects specific environment. For example, my <code>Django</code> environment looks like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">FROM dev:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Required dependencies</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RUN pacman -S --noconfirm imagemagick ghostscript postgresql chromium</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then I link everything together with a small script to build the containers in order:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create my base container named `dev` from the file `dev.Dockerfile`</span>
+</span></span><span class="line"><span class="cl">podman build -t dev -f dev.Dockerfile
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a more specific container based `dev` from the file `django.Dockerfile`</span>
+</span></span><span class="line"><span class="cl">podman build -t django -f django.Dockerfile
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If I need to run an update, I just execute the above script and I have a fresh set of containers.</p>
+<h2 id="using-graphical-applications-from-distrobox">Using graphical applications from Distrobox</h2>
+<p>Another critical features, if you use graphical applications (such as vscode) as part of your dev environmen, is running those applications natively.</p>
+<p>The above setup might seem like it wouldn&rsquo;t work for for this. After all, wouldn&rsquo;t it take a bunch of configurations to get a graphical application from a container to display and work on the host? In most cases, it would, but Distrobox takes care of all this.</p>
+<p>To start up vscode, you can just run <code>code</code> inside your Distrobox terminal and everything work. You will be actually running a graphical tool from inside your container without any extra steps. Better yet, as far as that instance of vscode is concerned, it&rsquo;s running in the environment of the container and uses all the packages available there.</p>
+<p>This is a great start. But Distrobox takes it even further. If going through a terminal seems like an extra burden, you can run <code>distrobox-export --app code</code> to make the <code>.desktop</code> file available on your base system (with the distrobox name prefixed). Then you don&rsquo;t even have to open a terminal and can get your whole environment, including the app, running right from your desktop.</p>
+<p>It&rsquo;s really amazing for just how many things this process works. I even have a container that runs QEMU VMs.</p>
+<h2 id="distrobox-makes-an-immutable-os-practical">Distrobox makes an immutable OS practical</h2>
+<p>I won&rsquo;t go on soap box about immutable OSes for too long. You can read about why I use one <a href="https://hackeryarn.com/post/picking-a-linux-distro/">here</a>. But I will say that they keep your system more secure, more stable, and easier to maintain. The two biggest ones out there are <a href="https://fedoraproject.org/silverblue/">Fedora Silverblue</a> and <a href="https://microos.opensuse.org/">OpenSUSE MicroOS</a>.</p>
+<p>Without Distrobox, it really doesn&rsquo;t makes sense to use one of these systems for development. Luckily Distrobox makes it easy to experiment and work in a container, while never breaking the base system.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Distrobox can do many more interesting things, but having a set of per-project containers is the biggest thing that took Distrobox from a neat tool to something practical that I use every day across multiple systems.</p>
+<p>I hope this gives you some ideas of how you can improve your dev setup with Distrobox.</p>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux/">linux</a>
+          <a href="/tags/distrobox/">distrobox</a>
+          <a href="/tags/containers/">containers</a>
+          <a href="/tags/docker/">docker</a>
+          <a href="/tags/podman/">podman</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/dry/">
+            <span class="next-text nav-default">When DRY goes wrong</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-72377824-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+</body>
+</html>
