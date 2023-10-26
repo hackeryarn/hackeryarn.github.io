@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>automation on hackeryarn</title>
+    <link>https://hackeryarn.com/tags/automation/</link>
+    <description>Recent content in automation on hackeryarn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/automation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Clojure GitHub Actions</title>
+      <link>https://hackeryarn.com/post/clojure-actions/</link>
+      <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://hackeryarn.com/post/clojure-actions/</guid>
+      <description>I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.
+The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project.</description>
+    </item>
+    
+  </channel>
+</rss>
