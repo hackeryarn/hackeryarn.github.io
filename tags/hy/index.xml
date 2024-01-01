@@ -6,17 +6,14 @@
     <description>Recent content in hy on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/hy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/hy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Django With Hy</title>
       <link>https://hackeryarn.com/post/hy-django/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/hy-django/</guid>
-      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
-Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
-To my surprise I only ran into minor issues.</description>
+      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.&#xA;Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.&#xA;To my surprise I only ran into minor issues.</description>
     </item>
-    
   </channel>
 </rss>

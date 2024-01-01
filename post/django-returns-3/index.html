@@ -25,7 +25,7 @@ Writ views that actually do something The first view introduced in the official 
 
 
 
-<meta name="generator" content="Hugo 0.110.0 with theme even" />
+<meta name="generator" content="Hugo 0.121.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/django-returns-3/" />
@@ -49,14 +49,14 @@ Writ views that actually do something The first view introduced in the official 
 <meta property="og:url" content="https://hackeryarn.com/post/django-returns-3/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2022-04-16T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-04-16T00:00:00+00:00" />
+
 <meta itemprop="name" content="Type safe Django app, Part 3">
 <meta itemprop="description" content="In Part 2 we got a taste of using returns and created our first model methods.
 In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
 Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions."><meta itemprop="datePublished" content="2022-04-16T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-04-16T00:00:00+00:00" />
 <meta itemprop="wordCount" content="1440">
-<meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Type safe Django app, Part 3"/>
+<meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Type safe Django app, Part 3"/>
 <meta name="twitter:description" content="In Part 2 we got a taste of using returns and created our first model methods.
 In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
 Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions."/>
@@ -365,12 +365,12 @@ require IO, we need to mark it as <code>impure_safe</code>.</p>
 </span></span><span class="line"><span class="cl">        <span class="n">map_</span><span class="p">(</span><span class="k">lambda</span> <span class="n">context</span><span class="p">:</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&#34;polls/detail.html&#34;</span><span class="p">,</span> <span class="n">context</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">match</span> <span class="n">template_string</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">Question</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="n">template_string</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">Question</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">Http404</span><span class="p">(</span><span class="s2">&#34;Question does not exist&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="n">Failure</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">Http500</span><span class="p">(</span><span class="s2">&#34;Trouble getting the question&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">response</span> <span class="o">=</span> <span class="n">unsafe_perform_io</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&#34;polls/detail.html&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
@@ -452,7 +452,7 @@ require IO, we need to mark it as <code>impure_safe</code>.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -470,17 +470,6 @@ require IO, we need to mark it as <code>impure_safe</code>.</p>
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-72377824-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

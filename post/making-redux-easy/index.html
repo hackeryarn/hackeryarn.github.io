@@ -24,7 +24,7 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 
 
 
-<meta name="generator" content="Hugo 0.110.0 with theme even" />
+<meta name="generator" content="Hugo 0.121.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/making-redux-easy/" />
@@ -47,13 +47,13 @@ In large projects, Redux bloat your project with repetitive code. To support a s
 <meta property="og:url" content="https://hackeryarn.com/post/making-redux-easy/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2019-02-11T00:00:00+00:00" />
 <meta property="article:modified_time" content="2019-02-11T00:00:00+00:00" />
+
 <meta itemprop="name" content="Making Redux Easy">
 <meta itemprop="description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
 In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component."><meta itemprop="datePublished" content="2019-02-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2019-02-11T00:00:00+00:00" />
 <meta itemprop="wordCount" content="900">
-<meta itemprop="keywords" content="opinion,experiment,guide," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Making Redux Easy"/>
+<meta itemprop="keywords" content="opinion,experiment,guide," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Making Redux Easy"/>
 <meta name="twitter:description" content="React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
 In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component."/>
 
@@ -198,18 +198,18 @@ the store, passing it to the <code>Provider</code>, and wrapping your app in the
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import React from &#39;react&#39;;
-</span></span><span class="line"><span class="cl">import {reduxSetup} from &#39;redux-easy&#39;;
-</span></span><span class="line"><span class="cl">import App from &#39;./App&#39;;
-</span></span><span class="line"><span class="cl">import &#39;./reducers&#39;; // described next
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="n">React</span> <span class="n">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="p">{</span><span class="n">reduxSetup</span><span class="p">}</span> <span class="n">from</span> <span class="s1">&#39;redux-easy&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="n">App</span> <span class="n">from</span> <span class="s1">&#39;./App&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">import</span> <span class="s1">&#39;./reducers&#39;</span><span class="p">;</span> <span class="o">//</span> <span class="n">described</span> <span class="n">next</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">const initialState = {
-</span></span><span class="line"><span class="cl">  user: {firstName: &#39;&#39;}
-</span></span><span class="line"><span class="cl">};
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">initialState</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">user</span><span class="p">:</span> <span class="p">{</span><span class="n">firstName</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">// The specified component is rendered in the element with
-</span></span><span class="line"><span class="cl">// id &#34;root&#34; unless the &#34;target&#34; option is specified.
-</span></span><span class="line"><span class="cl">reduxSetup({component: &lt;App /&gt;, initialState});
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">The</span> <span class="n">specified</span> <span class="n">component</span> <span class="n">is</span> <span class="n">rendered</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">element</span> <span class="n">with</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">id</span> <span class="s2">&#34;root&#34;</span> <span class="n">unless</span> <span class="n">the</span> <span class="s2">&#34;target&#34;</span> <span class="n">option</span> <span class="n">is</span> <span class="n">specified</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">reduxSetup</span><span class="p">({</span><span class="n">component</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">App</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="n">initialState</span><span class="p">});</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>You no longer manually group the actions handled by the reducer, nor combine
@@ -235,22 +235,22 @@ manages the root reducer for you, and you can add the handler from anywhere:</p>
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">import {addReducer} from &#39;redux-easy&#39;;
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">import</span> <span class="p">{</span><span class="n">addReducer</span><span class="p">}</span> <span class="n">from</span> <span class="s1">&#39;redux-easy&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">// Call addReducer once for each action type, giving it the
-</span></span><span class="line"><span class="cl">// function to be invoked when that action type is dispatched.
-</span></span><span class="line"><span class="cl">// These functions must return the new state
-</span></span><span class="line"><span class="cl">// and cannot modify the existing state.
-</span></span><span class="line"><span class="cl">addReducer(&#39;addToAge&#39;, (state, years) =&gt; {
-</span></span><span class="line"><span class="cl">  const {user} = state;
-</span></span><span class="line"><span class="cl">  return {
-</span></span><span class="line"><span class="cl">    ...state,
-</span></span><span class="line"><span class="cl">    user: {
-</span></span><span class="line"><span class="cl">      ...user,
-</span></span><span class="line"><span class="cl">      age: user.age + years
-</span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">  };
-</span></span><span class="line"><span class="cl">});
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">Call</span> <span class="n">addReducer</span> <span class="n">once</span> <span class="k">for</span> <span class="n">each</span> <span class="n">action</span> <span class="n">type</span><span class="p">,</span> <span class="n">giving</span> <span class="n">it</span> <span class="n">the</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">function</span> <span class="n">to</span> <span class="n">be</span> <span class="n">invoked</span> <span class="n">when</span> <span class="n">that</span> <span class="n">action</span> <span class="n">type</span> <span class="n">is</span> <span class="n">dispatched</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="n">These</span> <span class="n">functions</span> <span class="n">must</span> <span class="k">return</span> <span class="n">the</span> <span class="n">new</span> <span class="n">state</span>
+</span></span><span class="line"><span class="cl"><span class="o">//</span> <span class="ow">and</span> <span class="n">cannot</span> <span class="n">modify</span> <span class="n">the</span> <span class="n">existing</span> <span class="n">state</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">addReducer</span><span class="p">(</span><span class="s1">&#39;addToAge&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">years</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="p">{</span><span class="n">user</span><span class="p">}</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span><span class="n">state</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="o">...</span><span class="n">user</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">age</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">age</span> <span class="o">+</span> <span class="n">years</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>In vanilla <a href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
@@ -273,16 +273,16 @@ to fire off action:</p>
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">onFirstNameChange = event =&gt; {
-</span></span><span class="line"><span class="cl">  // assumes value comes from an input
-</span></span><span class="line"><span class="cl">  const {value} = event.target;
-</span></span><span class="line"><span class="cl">  dispatch(&#39;setFirstName&#39;, value);
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">onFirstNameChange</span> <span class="o">=</span> <span class="n">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="o">//</span> <span class="n">assumes</span> <span class="n">value</span> <span class="n">comes</span> <span class="n">from</span> <span class="n">an</span> <span class="n">input</span>
+</span></span><span class="line"><span class="cl">  <span class="k">const</span> <span class="p">{</span><span class="n">value</span><span class="p">}</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">target</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;setFirstName&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  // If the setFirstName action just sets a value in the state,
-</span></span><span class="line"><span class="cl">  // perhaps user.firstName, the following can be used instead.
-</span></span><span class="line"><span class="cl">  // There is no need to implement simple reducer functions.
-</span></span><span class="line"><span class="cl">  dispatchSet(&#39;user.firstName&#39;, value);
-</span></span><span class="line"><span class="cl">};
+</span></span><span class="line"><span class="cl">  <span class="o">//</span> <span class="n">If</span> <span class="n">the</span> <span class="n">setFirstName</span> <span class="n">action</span> <span class="n">just</span> <span class="n">sets</span> <span class="n">a</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">state</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="o">//</span> <span class="n">perhaps</span> <span class="n">user</span><span class="o">.</span><span class="n">firstName</span><span class="p">,</span> <span class="n">the</span> <span class="n">following</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">instead</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">  <span class="o">//</span> <span class="n">There</span> <span class="n">is</span> <span class="n">no</span> <span class="n">need</span> <span class="n">to</span> <span class="n">implement</span> <span class="n">simple</span> <span class="n">reducer</span> <span class="n">functions</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dispatchSet</span><span class="p">(</span><span class="s1">&#39;user.firstName&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Instead of <code>mapStateToProps</code>, you wrap your component in a <code>watch</code>
@@ -426,7 +426,7 @@ closer to where it&rsquo;s being used and is easier to follow.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -444,17 +444,6 @@ closer to where it&rsquo;s being used and is easier to follow.</p>
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-72377824-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

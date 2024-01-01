@@ -6,26 +6,21 @@
     <description>Recent content in Clojure on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/clojure/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/categories/clojure/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clojure GitHub Actions</title>
       <link>https://hackeryarn.com/post/clojure-actions/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/clojure-actions/</guid>
-      <description>I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.
-The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project.</description>
+      <description>I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.&#xA;The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project.</description>
     </item>
-    
     <item>
       <title>Why I Built a Static Site in Clojure</title>
       <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
-      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
-We started coming up with ideas right away over a couple of beers.</description>
+      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.&#xA;We started coming up with ideas right away over a couple of beers.</description>
     </item>
-    
   </channel>
 </rss>

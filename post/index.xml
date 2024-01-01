@@ -6,246 +6,175 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 26 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>You don&#39;t need a map for that</title>
+      <link>https://hackeryarn.com/post/maps/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/maps/</guid>
+      <description>One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.&#xA;It&amp;#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.</description>
+    </item>
     <item>
       <title>Clojure GitHub Actions</title>
       <link>https://hackeryarn.com/post/clojure-actions/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/clojure-actions/</guid>
-      <description>I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.
-The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project.</description>
+      <description>I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.&#xA;The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project.</description>
     </item>
-    
     <item>
       <title>Distrobox in practice</title>
       <link>https://hackeryarn.com/post/distrobox/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/distrobox/</guid>
-      <description>Distrobox is the single piece of software that completely changed the way I work. If you&amp;rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&amp;rsquo;ve been looking for.
-Within a month Distrobox became my primary dev environment and that hasn&amp;rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.</description>
+      <description>Distrobox is the single piece of software that completely changed the way I work. If you&amp;rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&amp;rsquo;ve been looking for.&#xA;Within a month Distrobox became my primary dev environment and that hasn&amp;rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.</description>
     </item>
-    
     <item>
       <title>When DRY goes wrong</title>
       <link>https://hackeryarn.com/post/dry/</link>
       <pubDate>Sat, 10 Jun 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/dry/</guid>
-      <description>DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.
-Ok, maybe it&amp;rsquo;s not that bad, but many times DRY gets applied without much thought. This careless application of DRY leads to brittle code, making even simple changes scary because they could have a huge ripple effect.</description>
+      <description>DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.&#xA;Ok, maybe it&amp;rsquo;s not that bad, but many times DRY gets applied without much thought. This careless application of DRY leads to brittle code, making even simple changes scary because they could have a huge ripple effect.</description>
     </item>
-    
     <item>
       <title>Picking a Linux Distro</title>
       <link>https://hackeryarn.com/post/picking-a-linux-distro/</link>
       <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/picking-a-linux-distro/</guid>
-      <description>I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up-to-date software while maintaining a stable system. The results of my search surprised even me.
-Background I have ran Ubuntu on my home lab server for over a decade, and used it a daily driver from 2009 to 2014.</description>
+      <description>I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up-to-date software while maintaining a stable system. The results of my search surprised even me.&#xA;Background I have ran Ubuntu on my home lab server for over a decade, and used it a daily driver from 2009 to 2014.</description>
     </item>
-    
     <item>
       <title>Managing local common lisp projects</title>
       <link>https://hackeryarn.com/post/local-common-lisp-projects/</link>
       <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/local-common-lisp-projects/</guid>
-      <description>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
-The biggest struggle that quicklisp brought was managing local packages.</description>
+      <description>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.&#xA;The biggest struggle that quicklisp brought was managing local packages.</description>
     </item>
-    
     <item>
       <title>Type safe Django app, Part 3</title>
       <link>https://hackeryarn.com/post/django-returns-3/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-3/</guid>
-      <description>In Part 2 we got a taste of using returns and created our first model methods.
-In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
-Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
+      <description>In Part 2 we got a taste of using returns and created our first model methods.&#xA;In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.&#xA;Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
     </item>
-    
     <item>
       <title>Type safe Django app, Part 2</title>
       <link>https://hackeryarn.com/post/django-returns-2/</link>
       <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-2/</guid>
-      <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
-In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
+      <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.&#xA;In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.&#xA;Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
     </item>
-    
     <item>
       <title>Type safe Django app, Part 1</title>
       <link>https://hackeryarn.com/post/django-returns-1/</link>
       <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-1/</guid>
-      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
-Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.&#xA;Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
     </item>
-    
     <item>
       <title>Django With Hy</title>
       <link>https://hackeryarn.com/post/hy-django/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/hy-django/</guid>
-      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
-Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
-To my surprise I only ran into minor issues.</description>
+      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.&#xA;Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.&#xA;To my surprise I only ran into minor issues.</description>
     </item>
-    
     <item>
       <title>Embrace Your Constraints</title>
       <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
-      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
-These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
+      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.&#xA;These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
     </item>
-    
     <item>
       <title>CLI Commands in Emacs</title>
       <link>https://hackeryarn.com/post/cli-in-emacs/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
-I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.&#xA;I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
-    
     <item>
       <title>Hierarchies In a Hakyll Blog</title>
       <link>https://hackeryarn.com/post/hierarchies-in-hakyll/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
-My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.&#xA;My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
-    
     <item>
       <title>The Right Abstraction for Lambdas</title>
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
-However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
+      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.&#xA;However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
     </item>
-    
     <item>
       <title>Making Redux Easy</title>
       <link>https://hackeryarn.com/post/making-redux-easy/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
+      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.&#xA;In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
     </item>
-    
     <item>
       <title>Introducing Daily Reading Notes</title>
       <link>https://hackeryarn.com/post/daily-reading-notes/</link>
       <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/daily-reading-notes/</guid>
-      <description>Recently I ran an experiment of posting daily reading notes on this blog. This was very much a personal experiment.
-Making these posts every day reinforced my reading habit. I felt motivated to set aside time to read, and I got the chance to reflect on my reading. It also provided the opportunity to share more with others.
-I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right place for it.</description>
+      <description>Recently I ran an experiment of posting daily reading notes on this blog. This was very much a personal experiment.&#xA;Making these posts every day reinforced my reading habit. I felt motivated to set aside time to read, and I got the chance to reflect on my reading. It also provided the opportunity to share more with others.&#xA;I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right place for it.</description>
     </item>
-    
     <item>
       <title>Why I Built a Static Site in Clojure</title>
       <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
-      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
-We started coming up with ideas right away over a couple of beers.</description>
+      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.&#xA;We started coming up with ideas right away over a couple of beers.</description>
     </item>
-    
     <item>
       <title>Your Job Isn&#39;t Writing Code</title>
       <link>https://hackeryarn.com/post/your-job-isnt-writing-code/</link>
       <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/your-job-isnt-writing-code/</guid>
-      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.
-The answer: You must remember your real job&amp;hellip; Delivering value to the users.
-Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
+      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.&#xA;The answer: You must remember your real job&amp;hellip; Delivering value to the users.&#xA;Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
     </item>
-    
     <item>
       <title>Universally Testable Dependencies in JavaScript</title>
       <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/universally-testable-dependencies/</guid>
-      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
-This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
-The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
+      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.&#xA;This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.&#xA;The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
     </item>
-    
     <item>
       <title>ClojureScript Setup for Leiningen Project With Emacs</title>
       <link>https://hackeryarn.com/post/clojurescript-setup/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
-      <description>A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
-This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure.</description>
+      <description>A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.&#xA;This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.&#xA;Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure.</description>
     </item>
-    
     <item>
       <title>How Lodash Worked Itself Out of a Job</title>
       <link>https://hackeryarn.com/post/lodash/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/lodash/</guid>
-      <description>I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
-I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day.</description>
+      <description>I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.&#xA;I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day.</description>
     </item>
-    
     <item>
       <title>Efficient CSV Imports in Rails</title>
       <link>https://hackeryarn.com/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/rails-csv-imports/</guid>
-      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
-We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
+      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.&#xA;We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.&#xA;Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
     </item>
-    
     <item>
       <title>Phoenix talk</title>
       <link>https://hackeryarn.com/post/phoenix-talk/</link>
       <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/phoenix-talk/</guid>
-      <description>I recently gave a talk, at the local Fullstack Meetup, on the Phoenix Framework. Phoenix is the de facto web framework for Elixir.
-In this talk, I cover some of the best features of Phoenix:
-Erlang: The platmor which Elixir and Phoenix are build on. (albeit very brief overview of the major features) Plug: The specification for composable module design that gives Phoenix much of it&amp;rsquo;s power. Ecto: The database integration layer.</description>
+      <description>I recently gave a talk, at the local Fullstack Meetup, on the Phoenix Framework. Phoenix is the de facto web framework for Elixir.&#xA;In this talk, I cover some of the best features of Phoenix:&#xA;Erlang: The platmor which Elixir and Phoenix are build on. (albeit very brief overview of the major features) Plug: The specification for composable module design that gives Phoenix much of it&amp;rsquo;s power. Ecto: The database integration layer.</description>
     </item>
-    
     <item>
       <title>Easy Universal Haskell Development Environment</title>
       <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
-      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
-Traditional methods included:
-Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&#xA;Traditional methods included:&#xA;Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
     </item>
-    
   </channel>
 </rss>

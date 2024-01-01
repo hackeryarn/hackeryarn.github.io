@@ -25,7 +25,7 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 
 
 
-<meta name="generator" content="Hugo 0.110.0 with theme even" />
+<meta name="generator" content="Hugo 0.121.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/rails-csv-imports/" />
@@ -49,14 +49,14 @@ Examining CSV Import Our processor is responsible for bringing in coordinates fr
 <meta property="og:url" content="https://hackeryarn.com/post/rails-csv-imports/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2017-06-11T00:00:00+00:00" />
 <meta property="article:modified_time" content="2017-06-11T00:00:00+00:00" />
+
 <meta itemprop="name" content="Efficient CSV Imports in Rails">
 <meta itemprop="description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
 Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API."><meta itemprop="datePublished" content="2017-06-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2017-06-11T00:00:00+00:00" />
 <meta itemprop="wordCount" content="581">
-<meta itemprop="keywords" content="guide," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Efficient CSV Imports in Rails"/>
+<meta itemprop="keywords" content="guide," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Efficient CSV Imports in Rails"/>
 <meta name="twitter:description" content="Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
 We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
 Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API."/>
@@ -324,7 +324,7 @@ much more worth it!</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2023<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
   </span>
 </div>
 
@@ -342,17 +342,6 @@ much more worth it!</p>
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-72377824-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

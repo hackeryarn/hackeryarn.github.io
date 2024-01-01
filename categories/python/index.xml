@@ -6,49 +6,35 @@
     <description>Recent content in Python on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Type safe Django app, Part 3</title>
       <link>https://hackeryarn.com/post/django-returns-3/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-3/</guid>
-      <description>In Part 2 we got a taste of using returns and created our first model methods.
-In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
-Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
+      <description>In Part 2 we got a taste of using returns and created our first model methods.&#xA;In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.&#xA;Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.</description>
     </item>
-    
     <item>
       <title>Type safe Django app, Part 2</title>
       <link>https://hackeryarn.com/post/django-returns-2/</link>
       <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-2/</guid>
-      <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
-In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
+      <description>In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.&#xA;In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.&#xA;Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.</description>
     </item>
-    
     <item>
       <title>Type safe Django app, Part 1</title>
       <link>https://hackeryarn.com/post/django-returns-1/</link>
       <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/django-returns-1/</guid>
-      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
-Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
+      <description>Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.&#xA;Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).</description>
     </item>
-    
     <item>
       <title>Django With Hy</title>
       <link>https://hackeryarn.com/post/hy-django/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/hy-django/</guid>
-      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
-Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
-To my surprise I only ran into minor issues.</description>
+      <description>Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.&#xA;Although it&amp;#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&amp;#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.&#xA;To my surprise I only ran into minor issues.</description>
     </item>
-    
   </channel>
 </rss>

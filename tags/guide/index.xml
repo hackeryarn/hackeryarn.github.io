@@ -6,101 +6,70 @@
     <description>Recent content in guide on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/guide/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/guide/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CLI Commands in Emacs</title>
       <link>https://hackeryarn.com/post/cli-in-emacs/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
-I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.&#xA;I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
     </item>
-    
     <item>
       <title>Hierarchies In a Hakyll Blog</title>
       <link>https://hackeryarn.com/post/hierarchies-in-hakyll/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
-My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.&#xA;My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
     </item>
-    
     <item>
       <title>The Right Abstraction for Lambdas</title>
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
-However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
+      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.&#xA;However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
     </item>
-    
     <item>
       <title>Making Redux Easy</title>
       <link>https://hackeryarn.com/post/making-redux-easy/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
+      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.&#xA;In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
     </item>
-    
     <item>
       <title>Your Job Isn&#39;t Writing Code</title>
       <link>https://hackeryarn.com/post/your-job-isnt-writing-code/</link>
       <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/your-job-isnt-writing-code/</guid>
-      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.
-The answer: You must remember your real job&amp;hellip; Delivering value to the users.
-Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
+      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.&#xA;The answer: You must remember your real job&amp;hellip; Delivering value to the users.&#xA;Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
     </item>
-    
     <item>
       <title>Universally Testable Dependencies in JavaScript</title>
       <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/universally-testable-dependencies/</guid>
-      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.
-This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.
-The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
+      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.&#xA;This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.&#xA;The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
     </item>
-    
     <item>
       <title>ClojureScript Setup for Leiningen Project With Emacs</title>
       <link>https://hackeryarn.com/post/clojurescript-setup/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
-      <description>A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
-This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure.</description>
+      <description>A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.&#xA;This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.&#xA;Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure.</description>
     </item>
-    
     <item>
       <title>Efficient CSV Imports in Rails</title>
       <link>https://hackeryarn.com/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/rails-csv-imports/</guid>
-      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
-We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
+      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.&#xA;We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.&#xA;Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
     </item>
-    
     <item>
       <title>Easy Universal Haskell Development Environment</title>
       <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
-      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.
-Traditional methods included:
-Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&#xA;Traditional methods included:&#xA;Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
     </item>
-    
   </channel>
 </rss>

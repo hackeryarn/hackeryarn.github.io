@@ -6,17 +6,14 @@
     <description>Recent content in Rails on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 11 Jun 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/rails/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/categories/rails/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Efficient CSV Imports in Rails</title>
       <link>https://hackeryarn.com/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/rails-csv-imports/</guid>
-      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.
-We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.
-Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
+      <description>Rails has great capabilities for working CSV files. However, like with many things, the most obvious way is not the most efficient.&#xA;We noticed this when our server had major fluctuations in memory consumption. After digging through metrics, made easy thanks to Prometheus and Grafana. We noticed that the spikes were due to our CSV uploads.&#xA;Examining CSV Import Our processor is responsible for bringing in coordinates from legacy systems and ones that cannot support our API.</description>
     </item>
-    
   </channel>
 </rss>

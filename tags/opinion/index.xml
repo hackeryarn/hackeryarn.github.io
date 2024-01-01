@@ -6,57 +6,49 @@
     <description>Recent content in opinion on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>You don&#39;t need a map for that</title>
+      <link>https://hackeryarn.com/post/maps/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/maps/</guid>
+      <description>One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.&#xA;It&amp;#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.</description>
+    </item>
     <item>
       <title>The Right Abstraction for Lambdas</title>
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.
-However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
+      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.&#xA;However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
     </item>
-    
     <item>
       <title>Making Redux Easy</title>
       <link>https://hackeryarn.com/post/making-redux-easy/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.
-In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
+      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.&#xA;In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
     </item>
-    
     <item>
       <title>Why I Built a Static Site in Clojure</title>
       <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
-      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.
-We started coming up with ideas right away over a couple of beers.</description>
+      <description>At a summer barbecue, a friend asked if I could build a website for his new restaurant. But what he didn&amp;#39;t know was that I haven&amp;#39;t built a static site in nearly a decade. However I couldn&amp;#39;t let him spend thousands of dollars on a cookie cutter website designed by a firm that knew nothing about his restaurant.&#xA;We started coming up with ideas right away over a couple of beers.</description>
     </item>
-    
     <item>
       <title>Your Job Isn&#39;t Writing Code</title>
       <link>https://hackeryarn.com/post/your-job-isnt-writing-code/</link>
       <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/your-job-isnt-writing-code/</guid>
-      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.
-The answer: You must remember your real job&amp;hellip; Delivering value to the users.
-Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
+      <description>Every line of code you write is a liability. That line of code you just wrote adds complexity to your code base, gives you more nuances to remember, it might even be a bug. If code is so expensive and dangerous. What can you do? After all, you are a developer.&#xA;The answer: You must remember your real job&amp;hellip; Delivering value to the users.&#xA;Users don&amp;rsquo;t care what your class hierarchy looks like.</description>
     </item>
-    
     <item>
       <title>How Lodash Worked Itself Out of a Job</title>
       <link>https://hackeryarn.com/post/lodash/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/lodash/</guid>
-      <description>I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.
-I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day.</description>
+      <description>I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.&#xA;I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day.</description>
     </item>
-    
   </channel>
 </rss>

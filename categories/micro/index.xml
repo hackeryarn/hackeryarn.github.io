@@ -6,16 +6,14 @@
     <description>Recent content in micro on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 11 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/categories/micro/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/categories/micro/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Managing local common lisp projects</title>
       <link>https://hackeryarn.com/post/local-common-lisp-projects/</link>
       <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/local-common-lisp-projects/</guid>
-      <description>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
-The biggest struggle that quicklisp brought was managing local packages.</description>
+      <description>When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.&#xA;The biggest struggle that quicklisp brought was managing local packages.</description>
     </item>
-    
   </channel>
 </rss>

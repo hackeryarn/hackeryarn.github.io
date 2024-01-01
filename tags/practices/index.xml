@@ -6,16 +6,14 @@
     <description>Recent content in practices on hackeryarn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://hackeryarn.com/tags/practices/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/practices/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Embrace Your Constraints</title>
       <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
-      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.
-These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
+      <description>Engineers want to measure the quality and effectiveness of their work. They turn to code coverage, burn down charts, and yearly goals, with the best intention.&#xA;These measurements provide quantitative data about how much planned work was delivered, but they fail to tie the work to outcome. What good are 1,000 lines of code if the users never use the feature? These metrics distract from the two question every professional should ask:</description>
     </item>
-    
   </channel>
 </rss>
