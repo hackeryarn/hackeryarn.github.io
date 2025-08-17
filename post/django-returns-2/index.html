@@ -16,16 +16,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+<meta name="author" content="" /><meta name="description" content=" In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
 In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part." /><meta name="keywords" content="blog, tech, ideas" />
+Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
+" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.121.1 with theme even" />
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/django-returns-2/" />
@@ -37,29 +38,38 @@ Into the database Let&amp;#39;s run our initial migrations and get rid of the er
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="Type safe Django app, Part 2" />
-<meta property="og:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+<meta property="og:url" content="https://hackeryarn.com/post/django-returns-2/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="Type safe Django app, Part 2">
+  <meta property="og:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
 In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/django-returns-2/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-02-27T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-27T00:00:00+00:00" />
+Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2022-02-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-02-27T00:00:00+00:00">
+    <meta property="article:tag" content="Django">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="Types">
 
-<meta itemprop="name" content="Type safe Django app, Part 2">
-<meta itemprop="description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+  <meta itemprop="name" content="Type safe Django app, Part 2">
+  <meta itemprop="description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
 In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part."><meta itemprop="datePublished" content="2022-02-27T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2022-02-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1065">
-<meta itemprop="keywords" content="django,python,types," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Type safe Django app, Part 2"/>
-<meta name="twitter:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
+Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.">
+  <meta itemprop="datePublished" content="2022-02-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2022-02-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1065">
+  <meta itemprop="keywords" content="Django,Python,Types">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Type safe Django app, Part 2">
+  <meta name="twitter:description" content="In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
 In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part."/>
+Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -497,7 +507,7 @@ In the meantime, I encourage you to go through at least all the shell examples i
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -515,7 +525,7 @@ In the meantime, I encourage you to go through at least all the shell examples i
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

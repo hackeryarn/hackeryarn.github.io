@@ -4,7 +4,7 @@
     <title>Haskell on hackeryarn</title>
     <link>https://hackeryarn.com/categories/haskell/</link>
     <description>Recent content in Haskell on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Wed, 27 Mar 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/categories/haskell/index.xml" rel="self" type="application/rss+xml" />
@@ -13,14 +13,14 @@
       <link>https://hackeryarn.com/post/hierarchies-in-hakyll/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.&#xA;My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date.</description>
+      <description>&lt;p&gt;&#xA;Creating hierarchy in a blog is a useful technique. It allows you to&#xA;have different sections by type of content. It lets users navigate&#xA;by their interests quickly. It makes your blog organized.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;My need for a hierarchy came when working on another blog - &lt;a href=&#34;https://dailyreadingnotes.com&#34;&gt;Daily Reading&#xA;Notes&lt;/a&gt;. That blog involves notes on books I read daily. Since each book&#xA;has multiple reading notes, I wanted to allow two forms of navigation: by a&#xA;grouping of all notes for a particular book and by posted date. The groupings also&#xA;needed to be dynamic. I didn&amp;#39;t want to write code or updated configurations every&#xA;time I added a new book.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Easy Universal Haskell Development Environment</title>
       <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
-      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&#xA;Traditional methods included:&#xA;Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+      <description>&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;/p&gt;&#xA;&lt;p&gt;Traditional methods included:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Installing &lt;a href=&#34;https://www.haskell.org/platform/&#34;&gt;The Haskell Platform&lt;/a&gt;, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.&lt;/li&gt;&#xA;&lt;li&gt;Required using a text editor like &lt;a href=&#34;http://www.vim.org/&#34;&gt;Vim&lt;/a&gt; or &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;. These are incredible tools and productivity boosters, if you take the time to learn them. Which is a pretty major time commitment in itself &lt;em&gt;I do suggest you learn one of these eventually, or use the vim/emacs mode of another tool.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;li&gt;Complex package management through &lt;a href=&#34;https://wiki.haskell.org/Cabal-Install&#34;&gt;Cabal-Install&lt;/a&gt;. This tool caused either version hell from everything being installed globally or caused you to have to re-install all your dependencies for every project.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;tools-of-the-trade&#34;&gt;Tools of The Trade&lt;/h1&gt;&#xA;&lt;p&gt;We will be using these tools to solve the above problems and make the installation completely system agnostic. That&amp;rsquo;s right, this installation process with work on any platform OS X, Linux, and even Windows.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

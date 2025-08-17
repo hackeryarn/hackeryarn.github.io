@@ -16,15 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
-It&amp;#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language." /><meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="" /><meta name="description" content=" One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
+It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.
+" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.121.1 with theme even" />
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/maps/" />
@@ -36,26 +37,33 @@ It&amp;#39;s a great data structure for quick storage and access of key value pa
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="You don&#39;t need a map for that" />
-<meta property="og:description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
-It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/maps/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-01-01T00:00:00+00:00" />
-<meta property="article:modified_time" content="2024-01-01T00:00:00+00:00" />
+<meta property="og:url" content="https://hackeryarn.com/post/maps/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="You don&#39;t need a map for that">
+  <meta property="og:description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
+It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2024-01-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-01-01T00:00:00+00:00">
+    <meta property="article:tag" content="Opinion">
 
-<meta itemprop="name" content="You don&#39;t need a map for that">
-<meta itemprop="description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
-It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language."><meta itemprop="datePublished" content="2024-01-01T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2024-01-01T00:00:00+00:00" />
-<meta itemprop="wordCount" content="542">
-<meta itemprop="keywords" content="opinion," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="You don&#39;t need a map for that"/>
-<meta name="twitter:description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
-It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language."/>
+  <meta itemprop="name" content="You don&#39;t need a map for that">
+  <meta itemprop="description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
+It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.">
+  <meta itemprop="datePublished" content="2024-01-01T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-01-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="542">
+  <meta itemprop="keywords" content="Opinion">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="You don&#39;t need a map for that">
+  <meta name="twitter:description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
+It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -225,7 +233,11 @@ By using these other methods of specification, we enable:</p>
           <a href="/tags/opinion/">opinion</a>
           </div>
       <nav class="post-nav">
-        
+        <a class="prev" href="/post/rust-macros-1/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Let&#39;s write a macro in Rust - Part 1</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         <a class="next" href="/post/clojure-actions/">
             <span class="next-text nav-default">Clojure GitHub Actions</span>
             <span class="next-text nav-mobile">Next</span>
@@ -262,7 +274,7 @@ By using these other methods of specification, we enable:</p>
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -280,7 +292,7 @@ By using these other methods of specification, we enable:</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

@@ -16,14 +16,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="A blog by Artem Chernyak" /><meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="" /><meta name="description" content="A blog by Artem Chernyak" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.121.1 with theme even" />
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/" />
@@ -37,18 +37,24 @@
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="hackeryarn" />
-<meta property="og:description" content="A blog by Artem Chernyak" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://hackeryarn.com/" />
+<meta property="og:url" content="https://hackeryarn.com/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="hackeryarn">
+  <meta property="og:description" content="A blog by Artem Chernyak">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
 
-<meta itemprop="name" content="hackeryarn">
-<meta itemprop="description" content="A blog by Artem Chernyak"><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="hackeryarn"/>
-<meta name="twitter:description" content="A blog by Artem Chernyak"/>
+  <meta itemprop="name" content="hackeryarn">
+  <meta itemprop="description" content="A blog by Artem Chernyak">
+  <meta itemprop="datePublished" content="2025-08-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-17T00:00:00+00:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="hackeryarn">
+  <meta name="twitter:description" content="A blog by Artem Chernyak">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -125,97 +131,6 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/local-common-lisp-projects/">Managing local common lisp projects</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2023-01-11 </span>
-      <div class="post-category">
-          <a href="/categories/micro/"> micro </a>
-          <a href="/categories/lisp/"> lisp </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across quicklisp. To my surprise, however, quicklisp worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.
-The biggest struggle that quicklisp brought was managing local packages.
-    </div>
-    <div class="read-more">
-      <a href="/post/local-common-lisp-projects/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/django-returns-3/">Type safe Django app, Part 3</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-04-16 </span>
-      <div class="post-category">
-          <a href="/categories/python/"> Python </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      In Part 2 we got a taste of using returns and created our first model methods.
-In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.
-Writ views that actually do something The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions.
-    </div>
-    <div class="read-more">
-      <a href="/post/django-returns-3/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/django-returns-2/">Type safe Django app, Part 2</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-02-27 </span>
-      <div class="post-category">
-          <a href="/categories/python/"> Python </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      In Part 1 of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.
-In this part we will start working with the database, implement custom database methods, and look at how to use returns to improve the safety of those methods.
-Into the database Let&#39;s run our initial migrations and get rid of the error that we ignored in the first part.
-    </div>
-    <div class="read-more">
-      <a href="/post/django-returns-2/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/django-returns-1/">Type safe Django app, Part 1</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-22 </span>
-      <div class="post-category">
-          <a href="/categories/python/"> Python </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.
-Throughout this series we will follow the official Django tutorial while making the code safer and easier to reason about. We will accomplish this by enlist the help of mypy (for general type checking) and returns (for containers that will provide safety).
-    </div>
-    <div class="read-more">
-      <a href="/post/django-returns-1/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/hy-django/">Django With Hy</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-03-01 </span>
@@ -228,12 +143,297 @@ Throughout this series we will follow the official Django tutorial while making 
   
   <div class="post-content">
     <div class="post-summary">
-      Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
-Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
-To my surprise I only ran into minor issues.
+      <p>
+<a href="https://docs.hylang.org/en/stable/">Hy</a> introduces a List that gives you all the power of macros and the elegant Lisp
+syntax while enabling the full power of Python.</p>
+<p>
+Although it&#39;s easy enough to use Python libraries in Hy, you just import
+them as you would in Python, I was weary of using a full framework outside it&#39;s
+native language. To prove out this concept, I followed <a href="https://docs.djangoproject.com/en/3.0/intro/tutorial01/">the official django
+tutorial</a> using Hy.</p>
+<p>
+To my surprise I only ran into minor issues. The rest of the project worked
+flawlessly.</p>
     </div>
     <div class="read-more">
       <a href="/post/hy-django/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/embrace-the-constraints/">Embrace Your Constraints</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-08-14 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>
+Engineers want to measure the quality and effectiveness of their work. They
+turn to code coverage, burn down charts, and yearly goals, with the best
+intention.</p>
+<p>
+These measurements provide quantitative data about how much planned work was
+delivered, but they fail to tie the work to outcome. What good are 1,000
+lines of code if the users never use the feature? These metrics distract from
+the two question every professional should ask:</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/embrace-the-constraints/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cli-in-emacs/">CLI Commands in Emacs</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-06-01 </span>
+      <div class="post-category">
+          <a href="/categories/emacs/"> Emacs </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>
+A few months ago, Gabriel Gonzalez wrote an <a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">excellent article</a> on creating useful
+tools with Haskell. He used an example of a small CLI tool that aligns the
+equals signs of a multi-line text input. The article wrapped up by integrating
+this tool into vim.</p>
+<p>
+I love the overarching concept in the article: create small tools that are
+useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.</p>
+<p>
+The only problem is that I am an Emacs user. So in this article, I wanted to
+show how I get the same effect in Emacs. And demonstrating how to
+take CLI interaction in the text editor even further.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/cli-in-emacs/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/hierarchies-in-hakyll/">Hierarchies In a Hakyll Blog</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-03-27 </span>
+      <div class="post-category">
+          <a href="/categories/haskell/"> Haskell </a>
+          <a href="/categories/hakyll/"> Hakyll </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>
+Creating hierarchy in a blog is a useful technique. It allows you to
+have different sections by type of content. It lets users navigate
+by their interests quickly. It makes your blog organized.</p>
+<p>
+My need for a hierarchy came when working on another blog - <a href="https://dailyreadingnotes.com">Daily Reading
+Notes</a>. That blog involves notes on books I read daily. Since each book
+has multiple reading notes, I wanted to allow two forms of navigation: by a
+grouping of all notes for a particular book and by posted date. The groupings also
+needed to be dynamic. I didn&#39;t want to write code or updated configurations every
+time I added a new book.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/hierarchies-in-hakyll/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/the-right-abstraction-for-lambdas/">The Right Abstraction for Lambdas</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-02-24 </span>
+      <div class="post-category">
+          <a href="/categories/go/"> Go </a>
+          <a href="/categories/golang/"> Golang </a>
+          <a href="/categories/js/"> JS </a>
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/nodejs/"> Nodejs </a>
+          <a href="/categories/node/"> Node </a>
+          <a href="/categories/express/"> Express </a>
+          <a href="/categories/lambda/"> Lambda </a>
+          <a href="/categories/serverless/"> Serverless </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Serverless functions are a great alternative for many light tasks that would
+traditionally required a server. They allow you to split up work across
+mutiple small functions, and you only pay
+for what you use. On top of that, they require less maintenance than managing your own
+server or Kubernetes cluster.</p>
+<p>However, the single function per lambda approach can become too granular. Shared
+functionality becomes hard to group together. You only have hard to enforce naming convention
+for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/the-right-abstraction-for-lambdas/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/making-redux-easy/">Making Redux Easy</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-02-11 </span>
+      <div class="post-category">
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/react/"> React </a>
+          <a href="/categories/redux/"> Redux </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p><a href="https://reactjs.org/">React</a> and <a href="https://redux.js.org/">Redux</a> are a top choice for front end projects. <a href="https://reactjs.org/">React</a> provides fast
+performance, easy ways to create shared components, and a plethora of
+libraries. <a href="https://redux.js.org/">Redux</a> lets you simplify state management in your
+application, but it has serious drawbacks.</p>
+<p>In large projects, <a href="https://redux.js.org/">Redux</a> bloat your project with repetitive code. To
+support a single store update, you need to create a reducer that handles an
+action type which is dispatched from an action called inside a component. If
+that process sounds tedious and confusing, that&rsquo;s because it is. You end up
+with tons of simple actions and reducers that all look alike.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/making-redux-easy/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/daily-reading-notes/">Introducing Daily Reading Notes</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-01-13 </span>
+      <div class="post-category">
+          <a href="/categories/books/"> Books </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Recently I ran an experiment of posting daily reading notes on this blog. This
+was very much a personal experiment.</p>
+<p>Making these posts every day reinforced my reading habit. I felt motivated to
+set aside time to read, and I got the chance to reflect on my reading. It
+also provided the opportunity to share more with others.</p>
+<p>I plan on keeping this habit going, but this blog isn&rsquo;t the right place for it.
+I want to keep this blog dedicated to tech posts. So I decided to
+create a dedicated site for my <a href="https://dailyreadingnotes.com">daily reading notes</a>.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/daily-reading-notes/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/why-i-built-a-static-site-in-clojure/">Why I Built a Static Site in Clojure</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-09-15 </span>
+      <div class="post-category">
+          <a href="/categories/clojure/"> Clojure </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>
+At a summer barbecue, a friend asked if I could build a website for his new
+restaurant. But what he didn&#39;t know was that I haven&#39;t built a static site in nearly a
+decade. However I couldn&#39;t let him spend thousands of dollars on a cookie cutter
+website designed by a firm that knew nothing about his restaurant.</p>
+<p>
+We started coming up with ideas right away over a couple of beers.
+He wanted manageable content, an Instagram feed, and an easy to change restaurant
+menu. It quickly started sounding like a full on Content Management System and
+not a simple website. I had to reel in this ambitious project before it
+became a feature sink. So we decided to just make a beautiful static site.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/why-i-built-a-static-site-in-clojure/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/your-job-isnt-writing-code/">Your Job Isn&#39;t Writing Code</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-08-19 </span>
+      <div class="post-category">
+          <a href="/categories/development/"> Development </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>Every line of code you write is a liability. That line of code you just wrote
+adds complexity to your code base, gives you more nuances to remember, it
+might even be a bug. If code is so expensive and dangerous. What can you do?
+After all, you are a developer.</p>
+<p>The answer: You must remember your real job&hellip; Delivering value to the users.</p>
+<p>Users don&rsquo;t care what your class hierarchy looks like. They don&rsquo;t care which
+language or framework you&rsquo;re using. They don&rsquo;t even care if your system is a
+cloud ready microservice. The user only cares that your product is helping them.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/your-job-isnt-writing-code/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/universally-testable-dependencies/">Universally Testable Dependencies in JavaScript</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-06-01 </span>
+      <div class="post-category">
+          <a href="/categories/javascript/"> JavaScript </a>
+          <a href="/categories/testing/"> Testing </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>JavaScript dependencies are notoriously hard to mock and test across framework
+and environments. However, <a href="https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E">Dependency Injection</a> (DI) ensures testability. It
+is common in statically typed languages, like Java or Go, but is also useful in
+dynamic languages like JavaScript.</p>
+<p>This article will guide you through a simple technique that can apply
+to any JavaScript code base, frontend or backend, independent of frameworks
+and libraries.</p>
+<p>The technique I am going to demonstrate is arguably not true DI, since the
+dependencies are still managed by the module using them. However, it
+solves the dependency problem for testing which is the focus of this
+article.</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/universally-testable-dependencies/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
@@ -261,7 +461,9 @@ To my surprise I only ran into minor issues.
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
+    <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -279,7 +481,7 @@ To my surprise I only ran into minor issues.
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

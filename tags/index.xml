@@ -4,201 +4,201 @@
     <title>Tags on hackeryarn</title>
     <link>https://hackeryarn.com/tags/</link>
     <description>Recent content in Tags on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>opinion</title>
+      <title>Opinion</title>
       <link>https://hackeryarn.com/tags/opinion/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/opinion/</guid>
       <description></description>
     </item>
     <item>
-      <title>automation</title>
+      <title>Automation</title>
       <link>https://hackeryarn.com/tags/automation/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/automation/</guid>
       <description></description>
     </item>
     <item>
-      <title>clojure</title>
+      <title>Clojure</title>
       <link>https://hackeryarn.com/tags/clojure/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/clojure/</guid>
       <description></description>
     </item>
     <item>
-      <title>containers</title>
+      <title>Containers</title>
       <link>https://hackeryarn.com/tags/containers/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/containers/</guid>
       <description></description>
     </item>
     <item>
-      <title>distrobox</title>
+      <title>Distrobox</title>
       <link>https://hackeryarn.com/tags/distrobox/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/distrobox/</guid>
       <description></description>
     </item>
     <item>
-      <title>docker</title>
+      <title>Docker</title>
       <link>https://hackeryarn.com/tags/docker/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/docker/</guid>
       <description></description>
     </item>
     <item>
-      <title>linux</title>
+      <title>Linux</title>
       <link>https://hackeryarn.com/tags/linux/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/linux/</guid>
       <description></description>
     </item>
     <item>
-      <title>podman</title>
+      <title>Podman</title>
       <link>https://hackeryarn.com/tags/podman/</link>
       <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/podman/</guid>
       <description></description>
     </item>
     <item>
-      <title>micoros</title>
+      <title>Micoros</title>
       <link>https://hackeryarn.com/tags/micoros/</link>
       <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/micoros/</guid>
       <description></description>
     </item>
     <item>
-      <title>opensuse</title>
+      <title>Opensuse</title>
       <link>https://hackeryarn.com/tags/opensuse/</link>
       <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/opensuse/</guid>
       <description></description>
     </item>
     <item>
-      <title>commonlisp</title>
+      <title>Commonlisp</title>
       <link>https://hackeryarn.com/tags/commonlisp/</link>
       <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/commonlisp/</guid>
       <description></description>
     </item>
     <item>
-      <title>django</title>
+      <title>Django</title>
       <link>https://hackeryarn.com/tags/django/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/django/</guid>
       <description></description>
     </item>
     <item>
-      <title>python</title>
+      <title>Python</title>
       <link>https://hackeryarn.com/tags/python/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/python/</guid>
       <description></description>
     </item>
     <item>
-      <title>types</title>
+      <title>Types</title>
       <link>https://hackeryarn.com/tags/types/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/types/</guid>
       <description></description>
     </item>
     <item>
-      <title>hy</title>
+      <title>Hy</title>
       <link>https://hackeryarn.com/tags/hy/</link>
       <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/hy/</guid>
       <description></description>
     </item>
     <item>
-      <title>practices</title>
+      <title>Practices</title>
       <link>https://hackeryarn.com/tags/practices/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/practices/</guid>
       <description></description>
     </item>
     <item>
-      <title>thoughts</title>
+      <title>Thoughts</title>
       <link>https://hackeryarn.com/tags/thoughts/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/thoughts/</guid>
       <description></description>
     </item>
     <item>
-      <title>emacs</title>
+      <title>Emacs</title>
       <link>https://hackeryarn.com/tags/emacs/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/emacs/</guid>
       <description></description>
     </item>
     <item>
-      <title>guide</title>
+      <title>Guide</title>
       <link>https://hackeryarn.com/tags/guide/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/guide/</guid>
       <description></description>
     </item>
     <item>
-      <title>hakyll</title>
+      <title>Hakyll</title>
       <link>https://hackeryarn.com/tags/hakyll/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/hakyll/</guid>
       <description></description>
     </item>
     <item>
-      <title>haskell</title>
+      <title>Haskell</title>
       <link>https://hackeryarn.com/tags/haskell/</link>
       <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/haskell/</guid>
       <description></description>
     </item>
     <item>
-      <title>experiment</title>
+      <title>Experiment</title>
       <link>https://hackeryarn.com/tags/experiment/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/experiment/</guid>
       <description></description>
     </item>
     <item>
-      <title>book</title>
+      <title>Book</title>
       <link>https://hackeryarn.com/tags/book/</link>
       <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/book/</guid>
       <description></description>
     </item>
     <item>
-      <title>experience</title>
+      <title>Experience</title>
       <link>https://hackeryarn.com/tags/experience/</link>
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/experience/</guid>
       <description></description>
     </item>
     <item>
-      <title>testing</title>
+      <title>Testing</title>
       <link>https://hackeryarn.com/tags/testing/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/testing/</guid>
       <description></description>
     </item>
     <item>
-      <title>setup</title>
+      <title>Setup</title>
       <link>https://hackeryarn.com/tags/setup/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/setup/</guid>
       <description></description>
     </item>
     <item>
-      <title>talk</title>
+      <title>Talk</title>
       <link>https://hackeryarn.com/tags/talk/</link>
       <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/talk/</guid>
       <description></description>
     </item>
     <item>
-      <title>video</title>
+      <title>Video</title>
       <link>https://hackeryarn.com/tags/video/</link>
       <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/video/</guid>

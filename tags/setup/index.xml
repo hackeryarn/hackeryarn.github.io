@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>setup on hackeryarn</title>
+    <title>Setup on hackeryarn</title>
     <link>https://hackeryarn.com/tags/setup/</link>
-    <description>Recent content in setup on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Setup on hackeryarn</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sat, 15 Jul 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/setup/index.xml" rel="self" type="application/rss+xml" />
@@ -13,14 +13,14 @@
       <link>https://hackeryarn.com/post/clojurescript-setup/</link>
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
-      <description>A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.&#xA;This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.&#xA;Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure.</description>
+      <description>&lt;p&gt;A good development environment if fundamental to being productive. This is&#xA;especially true for Lisps. A good environment can&#xA;greatly speed up your development process and allow you to utilize the full&#xA;power of Clojure or any other Lisp.&lt;/p&gt;&#xA;&lt;p&gt;This tutorial is focused on a &lt;a href=&#34;https://clojurescript.org/&#34;&gt;ClojureScript&lt;/a&gt; environment for a &lt;a href=&#34;https://leiningen.org/&#34;&gt;Leiningen&lt;/a&gt; based&#xA;project being developed in &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-emacs&#34;&gt;Why Emacs?&lt;/h1&gt;&#xA;&lt;p&gt;Emacs has a great setup for most programming languages but really shines when it&#xA;comes to Lisps, including Clojure. &lt;a href=&#34;https://cider.readthedocs.io/en/latest/&#34;&gt;Cider&lt;/a&gt; is the powerful package that allows easy&#xA;interaction with the Clojure REPL and many IDE like features. In combination with&#xA;&lt;a href=&#34;https://github.com/clojure-emacs/clj-refactor.el&#34;&gt;clj-refactor&lt;/a&gt;, you get one of the most powerful toolkits out there.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Easy Universal Haskell Development Environment</title>
       <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
       <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
-      <description>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&#xA;Traditional methods included:&#xA;Installing The Haskell Platform, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.</description>
+      <description>&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;/p&gt;&#xA;&lt;p&gt;Traditional methods included:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Installing &lt;a href=&#34;https://www.haskell.org/platform/&#34;&gt;The Haskell Platform&lt;/a&gt;, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.&lt;/li&gt;&#xA;&lt;li&gt;Required using a text editor like &lt;a href=&#34;http://www.vim.org/&#34;&gt;Vim&lt;/a&gt; or &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;. These are incredible tools and productivity boosters, if you take the time to learn them. Which is a pretty major time commitment in itself &lt;em&gt;I do suggest you learn one of these eventually, or use the vim/emacs mode of another tool.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;li&gt;Complex package management through &lt;a href=&#34;https://wiki.haskell.org/Cabal-Install&#34;&gt;Cabal-Install&lt;/a&gt;. This tool caused either version hell from everything being installed globally or caused you to have to re-install all your dependencies for every project.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;tools-of-the-trade&#34;&gt;Tools of The Trade&lt;/h1&gt;&#xA;&lt;p&gt;We will be using these tools to solve the above problems and make the installation completely system agnostic. That&amp;rsquo;s right, this installation process with work on any platform OS X, Linux, and even Windows.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

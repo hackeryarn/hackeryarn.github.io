@@ -4,7 +4,7 @@
     <title>JavaScript on hackeryarn</title>
     <link>https://hackeryarn.com/categories/javascript/</link>
     <description>Recent content in JavaScript on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
@@ -13,28 +13,28 @@
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.&#xA;However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
+      <description>&lt;p&gt;Serverless functions are a great alternative for many light tasks that would&#xA;traditionally required a server. They allow you to split up work across&#xA;mutiple small functions, and you only pay&#xA;for what you use. On top of that, they require less maintenance than managing your own&#xA;server or Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;However, the single function per lambda approach can become too granular. Shared&#xA;functionality becomes hard to group together. You only have hard to enforce naming convention&#xA;for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?&lt;/p&gt;</description>
     </item>
     <item>
       <title>Making Redux Easy</title>
       <link>https://hackeryarn.com/post/making-redux-easy/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>React and Redux are a top choice for front end projects. React provides fast performance, easy ways to create shared components, and a plethora of libraries. Redux lets you simplify state management in your application, but it has serious drawbacks.&#xA;In large projects, Redux bloat your project with repetitive code. To support a single store update, you need to create a reducer that handles an action type which is dispatched from an action called inside a component.</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Universally Testable Dependencies in JavaScript</title>
       <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/universally-testable-dependencies/</guid>
-      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.&#xA;This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.&#xA;The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
+      <description>&lt;p&gt;JavaScript dependencies are notoriously hard to mock and test across framework&#xA;and environments. However, &lt;a href=&#34;https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E&#34;&gt;Dependency Injection&lt;/a&gt; (DI) ensures testability. It&#xA;is common in statically typed languages, like Java or Go, but is also useful in&#xA;dynamic languages like JavaScript.&lt;/p&gt;&#xA;&lt;p&gt;This article will guide you through a simple technique that can apply&#xA;to any JavaScript code base, frontend or backend, independent of frameworks&#xA;and libraries.&lt;/p&gt;&#xA;&lt;p&gt;The technique I am going to demonstrate is arguably not true DI, since the&#xA;dependencies are still managed by the module using them. However, it&#xA;solves the dependency problem for testing which is the focus of this&#xA;article.&lt;/p&gt;</description>
     </item>
     <item>
       <title>How Lodash Worked Itself Out of a Job</title>
       <link>https://hackeryarn.com/post/lodash/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/lodash/</guid>
-      <description>I really loved lodash. It brough the joy of compact functional code to JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library. Back then, there was no ES6, no Babel, and terrible browser incompatabilities ran rampant. Lodash along with jQuery were the saving light of that time.&#xA;I gravitated towards using Lodash because the first language I learned was Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I think about code to this day.</description>
+      <description>&lt;p&gt;I really loved lodash. It brough the joy of compact functional code to&#xA;JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library.&#xA;Back then, there was no ES6, no Babel, and terrible browser incompatabilities&#xA;ran rampant. Lodash along with jQuery were the saving light of that time.&lt;/p&gt;&#xA;&lt;p&gt;I gravitated towards using Lodash because the first language I learned was&#xA;Scheme. It had functional programing at it&amp;rsquo;s core, and highly influanced how I&#xA;think about code to this day.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

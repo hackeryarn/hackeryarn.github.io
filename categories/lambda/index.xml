@@ -4,7 +4,7 @@
     <title>Lambda on hackeryarn</title>
     <link>https://hackeryarn.com/categories/lambda/</link>
     <description>Recent content in Lambda on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/categories/lambda/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,7 @@
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
       <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>Serverless functions are a great alternative for many light tasks that would traditionally required a server. They allow you to split up work across mutiple small functions, and you only pay for what you use. On top of that, they require less maintenance than managing your own server or Kubernetes cluster.&#xA;However, the single function per lambda approach can become too granular. Shared functionality becomes hard to group together. You only have hard to enforce naming convention for lambda that belong together.</description>
+      <description>&lt;p&gt;Serverless functions are a great alternative for many light tasks that would&#xA;traditionally required a server. They allow you to split up work across&#xA;mutiple small functions, and you only pay&#xA;for what you use. On top of that, they require less maintenance than managing your own&#xA;server or Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;However, the single function per lambda approach can become too granular. Shared&#xA;functionality becomes hard to group together. You only have hard to enforce naming convention&#xA;for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>testing on hackeryarn</title>
+    <title>Testing on hackeryarn</title>
     <link>https://hackeryarn.com/tags/testing/</link>
-    <description>Recent content in testing on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Testing on hackeryarn</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Fri, 01 Jun 2018 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/testing/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,7 @@
       <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/universally-testable-dependencies/</guid>
-      <description>JavaScript dependencies are notoriously hard to mock and test across framework and environments. However, Dependency Injection (DI) ensures testability. It is common in statically typed languages, like Java or Go, but is also useful in dynamic languages like JavaScript.&#xA;This article will guide you through a simple technique that can apply to any JavaScript code base, frontend or backend, independent of frameworks and libraries.&#xA;The technique I am going to demonstrate is arguably not true DI, since the dependencies are still managed by the module using them.</description>
+      <description>&lt;p&gt;JavaScript dependencies are notoriously hard to mock and test across framework&#xA;and environments. However, &lt;a href=&#34;https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E&#34;&gt;Dependency Injection&lt;/a&gt; (DI) ensures testability. It&#xA;is common in statically typed languages, like Java or Go, but is also useful in&#xA;dynamic languages like JavaScript.&lt;/p&gt;&#xA;&lt;p&gt;This article will guide you through a simple technique that can apply&#xA;to any JavaScript code base, frontend or backend, independent of frameworks&#xA;and libraries.&lt;/p&gt;&#xA;&lt;p&gt;The technique I am going to demonstrate is arguably not true DI, since the&#xA;dependencies are still managed by the module using them. However, it&#xA;solves the dependency problem for testing which is the focus of this&#xA;article.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

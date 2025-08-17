@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>emacs on hackeryarn</title>
+    <title>Emacs on hackeryarn</title>
     <link>https://hackeryarn.com/tags/emacs/</link>
-    <description>Recent content in emacs on hackeryarn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Emacs on hackeryarn</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
@@ -13,7 +13,7 @@
       <link>https://hackeryarn.com/post/cli-in-emacs/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.&#xA;I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.</description>
+      <description>&lt;p&gt;&#xA;A few months ago, Gabriel Gonzalez wrote an &lt;a href=&#34;http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html&#34;&gt;excellent article&lt;/a&gt; on creating useful&#xA;tools with Haskell. He used an example of a small CLI tool that aligns the&#xA;equals signs of a multi-line text input. The article wrapped up by integrating&#xA;this tool into vim.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;I love the overarching concept in the article: create small tools that are&#xA;useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The only problem is that I am an Emacs user. So in this article, I wanted to&#xA;show how I get the same effect in Emacs. And demonstrating how to&#xA;take CLI interaction in the text editor even further.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

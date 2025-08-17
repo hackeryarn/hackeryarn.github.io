@@ -16,16 +16,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+<meta name="author" content="" /><meta name="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure." /><meta name="keywords" content="blog, tech, ideas" />
+Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.
+" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.121.1 with theme even" />
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/clojurescript-setup/" />
@@ -37,29 +38,37 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="ClojureScript Setup for Leiningen Project With Emacs" />
-<meta property="og:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+<meta property="og:url" content="https://hackeryarn.com/post/clojurescript-setup/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="ClojureScript Setup for Leiningen Project With Emacs">
+  <meta property="og:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/clojurescript-setup/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2017-07-15T00:00:00+00:00" />
-<meta property="article:modified_time" content="2017-07-15T00:00:00+00:00" />
+Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2017-07-15T00:00:00+00:00">
+    <meta property="article:modified_time" content="2017-07-15T00:00:00+00:00">
+    <meta property="article:tag" content="Setup">
+    <meta property="article:tag" content="Guide">
 
-<meta itemprop="name" content="ClojureScript Setup for Leiningen Project With Emacs">
-<meta itemprop="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+  <meta itemprop="name" content="ClojureScript Setup for Leiningen Project With Emacs">
+  <meta itemprop="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure."><meta itemprop="datePublished" content="2017-07-15T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2017-07-15T00:00:00+00:00" />
-<meta itemprop="wordCount" content="389">
-<meta itemprop="keywords" content="setup,guide," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="ClojureScript Setup for Leiningen Project With Emacs"/>
-<meta name="twitter:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
+  <meta itemprop="datePublished" content="2017-07-15T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2017-07-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="389">
+  <meta itemprop="keywords" content="Setup,Guide">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ClojureScript Setup for Leiningen Project With Emacs">
+  <meta name="twitter:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
-Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure."/>
+Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -253,7 +262,7 @@ and you will have your two REPLs setup.</p>
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -271,7 +280,7 @@ and you will have your two REPLs setup.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

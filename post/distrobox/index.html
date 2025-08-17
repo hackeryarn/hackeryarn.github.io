@@ -16,15 +16,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Artem Chernyak" /><meta name="description" content="Distrobox is the single piece of software that completely changed the way I work. If you&amp;rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&amp;rsquo;ve been looking for.
-Within a month Distrobox became my primary dev environment and that hasn&amp;rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better." /><meta name="keywords" content="blog, tech, ideas" />
+<meta name="author" content="" /><meta name="description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.
+" /><meta name="keywords" content="blog, tech, ideas" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.121.1 with theme even" />
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/distrobox/" />
@@ -36,26 +37,37 @@ Within a month Distrobox became my primary dev environment and that hasn&amp;rsq
 
 
 
-<link href="/sass/main.min.cb68f97bc9cece255d217346d970e3c62623408634e500c330a62fadabbbe77c.css" rel="stylesheet">
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
 
 
 
-<meta property="og:title" content="Distrobox in practice" />
-<meta property="og:description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
-Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://hackeryarn.com/post/distrobox/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2023-09-17T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-09-17T00:00:00+00:00" />
+<meta property="og:url" content="https://hackeryarn.com/post/distrobox/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="Distrobox in practice">
+  <meta property="og:description" content="Distrobox is the single piece of software that completely changed the way I work. If you’ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you’ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn’t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2023-09-17T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-17T00:00:00+00:00">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Distrobox">
+    <meta property="article:tag" content="Containers">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="Podman">
 
-<meta itemprop="name" content="Distrobox in practice">
-<meta itemprop="description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
-Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better."><meta itemprop="datePublished" content="2023-09-17T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2023-09-17T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1083">
-<meta itemprop="keywords" content="linux,distrobox,containers,docker,podman," /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Distrobox in practice"/>
-<meta name="twitter:description" content="Distrobox is the single piece of software that completely changed the way I work. If you&rsquo;ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&rsquo;ve been looking for.
-Within a month Distrobox became my primary dev environment and that hasn&rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better."/>
+  <meta itemprop="name" content="Distrobox in practice">
+  <meta itemprop="description" content="Distrobox is the single piece of software that completely changed the way I work. If you’ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you’ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn’t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.">
+  <meta itemprop="datePublished" content="2023-09-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-09-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1083">
+  <meta itemprop="keywords" content="Linux,Distrobox,Containers,Docker,Podman">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Distrobox in practice">
+  <meta name="twitter:description" content="Distrobox is the single piece of software that completely changed the way I work. If you’ve hear of or used Vagrant and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you’ve been looking for.
+Within a month Distrobox became my primary dev environment and that hasn’t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -168,8 +180,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
 <h2 id="what-is-distrobox">What is Distrobox?</h2>
 <p>Distrobox is a wrapper around <a href="https://www.docker.com/">Docker</a> or <a href="https://podman.io/">Podman</a> that give access to any Linux distro from any other Linux distro.</p>
 <blockquote>
-<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p>
-</blockquote>
+<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p></blockquote>
 <p>At this point, you might be thinking &ldquo;But can&rsquo;t I already use Podman to run any Linux distro locally?&rdquo; Well yes you can, but Distrobox takes this a step further.</p>
 <h2 id="the-shared-environment">The shared environment</h2>
 <p>The main benefit of Distrobox, over just using Containers on their own, is the integration with the base system. A Distrobox container will have access to your home directory, devices, and a few other things which combine to make it feel like you are working natively.</p>
@@ -181,8 +192,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
 <h2 id="making-per-project-containers-efficient">Making per project containers efficient</h2>
 <p>Having a container for every project might sound wasteful and time consuming, but you can actually make it pretty quick and efficient. This efficiency is possible thanks to image layering done by Podman.</p>
 <blockquote>
-<p>I will not cover how layering works, but if you are curious, refer to <a href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p>
-</blockquote>
+<p>I will not cover how layering works, but if you are curious, refer to <a href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p></blockquote>
 <p>Because underneath Distrobox just uses containers, you can easily create a base containers that has all the common tools for your dev environment. My base container looks something like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -217,8 +227,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p>
-</blockquote>
+<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p></blockquote>
 <p>This all gets saved into a single layer and referenced by every projects specific environment. For example, my <code>Django</code> environment looks like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -316,7 +325,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
       <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
-  <a href="https://hackeryarn.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
@@ -334,7 +343,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span>Artem Chernyak</span>
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 
