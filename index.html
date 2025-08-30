@@ -50,8 +50,8 @@
 
   <meta itemprop="name" content="hackeryarn">
   <meta itemprop="description" content="A blog by Artem Chernyak">
-  <meta itemprop="datePublished" content="2025-08-17T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-08-17T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-08-24T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-24T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="hackeryarn">
   <meta name="twitter:description" content="A blog by Artem Chernyak">
@@ -129,6 +129,28 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/rust-macros-2/">Let&#39;s write a macro in Rust - Part 2</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2025-08-24 </span>
+      
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>In the <a href="https://hackeryarn.com/post/rust-macros-1/">last part</a> we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.</p>
+<p>In this part we will implement multi-field select and a basic <code>where</code> calause. That will make our query macro far more useful.</p>
+<h2 id="multi-field-select">Multi-field select</h2>
+<p>After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/rust-macros-2/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/rust-macros-1/">Let&#39;s write a macro in Rust - Part 1</a></h1>
@@ -337,30 +359,6 @@ Let&#39;s run our initial migrations and get rid of the error that we ignored in
     </div>
     <div class="read-more">
       <a href="/post/django-returns-2/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/django-returns-1/">Type safe Django app, Part 1</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2022-01-22 </span>
-      <div class="post-category">
-          <a href="/categories/python/"> Python </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>
-Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.</p>
-<p>
-Throughout this series we will follow the <a href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">official Django tutorial</a> while making the code safer and easier to reason about. We will accomplish this by enlist the help of <a href="http://mypy-lang.org/">mypy</a> (for general type checking) and <a href="https://github.com/dry-python/returns">returns</a> (for containers that will provide safety).</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/django-returns-1/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>

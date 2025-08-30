@@ -50,8 +50,8 @@
 
   <meta itemprop="name" content="hackeryarn">
   <meta itemprop="description" content="A blog by Artem Chernyak">
-  <meta itemprop="datePublished" content="2025-08-17T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-08-17T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-08-24T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-24T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="hackeryarn">
   <meta name="twitter:description" content="A blog by Artem Chernyak">
@@ -129,6 +129,30 @@
       <div class="content-wrapper">
         <div id="content" class="content">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/django-returns-1/">Type safe Django app, Part 1</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2022-01-22 </span>
+      <div class="post-category">
+          <a href="/categories/python/"> Python </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <p>
+Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.</p>
+<p>
+Throughout this series we will follow the <a href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">official Django tutorial</a> while making the code safer and easier to reason about. We will accomplish this by enlist the help of <a href="http://mypy-lang.org/">mypy</a> (for general type checking) and <a href="https://github.com/dry-python/returns">returns</a> (for containers that will provide safety).</p>
+    </div>
+    <div class="read-more">
+      <a href="/post/django-returns-1/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/hy-django/">Django With Hy</a></h1>
@@ -402,38 +426,6 @@ cloud ready microservice. The user only cares that your product is helping them.
     </div>
     <div class="read-more">
       <a href="/post/your-job-isnt-writing-code/" class="read-more-link">Read more...</a>
-    </div>
-  </div>
-</article>
-
-    <article class="post">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/universally-testable-dependencies/">Universally Testable Dependencies in JavaScript</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-06-01 </span>
-      <div class="post-category">
-          <a href="/categories/javascript/"> JavaScript </a>
-          <a href="/categories/testing/"> Testing </a>
-          </div>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    <div class="post-summary">
-      <p>JavaScript dependencies are notoriously hard to mock and test across framework
-and environments. However, <a href="https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E">Dependency Injection</a> (DI) ensures testability. It
-is common in statically typed languages, like Java or Go, but is also useful in
-dynamic languages like JavaScript.</p>
-<p>This article will guide you through a simple technique that can apply
-to any JavaScript code base, frontend or backend, independent of frameworks
-and libraries.</p>
-<p>The technique I am going to demonstrate is arguably not true DI, since the
-dependencies are still managed by the module using them. However, it
-solves the dependency problem for testing which is the focus of this
-article.</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/universally-testable-dependencies/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
