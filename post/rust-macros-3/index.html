@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Let&#39;s write a macro in Rust - Part 3 - hackeryarn</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="" /><meta name="description" content="In the last part we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.
+In this part, we will build on our where clause from the previous article. In the process we will allow the where clause to support multiple comparison operator (instead of just =) as well as multiple ways to join those operators (instead of just and).
+" /><meta name="keywords" content="blog, tech, ideas" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.148.1 with theme even" />
+
+
+<link rel="canonical" href="https://hackeryarn.com/post/rust-macros-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
+
+
+
+<meta property="og:url" content="https://hackeryarn.com/post/rust-macros-3/">
+  <meta property="og:site_name" content="hackeryarn">
+  <meta property="og:title" content="Let&#39;s write a macro in Rust - Part 3">
+  <meta property="og:description" content="In the last part we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.
+In this part, we will build on our where clause from the previous article. In the process we will allow the where clause to support multiple comparison operator (instead of just =) as well as multiple ways to join those operators (instead of just and).">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-10-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-05T00:00:00+00:00">
+
+  <meta itemprop="name" content="Let&#39;s write a macro in Rust - Part 3">
+  <meta itemprop="description" content="In the last part we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.
+In this part, we will build on our where clause from the previous article. In the process we will allow the where clause to support multiple comparison operator (instead of just =) as well as multiple ways to join those operators (instead of just and).">
+  <meta itemprop="datePublished" content="2025-10-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1286">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Let&#39;s write a macro in Rust - Part 3">
+  <meta name="twitter:description" content="In the last part we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.
+In this part, we will build on our where clause from the previous article. In the process we will allow the where clause to support multiple comparison operator (instead of just =) as well as multiple ways to join those operators (instead of just and).">
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hackeryarn</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="https://liberapay.com/hackeryarn">
+        <li class="mobile-menu-item">Donate</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hackeryarn</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Let&#39;s write a macro in Rust - Part 3</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2025-10-05 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#complex-where-clause">Complex where clause</a>
+      <ul>
+        <li><a href="#toketrees">TokeTrees</a></li>
+        <li><a href="#matching-complex-where-clause">Matching complex where clause</a></li>
+        <li><a href="#incremental-tt-muncher">Incremental TT muncher</a></li>
+        <li><a href="#stepping-through-complex-expansions">Stepping through complex expansions</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>In the <a href="https://hackeryarn.com/post/rust-macros-2/">last part</a> we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.</p>
+<p>In this part, we will build on our <code>where</code> clause from the previous article. In the process we will allow the <code>where</code> clause to support multiple comparison operator (instead of just <code>=</code>) as well as multiple ways to join those operators (instead of just <code>and</code>).</p>
+<h2 id="complex-where-clause">Complex where clause</h2>
+<p>Exactly what operator do we want to support? Lets add to our previous clause. Our macro should be able to support both of:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Teddy Swims&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Tool&#34;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can make this work, but it will result in more complexity than needed. Using the <code>=</code> operator means that we need to do a manual translation from <code>=</code> to Rust&rsquo;s <code>==</code> operator. If we just use <code>==</code> in our macro, we can use <code>==</code> and other Rust operators directly. Our updated syntax will look like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#34;Teddy Swims&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#34;Tool&#34;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>But before we can implement the match arm, we need to talk about a concept that we&rsquo;ve only skimmed over, so far.</p>
+<h3 id="toketrees">TokeTrees</h3>
+<p>Token trees are a part of Rust&rsquo;s AST that makes it easy to work with macros by giving them explicit bounds.</p>
+<p>Almost every token in the AST (2, &ldquo;hello&rdquo;, etc.) represents a leaf. <code>()</code>, <code>[]</code>, and <code>{}</code> are special tokens that start a new tree. A macro has to always take and produce a token tree, and that&rsquo;s exactly what our match arms represent. As far as macros care, all of the tree operators are interchangeable. So we could write our match arm as:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">{</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="cp">$db</span>:<span class="nc">ident</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="cp">$(</span><span class="w"> </span><span class="cp">$field</span>:<span class="nc">ident</span><span class="w"> </span><span class="p">),</span><span class="o">+</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="cp">$($test_field</span>:<span class="nc">ident</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$value</span>:<span class="nc">literal</span><span class="p">)</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cp">$db</span><span class="p">.</span><span class="n">into_iter</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="w"> </span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="cp">$(</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="cp">$test_field</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="cp">$value</span><span class="w"> </span><span class="p">)</span><span class="o">&amp;&amp;+</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="w"> </span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="cp">$(</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="cp">$field</span><span class="p">,</span><span class="w"> </span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="n">collect</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Or call our macro as:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="fm">query!</span><span class="p">[</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;Teddy Swims&#34;</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>And the compiler is perfectly happy. Although, readers of your code might not be.</p>
+<p>This is all interesting background, but how will it help us write our macro? Token trees are one of the fragment-specifiers that we can match, and we can take advantage of that to write a very concise macro definition.</p>
+<h3 id="matching-complex-where-clause">Matching complex where clause</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[macro_export]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">macro_rules</span><span class="o">!</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="cp">$db</span>:<span class="nc">ident</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="cp">$(</span><span class="w"> </span><span class="cp">$field</span>:<span class="nc">ident</span><span class="w"> </span><span class="p">),</span><span class="o">+</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="cp">$($where_tree</span>:<span class="nc">tt</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="cp">$db</span><span class="p">.</span><span class="n">into_iter</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="w"> </span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="fm">where_clause!</span><span class="p">(</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="cp">$($where_tree</span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="w"> </span><span class="o">|</span><span class="n">i</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="cp">$(</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="cp">$field</span><span class="p">,</span><span class="w"> </span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="n">collect</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>We use a repeating capture of <code>tt</code> (TokenTree) to capture every TokenTree that follows the word <code>where</code>. Since every token is either a leaf or separator, <code>tt</code> will capture everything. One important caveat here is that macros can&rsquo;t look ahead or behind, so if we use a repeating <code>tt</code> capture, we will capture the rest of the macro. There is no breaking out of a repeating <code>tt</code> capture.</p>
+<p>We then use a helper macro, <code>where_clause</code>, to process the captured token tree. We also pass through <code>i</code> using an arbitrary separator <code>;</code> which will make the implementation a little cleaner. Using helper macros is a common technique that reduces the number of match arms a single macro needs to implement.</p>
+<p>Now let&rsquo;s look at the <code>where_clause</code> macro that we need to implement. This will need a few clauses, and we will implement them one by one. We start with matching a single where clause with no <code>and</code> or <code>or</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[macro_export]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">macro_rules</span><span class="o">!</span><span class="w"> </span><span class="n">where_clause</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="cp">$i</span>:<span class="nc">ident</span><span class="p">;</span><span class="w"> </span><span class="cp">$test_field</span>:<span class="nc">ident</span><span class="w"> </span><span class="cp">$comp</span>:<span class="nc">tt</span><span class="w"> </span><span class="cp">$value</span>:<span class="nc">literal</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="cp">$i</span><span class="p">.</span><span class="cp">$test_field</span><span class="w"> </span><span class="cp">$comp</span><span class="w"> </span><span class="cp">$value</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>That&rsquo;s a lot of captures. The only literal in there, if you look closely enough, is <code>;</code>. But we&rsquo;ve seen all this before. The most surprising thing here is that to capture and use the comparison operator, <code>$comp</code>, we have to use <code>tt</code>. It took me a bit of trial and error to figure out that operators are not identifier or any kind of other fragment-specifier, so we have to use the most generic fragment-specifier <code>tt</code>.</p>
+<h3 id="incremental-tt-muncher">Incremental TT muncher</h3>
+<p>To implement the other cases, we have to use recursion. The arm we just implemented becomes the base case, and the other arms continuously call <code>where_clause!</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[macro_export]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">macro_rules</span><span class="o">!</span><span class="w"> </span><span class="n">where_clause</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="cp">$i</span>:<span class="nc">ident</span><span class="p">;</span><span class="w"> </span><span class="cp">$test_field</span>:<span class="nc">ident</span><span class="w"> </span><span class="cp">$comp</span>:<span class="nc">tt</span><span class="w"> </span><span class="cp">$value</span>:<span class="nc">literal</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="cp">$i</span><span class="p">.</span><span class="cp">$test_field</span><span class="w"> </span><span class="cp">$comp</span><span class="w"> </span><span class="cp">$value</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="cp">$i</span>:<span class="nc">ident</span><span class="p">;</span><span class="w"> </span><span class="cp">$test_field</span>:<span class="nc">ident</span><span class="w"> </span><span class="cp">$comp</span>:<span class="nc">tt</span><span class="w"> </span><span class="cp">$value</span>:<span class="nc">literal</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="cp">$($tail</span>:<span class="nc">tt</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="cp">$i</span><span class="p">.</span><span class="cp">$test_field</span><span class="w"> </span><span class="cp">$comp</span><span class="w"> </span><span class="cp">$value</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="fm">where_clause!</span><span class="p">(</span><span class="cp">$i</span><span class="p">;</span><span class="w"> </span><span class="cp">$($tail</span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="w"> </span><span class="cp">$i</span>:<span class="nc">ident</span><span class="p">;</span><span class="w"> </span><span class="cp">$test_field</span>:<span class="nc">ident</span><span class="w"> </span><span class="cp">$comp</span>:<span class="nc">tt</span><span class="w"> </span><span class="cp">$value</span>:<span class="nc">literal</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="cp">$($tail</span>:<span class="nc">tt</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="cp">$i</span><span class="p">.</span><span class="cp">$test_field</span><span class="w"> </span><span class="cp">$comp</span><span class="w"> </span><span class="cp">$value</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="fm">where_clause!</span><span class="p">(</span><span class="cp">$i</span><span class="p">;</span><span class="w"> </span><span class="cp">$($tail</span><span class="p">)</span><span class="o">+</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The next two captures only differ in the separator (<code>or</code> and <code>and</code>). They both capture all the parts of a single comparison expression, just like the base case, and capture any remaining expression as a repeating <code>tt</code>. Then we can put together our conditional from and join it, using <code>&amp;&amp;</code> or <code>||</code>, with another call to <code>where_clause!</code>. This is safe to do because we know that every arm of <code>where_clause!</code> will produce a valid conditional expression.</p>
+<h3 id="stepping-through-complex-expansions">Stepping through complex expansions</h3>
+<p>That was a lot of abstract code. Luckily, we can use the debugging tools to get a clearer picture of how all of this evaluates:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">results</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kt">i64</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">rating</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&#34;Tool&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// [(&#34;Not Like Us&#34;, 10), (&#34;Bad Dreams&#34;, 10), (&#34;Lateralus&#34;, 8)]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">// Expands to:
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: expanding `query! { from db select title, rating where rating &gt; 9 or artist == &#34;Tool&#34; }`
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: to `db.into_iter().filter(| i | where_clause!
+</span></span></span><span class="line"><span class="cl"><span class="c1">//         (i; rating &gt; 9 or artist == &#34;Tool&#34;)).map(| i | (i.title, i.rating,)).collect()`
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: expanding `where_clause! { i; rating &gt; 9 or artist == &#34;Tool&#34; }`
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: to `i.rating &gt; 9 || where_clause! (i; artist == &#34;Tool&#34;)`
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: expanding `where_clause! { i; artist == &#34;Tool&#34; }`
+</span></span></span><span class="line"><span class="cl"><span class="c1">// = note: to `i.artist == &#34;Tool&#34;` 
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The expansion becomes quite a bit more complex because we used helper macros, but it still clearly lists out all the steps. I usually have to read these types of expansions in a multi step process:</p>
+<ol>
+<li>Scan everything from top to bottom to get the general idea of the expansion</li>
+<li>Start back from the bottom with the last line</li>
+<li>Take the line I am on (<code>i.artist == &quot;Tool&quot;</code>)</li>
+<li>Look at the expansion above it (<code>i.rating &gt; 9 || where_clause! (i; artist == &quot;Tool&quot;)</code>)</li>
+<li>Substitute the line we started on into this expansion (<code>i.rating &gt; 9 || i.artist == &quot;Tool&quot;</code>)</li>
+<li>If there are more lines above, go back to step 3 using the substituted expansion from step 5, and repeat this until I am on the last (top most) line</li>
+</ol>
+<p>By following this process I can see exactly what each step looks like and spot any problems that might occur.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With all these techniques under your belt, you should have no problem figuring out and implementing 90% of declarative macros. If you run into more complex scenarios, the Little Book of Rust Macros has great resources including:</p>
+<ul>
+<li><a href="https://lukaswirth.dev/tlborm/decl-macros/patterns.html">More declarative macros patterns</a> if you run into very complex scenarios</li>
+<li><a href="https://lukaswirth.dev/tlborm/proc-macros.html">Procedural macros section</a> if you need to implement derive or decide to work on a full scale DSL macro</li>
+</ul>
+
+    </div>
+
+    
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/rust-macros-2/">
+            <span class="next-text nav-default">Let&#39;s write a macro in Rust - Part 2</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'achernyak';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
+      <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2018 - 
+    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

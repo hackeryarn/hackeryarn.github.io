@@ -6,8 +6,15 @@
     <description>Recent content in Posts on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 24 Aug 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Let&#39;s write a macro in Rust - Part 3</title>
+      <link>https://hackeryarn.com/post/rust-macros-3/</link>
+      <pubDate>Sun, 05 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/rust-macros-3/</guid>
+      <description>&lt;p&gt;In the &lt;a href=&#34;https://hackeryarn.com/post/rust-macros-2/&#34;&gt;last part&lt;/a&gt; we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.&lt;/p&gt;&#xA;&lt;p&gt;In this part, we will build on our &lt;code&gt;where&lt;/code&gt; clause from the previous article. In the process we will allow the &lt;code&gt;where&lt;/code&gt; clause to support multiple comparison operator (instead of just &lt;code&gt;=&lt;/code&gt;) as well as multiple ways to join those operators (instead of just &lt;code&gt;and&lt;/code&gt;).&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Let&#39;s write a macro in Rust - Part 2</title>
       <link>https://hackeryarn.com/post/rust-macros-2/</link>
