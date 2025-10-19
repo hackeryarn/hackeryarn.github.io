@@ -17,7 +17,7 @@
 
 
 <meta name="author" content="" /><meta name="description" content="In the last part we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.
-In this part we will implement multi-field select and a basic where calause. That will make our query macro far more useful.
+In this part we will implement multi-field select and a basic where clause. That will make our query macro far more useful.
 Multi-field select After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:
 " /><meta name="keywords" content="blog, tech, ideas" />
 
@@ -46,7 +46,7 @@ Multi-field select After being able to select one field, the immediate next thin
   <meta property="og:site_name" content="hackeryarn">
   <meta property="og:title" content="Let&#39;s write a macro in Rust - Part 2">
   <meta property="og:description" content="In the last part we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.
-In this part we will implement multi-field select and a basic where calause. That will make our query macro far more useful.
+In this part we will implement multi-field select and a basic where clause. That will make our query macro far more useful.
 Multi-field select After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -56,7 +56,7 @@ Multi-field select After being able to select one field, the immediate next thin
 
   <meta itemprop="name" content="Let&#39;s write a macro in Rust - Part 2">
   <meta itemprop="description" content="In the last part we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.
-In this part we will implement multi-field select and a basic where calause. That will make our query macro far more useful.
+In this part we will implement multi-field select and a basic where clause. That will make our query macro far more useful.
 Multi-field select After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:">
   <meta itemprop="datePublished" content="2025-08-24T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-08-24T00:00:00+00:00">
@@ -64,7 +64,7 @@ Multi-field select After being able to select one field, the immediate next thin
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Let&#39;s write a macro in Rust - Part 2">
   <meta name="twitter:description" content="In the last part we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.
-In this part we will implement multi-field select and a basic where calause. That will make our query macro far more useful.
+In this part we will implement multi-field select and a basic where clause. That will make our query macro far more useful.
 Multi-field select After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:">
 
 <!--[if lte IE 9]>
@@ -177,7 +177,7 @@ Multi-field select After being able to select one field, the immediate next thin
 </div>
     <div class="post-content">
       <p>In the <a href="https://hackeryarn.com/post/rust-macros-1/">last part</a> we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.</p>
-<p>In this part we will implement multi-field select and a basic <code>where</code> calause. That will make our query macro far more useful.</p>
+<p>In this part we will implement multi-field select and a basic <code>where</code> clause. That will make our query macro far more useful.</p>
 <h2 id="multi-field-select">Multi-field select</h2>
 <p>After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:</p>
 <div class="highlight"><div class="chroma">
@@ -188,7 +188,7 @@ Multi-field select After being able to select one field, the immediate next thin
 <pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">query!</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">rating</span><span class="p">)</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>Continuing to draw inspiratino from SQL, we use a comma separated list of fields. Using a separator, like a comma, turns out to be idiomatic Rust macro syntax for handling multiple value, so we are in luck with our choice.</p>
+</div><p>Continuing to draw inspiration from SQL, we use a comma separated list of fields. Using a separator, like a comma, turns out to be idiomatic Rust macro syntax for handling multiple value, so we are in luck with our choice.</p>
 <h3 id="matching-multi-field-select">Matching multi-field select</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -255,8 +255,8 @@ Multi-field select After being able to select one field, the immediate next thin
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>You might be suprprised by the extra set of parentheses around the repetiont usage. This is actually just a plain tuple.</p>
-<p>Because we can return mupltiple fields, we have to create some kind of container. Since we can have fields of multiple types, a vector is out of the question. We could lean on <code>serde</code> and require a serializer instance, but that introduces a lot of overhead. A tuple gives us a simple wrapper that&rsquo;s easy to destructure and allows us to handle any number of fields with any mix of types.</p>
+</div><p>You might be surprised by the extra set of parentheses around the repetition usage. This is actually just a plain tuple.</p>
+<p>Because we can return multiple fields, we have to create some kind of container. Since we can have fields of multiple types, a vector is out of the question. We could lean on <code>serde</code> and require a serializer instance, but that introduces a lot of overhead. A tuple gives us a simple wrapper that&rsquo;s easy to destructure and allows us to handle any number of fields with any mix of types.</p>
 <p>And with that, we can execute our query with a multi select:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -271,7 +271,7 @@ Multi-field select After being able to select one field, the immediate next thin
 </div><p>We have to specify the type here, but if you were to use the values later, Rust&rsquo;s compiler can often infer the type.</p>
 <h3 id="debugging-macros">Debugging macros</h3>
 <p>With the repetition operators the macro gets hard to follow, and it will only get more complicated. This would be the perfect time to look at how we can debug macros.</p>
-<p>Rust comes with everything we need built it. To see what marocs expand to, we can run <code>RUSTFLAGS=&quot;-Ztrace_macros&quot; cargo run</code> (note that you will need nightly rust version). This gets pretty noisy, however, since it expands <em>all</em> macros in the entire program. To limit what expands, we can use a macro <code>trace_macros!</code>:</p>
+<p>Rust comes with everything we need built it. To see what macros expand to, we can run <code>RUSTFLAGS=&quot;-Ztrace_macros&quot; cargo run</code> (note that you will need nightly rust version). This gets pretty noisy, however, since it expands <em>all</em> macros in the entire program. To limit what expands, we can use a macro <code>trace_macros!</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

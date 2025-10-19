@@ -17,7 +17,7 @@
 
 
 <meta name="author" content="" /><meta name="description" content="Macros are required to do some very helpful things in Rust, but this isn&rsquo;t an article about any of those things.
-I became ennamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.
+I became enamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.
 " /><meta name="keywords" content="blog, tech, ideas" />
 
 
@@ -45,7 +45,7 @@ I became ennamored with macros many years ago when I read Practical Common Lisp 
   <meta property="og:site_name" content="hackeryarn">
   <meta property="og:title" content="Let&#39;s write a macro in Rust - Part 1">
   <meta property="og:description" content="Macros are required to do some very helpful things in Rust, but this isn’t an article about any of those things.
-I became ennamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
+I became enamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
@@ -54,14 +54,14 @@ I became ennamored with macros many years ago when I read Practical Common Lisp 
 
   <meta itemprop="name" content="Let&#39;s write a macro in Rust - Part 1">
   <meta itemprop="description" content="Macros are required to do some very helpful things in Rust, but this isn’t an article about any of those things.
-I became ennamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
+I became enamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
   <meta itemprop="datePublished" content="2025-08-17T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-08-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1333">
+  <meta itemprop="wordCount" content="1334">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Let&#39;s write a macro in Rust - Part 1">
   <meta name="twitter:description" content="Macros are required to do some very helpful things in Rust, but this isn’t an article about any of those things.
-I became ennamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
+I became enamored with macros many years ago when I read Practical Common Lisp and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -171,16 +171,16 @@ I became ennamored with macros many years ago when I read Practical Common Lisp 
 </div>
     <div class="post-content">
       <p>Macros are required to do some very helpful things in Rust, but this isn&rsquo;t an article about any of those things.</p>
-<p>I became ennamored with macros many years ago when I read <a href="https://gigamonkeys.com/book/">Practical Common Lisp</a> and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.</p>
+<p>I became enamored with macros many years ago when I read <a href="https://gigamonkeys.com/book/">Practical Common Lisp</a> and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.</p>
 <p>In this article, I will try to share some of that excitement with you while using Rust&rsquo;s macro system. Will this be the most practical and useful macro you can write? Absolutely not. I only hope to show you some possibilities of this powerful tool.</p>
 <h2 id="prior-art">Prior art</h2>
-<p>Rust&rsquo;s macros build on top of a long legacy of syntax macros primarily seen in the Lisp language family. Unlige Go, C, and Assembly macros, which work as a pre-processor step on raw strings, Rust&rsquo;s macros work dircectly on the AST (<a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>). This means that Tokenization and AST parsing has already occurred, so you can be sure that the what you work with is at least shaped like hypothetican Rust code.</p>
+<p>Rust&rsquo;s macros build on top of a long legacy of syntax macros primarily seen in the Lisp language family. Unlike Go, C, and Assembly macros, which work as a pre-processor step on raw strings, Rust&rsquo;s macros work directly on the AST (<a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>). This means that Tokenization and AST parsing has already occurred, so you can be sure that the what you work with is at least shaped like hypothetical Rust code.</p>
 <p>Unlike the Lisp family of languages, Rust had some additional challenges to overcome with their macro implementation.</p>
-<p>Lisp has a syntax that&rsquo;s basically an AST, so it is extremely easy to consume and produce an AST, because it looks like normar code. Rust, on the other hand, looks nothing like Lisp or an AST, so it needs a way to elegantly handle these conversion steps. That&rsquo;s where the <code>macro_rules!</code> macro comes in, which will be the focus of this article.</p>
+<p>Lisp has a syntax that&rsquo;s basically an AST, so it is extremely easy to consume and produce an AST, because it looks like normal code. Rust, on the other hand, looks nothing like Lisp or an AST, so it needs a way to elegantly handle these conversion steps. That&rsquo;s where the <code>macro_rules!</code> macro comes in, which will be the focus of this article.</p>
 <p>The other challenge within <code>macro_rules!</code> comes from Rust&rsquo;s goal to provide as much help and correctness as possible. Rust actually supports types (technically fragment-specifiers) in macros. We will see more of this later, but it goes towards making macros easier to write, reason about, and maintain.</p>
-<p>Without further ado, let&rsquo;s jump into using <code>macro_rules!</code> and declerative macros.</p>
+<p>Without further ado, let&rsquo;s jump into using <code>macro_rules!</code> and declarative macros.</p>
 <h2 id="macro-design-process">Macro design process</h2>
-<p>Since every time we write a macro, we creat a DSL it&rsquo;s important to keep some rules and processes in mind. With that in mind, these are the typical steps that we should follow when writing macros:</p>
+<p>Since every time we write a macro, we create a DSL it&rsquo;s important to keep some rules and processes in mind. With that in mind, these are the typical steps that we should follow when writing macros:</p>
 <ul>
 <li>Evaluate if you need a macro</li>
 <li>Design the simplest possible invocation first (determine what your DSL looks like)</li>
@@ -192,7 +192,7 @@ I became ennamored with macros many years ago when I read Practical Common Lisp 
 <h3 id="dont-write-macros">Don&rsquo;t write macros</h3>
 <p>Before we start writing a macro, we should always evaluate if it is the best choice for the problem in hand. I know this is an odd step to start with for an article about writing macros, but macros get frequently abused, and we should strive to use all our tools well.</p>
 <p>Macros bring a lot of complexity in writing and debugging them. You are introducing another compilation step in your code, and often times erasing some of Rust&rsquo;s ability to help you write correct code. On top of all this, making code generic enough for macros can lead to far more complex types than you could accomplish with a little more boilerplate.</p>
-<p>Because of this overhead, you have to really consider the tradeoffs that you&rsquo;re making. Rust is a powerful language with lots of abstractions. Often times, the existing tools can get you to your goal without resorting to macros.</p>
+<p>Because of this overhead, you have to really consider the trade offs that you&rsquo;re making. Rust is a powerful language with lots of abstractions. Often times, the existing tools can get you to your goal without resorting to macros.</p>
 <p>In our case, we are writing the macro for practice, so these concerns don&rsquo;t apply here.</p>
 <h2 id="the-simplest-query-macro">The simplest query! macro</h2>
 <p>Lets jump right to the second step and design our invocation:</p>

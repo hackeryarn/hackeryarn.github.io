@@ -20,14 +20,14 @@
       <link>https://hackeryarn.com/post/rust-macros-2/</link>
       <pubDate>Sun, 24 Aug 2025 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/rust-macros-2/</guid>
-      <description>&lt;p&gt;In the &lt;a href=&#34;https://hackeryarn.com/post/rust-macros-1/&#34;&gt;last part&lt;/a&gt; we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.&lt;/p&gt;&#xA;&lt;p&gt;In this part we will implement multi-field select and a basic &lt;code&gt;where&lt;/code&gt; calause. That will make our query macro far more useful.&lt;/p&gt;&#xA;&lt;h2 id=&#34;multi-field-select&#34;&gt;Multi-field select&lt;/h2&gt;&#xA;&lt;p&gt;After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:&lt;/p&gt;</description>
+      <description>&lt;p&gt;In the &lt;a href=&#34;https://hackeryarn.com/post/rust-macros-1/&#34;&gt;last part&lt;/a&gt; we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.&lt;/p&gt;&#xA;&lt;p&gt;In this part we will implement multi-field select and a basic &lt;code&gt;where&lt;/code&gt; clause. That will make our query macro far more useful.&lt;/p&gt;&#xA;&lt;h2 id=&#34;multi-field-select&#34;&gt;Multi-field select&lt;/h2&gt;&#xA;&lt;p&gt;After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Let&#39;s write a macro in Rust - Part 1</title>
       <link>https://hackeryarn.com/post/rust-macros-1/</link>
       <pubDate>Sun, 17 Aug 2025 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/rust-macros-1/</guid>
-      <description>&lt;p&gt;Macros are required to do some very helpful things in Rust, but this isn&amp;rsquo;t an article about any of those things.&lt;/p&gt;&#xA;&lt;p&gt;I became ennamored with macros many years ago when I read &lt;a href=&#34;https://gigamonkeys.com/book/&#34;&gt;Practical Common Lisp&lt;/a&gt; and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Macros are required to do some very helpful things in Rust, but this isn&amp;rsquo;t an article about any of those things.&lt;/p&gt;&#xA;&lt;p&gt;I became enamored with macros many years ago when I read &lt;a href=&#34;https://gigamonkeys.com/book/&#34;&gt;Practical Common Lisp&lt;/a&gt; and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.&lt;/p&gt;</description>
     </item>
     <item>
       <title>You don&#39;t need a map for that</title>
