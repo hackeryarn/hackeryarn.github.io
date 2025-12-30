@@ -6,8 +6,29 @@
     <description>Recent content in Tags on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Benchmarks</title>
+      <link>https://hackeryarn.com/tags/benchmarks/</link>
+      <pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/tags/benchmarks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Django</title>
+      <link>https://hackeryarn.com/tags/django/</link>
+      <pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/tags/django/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://hackeryarn.com/tags/python/</link>
+      <pubDate>Tue, 30 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/tags/python/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Opinion</title>
       <link>https://hackeryarn.com/tags/opinion/</link>
@@ -83,20 +104,6 @@
       <link>https://hackeryarn.com/tags/commonlisp/</link>
       <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/commonlisp/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Django</title>
-      <link>https://hackeryarn.com/tags/django/</link>
-      <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/django/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://hackeryarn.com/tags/python/</link>
-      <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/python/</guid>
       <description></description>
     </item>
     <item>

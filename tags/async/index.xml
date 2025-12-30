@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Async on hackeryarn</title>
+    <link>http://localhost:1313/tags/async/</link>
+    <description>Recent content in Async on hackeryarn</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/async/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What async really mean for your python web app?</title>
+      <link>http://localhost:1313/post/async-python/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/async-python/</guid>
+      <description>&lt;p&gt;The Python community is abuzz with excitement about better async support. If you have an existing service, you might wonder if you&amp;rsquo;re missing out. Benchmarks show higher throughput and promise the ability to handle more requests with less hardware. Will a switch to async be a free lunch for your existing service?&lt;/p&gt;&#xA;&lt;p&gt;As often happens, the reality differs from expectations. Unless you run in a highly distributed environment and your service is the bottleneck, needing 10 instances just to keep up with all the traffic, you probably won&amp;rsquo;t see the benefits that most benchmarks promise. In fact, you might see worse performance by switching.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

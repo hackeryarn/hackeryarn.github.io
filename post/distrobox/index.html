@@ -25,7 +25,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
 
 
 
-<meta name="generator" content="Hugo 0.148.1 with theme even" />
+<meta name="generator" content="Hugo 0.152.2 with theme even" />
 
 
 <link rel="canonical" href="https://hackeryarn.com/post/distrobox/" />
@@ -37,7 +37,7 @@ Within a month Distrobox became my primary dev environment and that hasn&rsquo;t
 
 
 
-<link href="/sass/main.min.b21c25b30b65a0cc5fa7853ee7d0a14a33817ce15313d5f58fc3a0e8c473d999.css" rel="stylesheet">
+<link href="/sass/main.min.6a025d60334ccde9f765dedcf6936f4c2eb3ea8d22276e9f389bb2efc2d55e11.css" rel="stylesheet">
 
 
 
@@ -94,12 +94,8 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
   <ul class="mobile-menu-list">
     <a href="/">
         <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
       </a><a href="/tags/">
         <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
       </a><a href="https://liberapay.com/hackeryarn">
         <li class="mobile-menu-item">Donate</li>
       </a>
@@ -125,11 +121,7 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
     <li class="menu-item">
         <a class="menu-item-link" href="/">Home</a>
       </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
         <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
       </li><li class="menu-item">
         <a class="menu-item-link" href="https://liberapay.com/hackeryarn">Donate</a>
       </li>
@@ -180,7 +172,8 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
 <h2 id="what-is-distrobox">What is Distrobox?</h2>
 <p>Distrobox is a wrapper around <a href="https://www.docker.com/">Docker</a> or <a href="https://podman.io/">Podman</a> that give access to any Linux distro from any other Linux distro.</p>
 <blockquote>
-<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p></blockquote>
+<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p>
+</blockquote>
 <p>At this point, you might be thinking &ldquo;But can&rsquo;t I already use Podman to run any Linux distro locally?&rdquo; Well yes you can, but Distrobox takes this a step further.</p>
 <h2 id="the-shared-environment">The shared environment</h2>
 <p>The main benefit of Distrobox, over just using Containers on their own, is the integration with the base system. A Distrobox container will have access to your home directory, devices, and a few other things which combine to make it feel like you are working natively.</p>
@@ -192,7 +185,8 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
 <h2 id="making-per-project-containers-efficient">Making per project containers efficient</h2>
 <p>Having a container for every project might sound wasteful and time consuming, but you can actually make it pretty quick and efficient. This efficiency is possible thanks to image layering done by Podman.</p>
 <blockquote>
-<p>I will not cover how layering works, but if you are curious, refer to <a href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p></blockquote>
+<p>I will not cover how layering works, but if you are curious, refer to <a href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p>
+</blockquote>
 <p>Because underneath Distrobox just uses containers, you can easily create a base containers that has all the common tools for your dev environment. My base container looks something like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -227,7 +221,8 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p></blockquote>
+<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p>
+</blockquote>
 <p>This all gets saved into a single layer and referenced by every projects specific environment. For example, my <code>Django</code> environment looks like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -322,9 +317,9 @@ Within a month Distrobox became my primary dev environment and that hasn’t cha
 
     <footer id="footer" class="footer">
       <div class="social-links">
-      <a href="https://twitter.com/hackeryarn" class="iconfont icon-twitter" title="twitter"></a>
       <a href="https://www.linkedin.com/in/achernyak" class="iconfont icon-linkedin" title="linkedin"></a>
       <a href="https://github.com/hackeryarn" class="iconfont icon-github" title="github"></a>
+      <a href="https://mastodon.social/@hackeryarn" class="iconfont icon-mastodon" title="mastodon"></a>
   
 </div>
 
