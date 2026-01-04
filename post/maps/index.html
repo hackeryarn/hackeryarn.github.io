@@ -16,9 +16,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="" /><meta name="description" content=" One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
+<meta name="author" content="" /><meta name="description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
 It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.
-" /><meta name="keywords" content="blog, tech, ideas" />
+" /><meta name="keywords" content="discussion, development, map, patterns" />
 
 
 
@@ -51,7 +51,8 @@ It&#39;s a great data structure for quick storage and access of key value pairs.
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2024-01-01T00:00:00+00:00">
     <meta property="article:modified_time" content="2024-01-01T00:00:00+00:00">
-    <meta property="article:tag" content="Opinion">
+    <meta property="article:tag" content="Discussion">
+    <meta property="article:tag" content="Development">
 
   <meta itemprop="name" content="You don&#39;t need a map for that">
   <meta itemprop="description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
@@ -59,7 +60,7 @@ It&#39;s a great data structure for quick storage and access of key value pairs.
   <meta itemprop="datePublished" content="2024-01-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-01-01T00:00:00+00:00">
   <meta itemprop="wordCount" content="542">
-  <meta itemprop="keywords" content="Opinion">
+  <meta itemprop="keywords" content="discussion,development,map,patterns">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="You don&#39;t need a map for that">
   <meta name="twitter:description" content="One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.
@@ -136,9 +137,7 @@ It&#39;s a great data structure for quick storage and access of key value pairs.
 
       <div class="post-meta">
         <span class="post-time"> 2024-01-01 </span>
-        <div class="post-category">
-            <a href="/categories/development/"> development </a>
-            </div>
+        
         
       </div>
     </header>
@@ -147,82 +146,79 @@ It&#39;s a great data structure for quick storage and access of key value pairs.
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#headline-1">Passing around data</a>
-</li>
-<li><a href="#headline-2">The problem with using a map </a>
-</li>
-<li><a href="#headline-3">One simple rule</a>
-</li>
-</ul>
+  <ul>
+    <li><a href="#passing-around-data">Passing around data</a></li>
+    <li><a href="#the-problem-with-using-a-map">The problem with using a map</a></li>
+    <li><a href="#one-simple-rule">One simple rule</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-<p>
-One of the most misused data structures is the humble map; hashmap, dictionary, hash table, etc.</p>
-<p>
-It&#39;s a great data structure for quick storage and access of key value pairs. Unfortunately, because of its ease and availability, it becomes pervasive at jobs it has no business doing. The problem grows most visible in dynamically typed languages that make the map a first class citizen (Python, Ruby, Clojure, etc.), but it can creep up in any language.</p>
-<div id="outline-container-headline-1" class="outline-3">
-<h3 id="headline-1">
-Passing around data
-</h3>
-<div id="outline-text-headline-1" class="outline-text-3">
-<p>
-This is the most common case where the map might tempt us. Let&#39;s play out a common scenario.</p>
-<p>
-We have a some values that we need to pass to multiple functions. We don&#39;t want to make all these functions take 5 new arguments, so what can we do?</p>
-<p>
-We can stick the values in a data structure. We could put them in a list, but keeping the order and retrieving the value at the right location would quickly become error prone.</p>
-<p>
-Instead, we can give each value a short name and stick it in a map. Then each function can retrieve exactly what it needs and we don&#39;t have to worry about order. Everything works nicely.</p>
-<p>
-After a couple weeks, we decide to reuse one of the functions that takes a map. But what keys did the function need from the map? That&#39;s easy enough to figure out. We pop open the source and take a peek. We see a couple keys used, but then the map gets passed to another function. Time to look at the source of that function as well. We see 3 new keys here and 1 key used in the previous function. That make 4 keys total. Great!</p>
-<p>
-Time to… what were we doing before we started spelunking down this call stack? Was the first key we saw <code>integration</code> or <code>integrations</code>? And was the value of that last key a string or a boolean?</p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-3">
-<h3 id="headline-2">
-The problem with using a map 
-</h3>
-<div id="outline-text-headline-2" class="outline-text-3">
-<p>
-A myriad of problems comes up as soon as we need to work with code that relies on maps:</p>
+      <p>One of the most misused data structures is the humble map; hashmap,
+dictionary, hash table, etc.</p>
+<p>It's a great data structure for quick storage and access of key value
+pairs. Unfortunately, because of its ease and availability, it becomes
+pervasive at jobs it has no business doing. The problem grows most
+visible in dynamically typed languages that make the map a first class
+citizen (Python, Ruby, Clojure, etc.), but it can creep up in any
+language.</p>
+<h2 id="passing-around-data">Passing around data</h2>
+<p>This is the most common case where the map might tempt us. Let's play
+out a common scenario.</p>
+<p>We have a some values that we need to pass to multiple functions. We
+don't want to make all these functions take 5 new arguments, so what
+can we do?</p>
+<p>We can stick the values in a data structure. We could put them in a
+list, but keeping the order and retrieving the value at the right
+location would quickly become error prone.</p>
+<p>Instead, we can give each value a short name and stick it in a map. Then
+each function can retrieve exactly what it needs and we don't have to
+worry about order. Everything works nicely.</p>
+<p>After a couple weeks, we decide to reuse one of the functions that takes
+a map. But what keys did the function need from the map? That's easy
+enough to figure out. We pop open the source and take a peek. We see a
+couple keys used, but then the map gets passed to another function. Time
+to look at the source of that function as well. We see 3 new keys here
+and 1 key used in the previous function. That make 4 keys total. Great!</p>
+<p>Time to&hellip; what were we doing before we started spelunking down this
+call stack? Was the first key we saw <code>integration</code> or <code>integrations</code>?
+And was the value of that last key a string or a boolean?</p>
+<h2 id="the-problem-with-using-a-map">The problem with using a map</h2>
+<p>A myriad of problems comes up as soon as we need to work with code that
+relies on maps:</p>
 <ul>
 <li>We have to read the source to figure out the expected keys</li>
-<li>We can easily make the mistake of mistyping or forgetting the name of a key</li>
-<li>We have no way to know the types of value a map expects, unless we know ahead of time that all the values require the same type</li>
+<li>We can easily make the mistake of mistyping or forgetting the name of
+a key</li>
+<li>We have no way to know the types of value a map expects, unless we
+know ahead of time that all the values require the same type</li>
 </ul>
-<p>These are not problems with a map structure itself; these are problems with how we are using the map.</p>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-3">
-<h3 id="headline-3">
-One simple rule
-</h3>
-<div id="outline-text-headline-3" class="outline-text-3">
-<p>
-To remedy most cases of map misuse, we can follow one simple rule. If we know the keys of a map, we should not use a map. Instead, we should use a struct, TypedDict, object, or any of the other abstraction that allow us to specify the expected keys and, hopefully, value types.</p>
-<p>
-By using these other methods of specification, we enable:</p>
+<p>These are not problems with a map structure itself; these are problems
+with how we are using the map.</p>
+<h2 id="one-simple-rule">One simple rule</h2>
+<p>To remedy most cases of map misuse, we can follow one simple rule. If we
+know the keys of a map, we should not use a map. Instead, we should use
+a struct, TypedDict, object, or any of the other abstraction that allow
+us to specify the expected keys and, hopefully, value types.</p>
+<p>By using these other methods of specification, we enable:</p>
 <ul>
 <li>Easy lookup of keys</li>
 <li>Static checks of the key names and value types</li>
 <li>Informative error messages if we make a mistake</li>
 <li>Editor assistance with supplying the right values</li>
 </ul>
-<p>Just by following this rule we can save our future self from frustration and reserve maps for what they are really meant for: storing large numbers of key value pairs for fast lookup.</p>
-</div>
-</div>
+<p>Just by following this rule we can save our future self from frustration
+and reserve maps for what they are really meant for: storing large
+numbers of key value pairs for fast lookup.</p>
 
     </div>
 
     
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/opinion/">opinion</a>
+          <a href="/tags/discussion/">discussion</a>
+          <a href="/tags/development/">development</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/rust-macros-1/">
@@ -284,7 +280,7 @@ By using these other methods of specification, we enable:</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Hierarchies In a Hakyll Blog - hackeryarn</title>
+  <title>Hierarchies in Hakyll - hackeryarn</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,9 +16,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="" /><meta name="description" content=" Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
+<meta name="author" content="" /><meta name="description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
 My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date. The groupings also needed to be dynamic. I didn&#39;t want to write code or updated configurations every time I added a new book.
-" /><meta name="keywords" content="blog, tech, ideas" />
+" /><meta name="keywords" content="tutorial, haskell, hakyll, static site" />
 
 
 
@@ -43,7 +43,7 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
 
 <meta property="og:url" content="https://hackeryarn.com/post/hierarchies-in-hakyll/">
   <meta property="og:site_name" content="hackeryarn">
-  <meta property="og:title" content="Hierarchies In a Hakyll Blog">
+  <meta property="og:title" content="Hierarchies in Hakyll">
   <meta property="og:description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
 My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date. The groupings also needed to be dynamic. I didn&#39;t want to write code or updated configurations every time I added a new book.">
   <meta property="og:locale" content="en">
@@ -51,19 +51,18 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2019-03-27T00:00:00+00:00">
     <meta property="article:modified_time" content="2019-03-27T00:00:00+00:00">
-    <meta property="article:tag" content="Guide">
+    <meta property="article:tag" content="Tutorial">
     <meta property="article:tag" content="Haskell">
-    <meta property="article:tag" content="Hakyll">
 
-  <meta itemprop="name" content="Hierarchies In a Hakyll Blog">
+  <meta itemprop="name" content="Hierarchies in Hakyll">
   <meta itemprop="description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
 My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date. The groupings also needed to be dynamic. I didn&#39;t want to write code or updated configurations every time I added a new book.">
   <meta itemprop="datePublished" content="2019-03-27T00:00:00+00:00">
   <meta itemprop="dateModified" content="2019-03-27T00:00:00+00:00">
   <meta itemprop="wordCount" content="822">
-  <meta itemprop="keywords" content="Guide,Haskell,Hakyll">
+  <meta itemprop="keywords" content="tutorial,haskell,hakyll,static site">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Hierarchies In a Hakyll Blog">
+  <meta name="twitter:title" content="Hierarchies in Hakyll">
   <meta name="twitter:description" content="Creating hierarchy in a blog is a useful technique. It allows you to have different sections by type of content. It lets users navigate by their interests quickly. It makes your blog organized.
 My need for a hierarchy came when working on another blog - Daily Reading Notes. That blog involves notes on books I read daily. Since each book has multiple reading notes, I wanted to allow two forms of navigation: by a grouping of all notes for a particular book and by posted date. The groupings also needed to be dynamic. I didn&#39;t want to write code or updated configurations every time I added a new book.">
 
@@ -134,14 +133,11 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Hierarchies In a Hakyll Blog</h1>
+      <h1 class="post-title">Hierarchies in Hakyll</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-03-27 </span>
-        <div class="post-category">
-            <a href="/categories/haskell/"> Haskell </a>
-            <a href="/categories/hakyll/"> Hakyll </a>
-            </div>
+        
         
       </div>
     </header>
@@ -149,52 +145,30 @@ My need for a hierarchy came when working on another blog - Daily Reading Notes.
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#headline-1">Structuring the posts directory</a>
-</li>
-<li><a href="#headline-2">Matching the Routes</a>
-</li>
-<li><a href="#headline-3">Getting the Posts for a Book</a>
-</li>
-<li><a href="#headline-4">Applying Templates</a>
-</li>
-<li><a href="#headline-5">Wrapping up</a>
-</li>
-</ul>
-</nav>
+    <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
-      
-<p>
-Creating hierarchy in a blog is a useful technique. It allows you to
-have different sections by type of content. It lets users navigate
-by their interests quickly. It makes your blog organized.</p>
-<p>
-My need for a hierarchy came when working on another blog - <a href="https://dailyreadingnotes.com">Daily Reading
-Notes</a>. That blog involves notes on books I read daily. Since each book
-has multiple reading notes, I wanted to allow two forms of navigation: by a
-grouping of all notes for a particular book and by posted date. The groupings also
-needed to be dynamic. I didn&#39;t want to write code or updated configurations every
+      <p>Creating hierarchy in a blog is a useful technique. It allows you to
+have different sections by type of content. It lets users navigate by
+their interests quickly. It makes your blog organized.</p>
+<p>My need for a hierarchy came when working on another blog - <a href="https://dailyreadingnotes.com">Daily
+Reading Notes</a>. That blog involves notes
+on books I read daily. Since each book has multiple reading notes, I
+wanted to allow two forms of navigation: by a grouping of all notes for
+a particular book and by posted date. The groupings also needed to be
+dynamic. I didn't want to write code or updated configurations every
 time I added a new book.</p>
-<p>
-<a href="https://jaspervdj.be/hakyll/">Hakyll</a> didn&#39;t support this out of the box, and I didn&#39;t find examples of anyone
-using similar layouts. So, I created my own approach which I am now sharing.</p>
-<div id="outline-container-headline-1" class="outline-2">
-<h2 id="headline-1">
-Structuring the posts directory
-</h2>
-<div id="outline-text-headline-1" class="outline-text-2">
-<p>In order to build a dynamic hierarchy, the directory structures needs to support
-association of the books with their related posts.</p>
-<p>
-We start our implementation by creating a page and a folder with the name
-of the book inside the <code>posts</code> directory. This naming convention allows us to
-link the book&#39;s page to the folder containing the posts.</p>
-<p>
-Our directory structure should have the following layout:</p>
-<div class="src src-text">
+<p><a href="https://jaspervdj.be/hakyll/">Hakyll</a> didn't support this out of the
+box, and I didn't find examples of anyone using similar layouts. So, I
+created my own approach which I am now sharing.</p>
+<h1 id="structuring-the-posts-directory">Structuring the posts directory</h1>
+<p>In order to build a dynamic hierarchy, the directory structures needs to
+support association of the books with their related posts.</p>
+<p>We start our implementation by creating a page and a folder with the
+name of the book inside the <code>posts</code> directory. This naming convention
+allows us to link the book's page to the folder containing the posts.</p>
+<p>Our directory structure should have the following layout:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -208,32 +182,22 @@ Our directory structure should have the following layout:</p>
 </span></span><span class="line"><span class="cl">+-- book-title.md
 </span></span><span class="line"><span class="cl">+-- book-title
 </span></span><span class="line"><span class="cl">|   +-- post1.md
-</span></span><span class="line"><span class="cl">|   +-- post2.md</span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">|   +-- post2.md
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-2">
-<h2 id="headline-2">
-Matching the Routes
-</h2>
-<div id="outline-text-headline-2" class="outline-text-2">
-<p>With the directory structure in place, we can proceed to creating matchers for
-the books and posts pages.</p>
-<p>
-For the books pages, we match all the files in the <code>posts</code> directory while
-ignoring directories and their contents. We also set the extension of these file
-to <code>html</code>. The extension need to be specified because the original files are
-written in markdown.</p>
-<p>
-For the posts pages, we use <code>posts/*/*</code> as the matcher string. The first <code>*</code>
-tells <code>match</code> to look inside any directory within <code>posts</code>. The second <code>*</code> tells
-<code>match</code> to gets all the files inside the subdirectory. These file are also
-written in markdown and need their extension set to <code>html</code>.</p>
-<p>
-The matchers with extensions look like this:</p>
-<div class="src src-haskell">
+</div><h1 id="matching-the-routes">Matching the Routes</h1>
+<p>With the directory structure in place, we can proceed to creating
+matchers for the books and posts pages.</p>
+<p>For the books pages, we match all the files in the <code>posts</code> directory
+while ignoring directories and their contents. We also set the extension
+of these file to <code>html</code>. The extension need to be specified because the
+original files are written in markdown.</p>
+<p>For the posts pages, we use <code>posts/*/*</code> as the matcher string. The first
+<code>*</code> tells <code>match</code> to look inside any directory within <code>posts</code>. The
+second <code>*</code> tells <code>match</code> to gets all the files inside the subdirectory.
+These file are also written in markdown and need their extension set to
+<code>html</code>.</p>
+<p>The matchers with extensions look like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -255,25 +219,17 @@ The matchers with extensions look like this:</p>
 </span></span><span class="line"><span class="cl">  <span class="o">...</span>
 </span></span><span class="line"><span class="cl"><span class="nf">match</span> <span class="s">&#34;posts/*/*&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="n">route</span> <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&#34;html&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="o">...</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-3" class="outline-2">
-<h2 id="headline-3">
-Getting the Posts for a Book
-</h2>
-<div id="outline-text-headline-3" class="outline-text-2">
-<p>Now that we are matching the books and posts pages, we need to group
-the posts by their respective book. For this purpose, we write a small
-helper function that takes the output of <a href="https://jaspervdj.be/hakyll/">Hakyll&#39;s</a> <code>getResourceFilePath</code>
+</div><h1 id="getting-the-posts-for-a-book">Getting the Posts for a Book</h1>
+<p>Now that we are matching the books and posts pages, we need to group the
+posts by their respective book. For this purpose, we write a small
+helper function that takes the output of
+<a href="https://jaspervdj.be/hakyll/">Hakyll's</a> <code>getResourceFilePath</code>
 function.</p>
-<p>
-Our function takes the file path for the book page, strips out everything
-but the file name, and add a glob pattern to the end.</p>
-<div class="src src-haskell">
+<p>Our function takes the file path for the book page, strips out
+everything but the file name, and add a glob pattern to the end.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -281,16 +237,12 @@ but the file name, and add a glob pattern to the end.</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-haskell" data-lang="haskell"><span class="line"><span class="cl"><span class="nf">getBookFolder</span> <span class="ow">::</span> <span class="kt">FilePath</span> <span class="ow">-&gt;</span> <span class="kt">Pattern</span>
-</span></span><span class="line"><span class="cl"><span class="nf">getBookFolder</span> <span class="ow">=</span> <span class="n">fromGlob</span> <span class="o">.</span> <span class="p">(</span><span class="o">++</span> <span class="s">&#34;/*&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="n">takeWhile</span> <span class="p">(</span><span class="o">/=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="n">drop</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">show</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="nf">getBookFolder</span> <span class="ow">=</span> <span class="n">fromGlob</span> <span class="o">.</span> <span class="p">(</span><span class="o">++</span> <span class="s">&#34;/*&#34;</span><span class="p">)</span> <span class="o">.</span> <span class="n">takeWhile</span> <span class="p">(</span><span class="o">/=</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="n">drop</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">show</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-We use this function in the books pages matcher to get a list of the book&#39;s posts
-as an input for the newly created <code>bookCtx</code>.</p>
-<p>
-Creating the <code>bookCtx</code> goes in the <code>compile</code> block:</p>
-<div class="src src-haskell">
+</div><p>We use this function in the books pages matcher to get a list of the
+book's posts as an input for the newly created <code>bookCtx</code>.</p>
+<p>Creating the <code>bookCtx</code> goes in the <code>compile</code> block:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -314,28 +266,19 @@ Creating the <code>bookCtx</code> goes in the <code>compile</code> block:</p>
 </span></span><span class="line"><span class="cl">        <span class="n">filepath</span> <span class="ow">&lt;-</span> <span class="n">getResourceFilePath</span>
 </span></span><span class="line"><span class="cl">        <span class="n">posts</span> <span class="ow">&lt;-</span> <span class="n">recentFirst</span> <span class="o">=&lt;&lt;</span> <span class="n">loadAll</span> <span class="p">(</span><span class="n">getBookFolder</span> <span class="n">filepath</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="kr">let</span> <span class="n">bookCtx</span> <span class="ow">=</span> <span class="n">listField</span> <span class="s">&#34;posts&#34;</span> <span class="n">defaultContext</span> <span class="p">(</span><span class="n">return</span> <span class="n">posts</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="o">...</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-This <code>compile</code> block is similar to the auto generated example that lists all the
-posts. Except, we generate the path for the posts relatively to the current file.</p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-2">
-<h2 id="headline-4">
-Applying Templates
-</h2>
-<div id="outline-text-headline-4" class="outline-text-2">
-<p>In the final step, we apply templates to both outputs. The book pages need a new
-template that uses the <code>posts</code> list context field we generated in the previous
-step. The posts can continue using the default <code>post</code> template. In addition to
-the individual templates, both the matchers will need the default template and the
-<code>relativizeUrls</code> helper.</p>
-<p>
-The final output of the two matchers looks like this:</p>
-<div class="src src-haskell">
+</div><p>This <code>compile</code> block is similar to the auto generated example that lists
+all the posts. Except, we generate the path for the posts relatively to
+the current file.</p>
+<h1 id="applying-templates">Applying Templates</h1>
+<p>In the final step, we apply templates to both outputs. The book pages
+need a new template that uses the <code>posts</code> list context field we
+generated in the previous step. The posts can continue using the default
+<code>post</code> template. In addition to the individual templates, both the
+matchers will need the default template and the <code>relativizeUrls</code> helper.</p>
+<p>The final output of the two matchers looks like this:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -377,40 +320,32 @@ The final output of the two matchers looks like this:</p>
 </span></span><span class="line"><span class="cl">      <span class="n">compile</span> <span class="o">$</span>
 </span></span><span class="line"><span class="cl">        <span class="n">pandocCompiler</span> <span class="o">&gt;&gt;=</span> <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/post.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
 </span></span><span class="line"><span class="cl">        <span class="n">loadAndApplyTemplate</span> <span class="s">&#34;templates/default.html&#34;</span> <span class="n">postCtx</span> <span class="o">&gt;&gt;=</span>
-</span></span><span class="line"><span class="cl">        <span class="n">relativizeUrls</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">        <span class="n">relativizeUrls</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-2">
-<h2 id="headline-5">
-Wrapping up
-</h2>
-<div id="outline-text-headline-5" class="outline-text-2">
-<p>With these matchers in place, we have a hierarchy of books containing the posts
-related to them. We can add books by creating a new page and folder with the
-name of the book. This setup made it easy for me to maintain a hierarchical site.
-I hope it does the same for you.</p>
-<p>
-The final result of a book page looks like this: <a href="https://dailyreadingnotes.com/posts/the-lean-startup.html">The Lean Startup book page</a>. The full
-code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is available on <a href="https://github.com/hackeryarn/daily-reading-notes/tree/develop">github</a>.</p>
-</div>
-</div>
+</div><h1 id="wrapping-up">Wrapping up</h1>
+<p>With these matchers in place, we have a hierarchy of books containing
+the posts related to them. We can add books by creating a new page and
+folder with the name of the book. This setup made it easy for me to
+maintain a hierarchical site. I hope it does the same for you.</p>
+<p>The final result of a book page looks like this: <a href="https://dailyreadingnotes.com/posts/the-lean-startup.html">The Lean Startup book
+page</a>. The
+full code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is
+available on
+<a href="https://github.com/hackeryarn/daily-reading-notes/tree/develop">github</a>.</p>
 
     </div>
 
     
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/guide/">guide</a>
+          <a href="/tags/tutorial/">tutorial</a>
           <a href="/tags/haskell/">haskell</a>
-          <a href="/tags/hakyll/">hakyll</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/cli-in-emacs/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">CLI Commands in Emacs</span>
+            <span class="prev-text nav-default">CLI commands in Emacs</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/the-right-abstraction-for-lambdas/">
@@ -467,7 +402,7 @@ code for <a href="https://dailyreadingnotes.com/">Daily Reading Notes</a> is ava
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

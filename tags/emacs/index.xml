@@ -9,11 +9,18 @@
     <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>CLI Commands in Emacs</title>
+      <title>CLI commands in Emacs</title>
       <link>https://hackeryarn.com/post/cli-in-emacs/</link>
       <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>&lt;p&gt;&#xA;A few months ago, Gabriel Gonzalez wrote an &lt;a href=&#34;http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html&#34;&gt;excellent article&lt;/a&gt; on creating useful&#xA;tools with Haskell. He used an example of a small CLI tool that aligns the&#xA;equals signs of a multi-line text input. The article wrapped up by integrating&#xA;this tool into vim.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;I love the overarching concept in the article: create small tools that are&#xA;useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The only problem is that I am an Emacs user. So in this article, I wanted to&#xA;show how I get the same effect in Emacs. And demonstrating how to&#xA;take CLI interaction in the text editor even further.&lt;/p&gt;</description>
+      <description>&lt;p&gt;A few months ago, Gabriel Gonzalez wrote an &lt;a href=&#34;http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html&#34;&gt;excellent&#xA;article&lt;/a&gt;&#xA;on creating useful tools with Haskell. He used an example of a small CLI&#xA;tool that aligns the equals signs of a multi-line text input. The&#xA;article wrapped up by integrating this tool into vim.&lt;/p&gt;&#xA;&lt;p&gt;I love the overarching concept in the article: create small tools that&#xA;are useful in multiple contexts. It&#39;s directly inline with the Unix&#xA;philosophy.&lt;/p&gt;&#xA;&lt;p&gt;The only problem is that I am an Emacs user. So in this article, I&#xA;wanted to show how I get the same effect in Emacs. And demonstrating how&#xA;to take CLI interaction in the text editor even further.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ClojureScript Setup for Leiningen Project With Emacs</title>
+      <link>https://hackeryarn.com/post/clojurescript-setup/</link>
+      <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
+      <description>&lt;p&gt;A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.&lt;/p&gt;&#xA;&lt;p&gt;This tutorial is focused on a &lt;a href=&#34;https://clojurescript.org/&#34;&gt;ClojureScript&lt;/a&gt; environment for a &lt;a href=&#34;https://leiningen.org/&#34;&gt;Leiningen&lt;/a&gt; based&#xA;project being developed in &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-emacs&#34;&gt;Why Emacs?&lt;/h1&gt;&#xA;&lt;p&gt;Emacs has a great setup for most programming languages but really shines when it&#xA;comes to Lisps, including Clojure. &lt;a href=&#34;https://cider.readthedocs.io/en/latest/&#34;&gt;Cider&lt;/a&gt; is the powerful package that allows easy&#xA;interaction with the Clojure REPL and many IDE like features. In combination with&#xA;&lt;a href=&#34;https://github.com/clojure-emacs/clj-refactor.el&#34;&gt;clj-refactor&lt;/a&gt;, you get one of the most powerful toolkits out there.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

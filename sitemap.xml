@@ -58,6 +58,20 @@
   </url>
   
   <url>
+    <loc>https://hackeryarn.com/tags/rust/</loc>
+    <lastmod>2025-10-05T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/tutorial/</loc>
+    <lastmod>2025-10-05T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/post/rust-macros-2/</loc>
     <lastmod>2025-08-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -72,21 +86,14 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/</loc>
+    <loc>https://hackeryarn.com/tags/development/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/development/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/opinion/</loc>
+    <loc>https://hackeryarn.com/tags/discussion/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -101,13 +108,6 @@
   
   <url>
     <loc>https://hackeryarn.com/tags/automation/</loc>
-    <lastmod>2023-10-26T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/categories/clojure/</loc>
     <lastmod>2023-10-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -135,28 +135,7 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/distrobox/</loc>
-    <lastmod>2023-09-17T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/post/distrobox/</loc>
-    <lastmod>2023-09-17T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/docker/</loc>
-    <lastmod>2023-09-17T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/categories/linux/</loc>
     <lastmod>2023-09-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -170,8 +149,8 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/podman/</loc>
-    <lastmod>2023-09-17T00:00:00+00:00</lastmod>
+    <loc>https://hackeryarn.com/tags/patterns/</loc>
+    <lastmod>2023-06-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -179,6 +158,20 @@
   <url>
     <loc>https://hackeryarn.com/post/dry/</loc>
     <lastmod>2023-06-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/categories/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/categories/linux/</loc>
+    <lastmod>2023-02-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -233,21 +226,7 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/python/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/post/django-returns-3/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/types/</loc>
     <lastmod>2022-04-16T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -275,13 +254,6 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/hy/</loc>
-    <lastmod>2020-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/tags/hy/</loc>
     <lastmod>2020-03-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -296,15 +268,8 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/practices/</loc>
-    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/thoughts/</loc>
-    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <loc>https://hackeryarn.com/tags/cli/</loc>
+    <lastmod>2019-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -317,43 +282,8 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/emacs/</loc>
-    <lastmod>2019-06-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/tags/emacs/</loc>
     <lastmod>2019-06-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/guide/</loc>
-    <lastmod>2019-06-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/categories/hakyll/</loc>
-    <lastmod>2019-03-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/hakyll/</loc>
-    <lastmod>2019-03-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/categories/haskell/</loc>
-    <lastmod>2019-03-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -394,6 +324,13 @@
   </url>
   
   <url>
+    <loc>https://hackeryarn.com/tags/guide/</loc>
+    <lastmod>2019-02-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://hackeryarn.com/categories/javascript/</loc>
     <lastmod>2019-02-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -423,6 +360,13 @@
   
   <url>
     <loc>https://hackeryarn.com/categories/nodejs/</loc>
+    <lastmod>2019-02-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/opinion/</loc>
     <lastmod>2019-02-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -492,13 +436,6 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/tags/experience/</loc>
-    <lastmod>2018-09-15T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</loc>
     <lastmod>2018-09-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -513,7 +450,7 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/testing/</loc>
+    <loc>https://hackeryarn.com/tags/javascript/</loc>
     <lastmod>2018-06-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -534,21 +471,7 @@
   </url>
   
   <url>
-    <loc>https://hackeryarn.com/categories/clojurescript/</loc>
-    <lastmod>2017-07-15T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://hackeryarn.com/post/clojurescript-setup/</loc>
-    <lastmod>2017-07-15T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://hackeryarn.com/tags/setup/</loc>
     <lastmod>2017-07-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -612,6 +535,20 @@
   
   <url>
     <loc>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</loc>
+    <lastmod>2016-02-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/categories/haskell/</loc>
+    <lastmod>2016-02-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://hackeryarn.com/tags/setup/</loc>
     <lastmod>2016-02-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

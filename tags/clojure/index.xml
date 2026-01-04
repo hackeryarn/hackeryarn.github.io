@@ -13,7 +13,21 @@
       <link>https://hackeryarn.com/post/clojure-actions/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/clojure-actions/</guid>
-      <description>&lt;p&gt;&#xA;I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project. And these parts become especially important if the project is in maintenance mode.&lt;/p&gt;</description>
+      <description>&lt;p&gt;I recently took over the maintenance of an open source Clojure project.&#xA;One of the first things I noticed was the lack CI or CD. These are&#xA;things that aren&amp;rsquo;t required but can save a lot of work, especially for&#xA;a public project.&lt;/p&gt;&#xA;&lt;p&gt;The CI portion helps make sure that all pull requests pass tests and&#xA;conform to the project&#39;s coding style. The CD portion helps with&#xA;deploying the project. And these parts become especially important if&#xA;the project is in maintenance mode.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Why I Built a Static Site in Clojure</title>
+      <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
+      <description>&lt;p&gt;At a summer barbecue, a friend asked if I could build a website for his&#xA;new restaurant. But what he didn&#39;t know was that I haven&#39;t built a&#xA;static site in nearly a decade. However I couldn&#39;t let him spend&#xA;thousands of dollars on a cookie cutter website designed by a firm that&#xA;knew nothing about his restaurant.&lt;/p&gt;&#xA;&lt;p&gt;We started coming up with ideas right away over a couple of beers. He&#xA;wanted manageable content, an Instagram feed, and an easy to change&#xA;restaurant menu. It quickly started sounding like a full on Content&#xA;Management System and not a simple website. I had to reel in this&#xA;ambitious project before it became a feature sink. So we decided to just&#xA;make a beautiful static site.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>ClojureScript Setup for Leiningen Project With Emacs</title>
+      <link>https://hackeryarn.com/post/clojurescript-setup/</link>
+      <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
+      <description>&lt;p&gt;A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.&lt;/p&gt;&#xA;&lt;p&gt;This tutorial is focused on a &lt;a href=&#34;https://clojurescript.org/&#34;&gt;ClojureScript&lt;/a&gt; environment for a &lt;a href=&#34;https://leiningen.org/&#34;&gt;Leiningen&lt;/a&gt; based&#xA;project being developed in &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-emacs&#34;&gt;Why Emacs?&lt;/h1&gt;&#xA;&lt;p&gt;Emacs has a great setup for most programming languages but really shines when it&#xA;comes to Lisps, including Clojure. &lt;a href=&#34;https://cider.readthedocs.io/en/latest/&#34;&gt;Cider&lt;/a&gt; is the powerful package that allows easy&#xA;interaction with the Clojure REPL and many IDE like features. In combination with&#xA;&lt;a href=&#34;https://github.com/clojure-emacs/clj-refactor.el&#34;&gt;clj-refactor&lt;/a&gt;, you get one of the most powerful toolkits out there.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

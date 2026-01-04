@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Discussion on hackeryarn</title>
+    <link>https://hackeryarn.com/tags/discussion/</link>
+    <description>Recent content in Discussion on hackeryarn</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/discussion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>You don&#39;t need a map for that</title>
+      <link>https://hackeryarn.com/post/maps/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/maps/</guid>
+      <description>&lt;p&gt;One of the most misused data structures is the humble map; hashmap,&#xA;dictionary, hash table, etc.&lt;/p&gt;&#xA;&lt;p&gt;It&#39;s a great data structure for quick storage and access of key value&#xA;pairs. Unfortunately, because of its ease and availability, it becomes&#xA;pervasive at jobs it has no business doing. The problem grows most&#xA;visible in dynamically typed languages that make the map a first class&#xA;citizen (Python, Ruby, Clojure, etc.), but it can creep up in any&#xA;language.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>When DRY goes wrong</title>
+      <link>https://hackeryarn.com/post/dry/</link>
+      <pubDate>Sat, 10 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/dry/</guid>
+      <description>&lt;p&gt;DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.&lt;/p&gt;&#xA;&lt;p&gt;Ok, maybe it&amp;rsquo;s not that bad, but many times DRY gets applied without much thought. This careless application of DRY leads to brittle code, making even simple changes scary because they could have a huge ripple effect.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Embrace your constraints</title>
+      <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
+      <description>&lt;p&gt;Engineers want to measure the quality and effectiveness of their work.&#xA;They turn to code coverage, burn down charts, and yearly goals, with the&#xA;best intention.&lt;/p&gt;&#xA;&lt;p&gt;These measurements provide quantitative data about how much planned work&#xA;was delivered, but they fail to tie the work to outcome. What good are&#xA;1,000 lines of code if the users never use the feature? These metrics&#xA;distract from the two question every professional should ask:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Why I Built a Static Site in Clojure</title>
+      <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</guid>
+      <description>&lt;p&gt;At a summer barbecue, a friend asked if I could build a website for his&#xA;new restaurant. But what he didn&#39;t know was that I haven&#39;t built a&#xA;static site in nearly a decade. However I couldn&#39;t let him spend&#xA;thousands of dollars on a cookie cutter website designed by a firm that&#xA;knew nothing about his restaurant.&lt;/p&gt;&#xA;&lt;p&gt;We started coming up with ideas right away over a couple of beers. He&#xA;wanted manageable content, an Instagram feed, and an easy to change&#xA;restaurant menu. It quickly started sounding like a full on Content&#xA;Management System and not a simple website. I had to reel in this&#xA;ambitious project before it became a feature sink. So we decided to just&#xA;make a beautiful static site.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Your Job Isn&#39;t Writing Code</title>
+      <link>https://hackeryarn.com/post/your-job-isnt-writing-code/</link>
+      <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/your-job-isnt-writing-code/</guid>
+      <description>&lt;p&gt;Every line of code you write is a liability. That line of code you just wrote&#xA;adds complexity to your code base, gives you more nuances to remember, it&#xA;might even be a bug. If code is so expensive and dangerous. What can you do?&#xA;After all, you are a developer.&lt;/p&gt;&#xA;&lt;p&gt;The answer: You must remember your real job&amp;hellip; Delivering value to the users.&lt;/p&gt;&#xA;&lt;p&gt;Users don&amp;rsquo;t care what your class hierarchy looks like. They don&amp;rsquo;t care which&#xA;language or framework you&amp;rsquo;re using. They don&amp;rsquo;t even care if your system is a&#xA;cloud ready microservice. The user only cares that your product is helping them.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

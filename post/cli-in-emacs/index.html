@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>CLI Commands in Emacs - hackeryarn</title>
+  <title>CLI commands in Emacs - hackeryarn</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,10 +16,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="" /><meta name="description" content=" A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
+<meta name="author" content="" /><meta name="description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
 I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
 The only problem is that I am an Emacs user. So in this article, I wanted to show how I get the same effect in Emacs. And demonstrating how to take CLI interaction in the text editor even further.
-" /><meta name="keywords" content="blog, tech, ideas" />
+" /><meta name="keywords" content="tutorial, emacs, terminal, cli" />
 
 
 
@@ -44,7 +44,7 @@ The only problem is that I am an Emacs user. So in this article, I wanted to sho
 
 <meta property="og:url" content="https://hackeryarn.com/post/cli-in-emacs/">
   <meta property="og:site_name" content="hackeryarn">
-  <meta property="og:title" content="CLI Commands in Emacs">
+  <meta property="og:title" content="CLI commands in Emacs">
   <meta property="og:description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
 I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
 The only problem is that I am an Emacs user. So in this article, I wanted to show how I get the same effect in Emacs. And demonstrating how to take CLI interaction in the text editor even further.">
@@ -53,19 +53,20 @@ The only problem is that I am an Emacs user. So in this article, I wanted to sho
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2019-06-01T00:00:00+00:00">
     <meta property="article:modified_time" content="2019-06-01T00:00:00+00:00">
-    <meta property="article:tag" content="Guide">
+    <meta property="article:tag" content="Tutorial">
     <meta property="article:tag" content="Emacs">
+    <meta property="article:tag" content="Cli">
 
-  <meta itemprop="name" content="CLI Commands in Emacs">
+  <meta itemprop="name" content="CLI commands in Emacs">
   <meta itemprop="description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
 I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
 The only problem is that I am an Emacs user. So in this article, I wanted to show how I get the same effect in Emacs. And demonstrating how to take CLI interaction in the text editor even further.">
   <meta itemprop="datePublished" content="2019-06-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2019-06-01T00:00:00+00:00">
   <meta itemprop="wordCount" content="1142">
-  <meta itemprop="keywords" content="Guide,Emacs">
+  <meta itemprop="keywords" content="tutorial,emacs,terminal,cli">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="CLI Commands in Emacs">
+  <meta name="twitter:title" content="CLI commands in Emacs">
   <meta name="twitter:description" content="A few months ago, Gabriel Gonzalez wrote an excellent article on creating useful tools with Haskell. He used an example of a small CLI tool that aligns the equals signs of a multi-line text input. The article wrapped up by integrating this tool into vim.
 I love the overarching concept in the article: create small tools that are useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.
 The only problem is that I am an Emacs user. So in this article, I wanted to show how I get the same effect in Emacs. And demonstrating how to take CLI interaction in the text editor even further.">
@@ -137,13 +138,11 @@ The only problem is that I am an Emacs user. So in this article, I wanted to sho
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">CLI Commands in Emacs</h1>
+      <h1 class="post-title">CLI commands in Emacs</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-06-01 </span>
-        <div class="post-category">
-            <a href="/categories/emacs/"> Emacs </a>
-            </div>
+        
         
       </div>
     </header>
@@ -152,54 +151,35 @@ The only problem is that I am an Emacs user. So in this article, I wanted to sho
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#headline-1">Take Action on a Region</a>
-</li>
-<li><a href="#headline-2">Take Action on a Buffer</a>
-<ul>
-<li><a href="#headline-3">Replacing Buffer Contents</a>
-</li>
-<li><a href="#headline-4">Displaying The Output of a Shell Command</a>
-</li>
-</ul>
-</li>
-<li><a href="#headline-5">Running Command Automatically</a>
-</li>
-<li><a href="#headline-6">Going Further</a>
-</li>
-</ul>
+  <ul>
+    <li><a href="#replacing-buffer-contents">Replacing Buffer Contents</a></li>
+    <li><a href="#displaying-the-output-of-a-shell-command">Displaying The Output of a Shell Command</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-<p>
-A few months ago, Gabriel Gonzalez wrote an <a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">excellent article</a> on creating useful
-tools with Haskell. He used an example of a small CLI tool that aligns the
-equals signs of a multi-line text input. The article wrapped up by integrating
-this tool into vim.</p>
-<p>
-I love the overarching concept in the article: create small tools that are
-useful in multiple contexts. It&#39;s directly inline with the Unix philosophy.</p>
-<p>
-The only problem is that I am an Emacs user. So in this article, I wanted to
-show how I get the same effect in Emacs. And demonstrating how to
-take CLI interaction in the text editor even further.</p>
-<div id="outline-container-headline-1" class="outline-2">
-<h2 id="headline-1">
-Take Action on a Region
-</h2>
-<div id="outline-text-headline-1" class="outline-text-2">
-<p>
-In his article, Gabriel uses the command he created to take action on a region.
-This involves selecting text and executing a CLI command on it&#39;s contents –
-replacing the region with the command&#39;s output.</p>
-<p>
-For this example, we will use the command from Gabrial&#39;s article,
-<code>align-equals</code>. To see the full implementation and learn a little Haskell, 
-you can read his <a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">article</a>. Or you can follow along while keeping the below
-command&#39;s usage in mind:</p>
-<div class="src src-bash">
+      <p>A few months ago, Gabriel Gonzalez wrote an <a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">excellent
+article</a>
+on creating useful tools with Haskell. He used an example of a small CLI
+tool that aligns the equals signs of a multi-line text input. The
+article wrapped up by integrating this tool into vim.</p>
+<p>I love the overarching concept in the article: create small tools that
+are useful in multiple contexts. It's directly inline with the Unix
+philosophy.</p>
+<p>The only problem is that I am an Emacs user. So in this article, I
+wanted to show how I get the same effect in Emacs. And demonstrating how
+to take CLI interaction in the text editor even further.</p>
+<h1 id="take-action-on-a-region">Take Action on a Region</h1>
+<p>In his article, Gabriel uses the command he created to take action on a
+region. This involves selecting text and executing a CLI command on
+it's contents &ndash; replacing the region with the command's output.</p>
+<p>For this example, we will use the command from Gabrial's article,
+<code>align-equals</code>. To see the full implementation and learn a little
+Haskell, you can read his
+<a href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">article</a>.
+Or you can follow along while keeping the below command's usage in
+mind:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -219,31 +199,28 @@ command&#39;s usage in mind:</p>
 </span></span><span class="line"><span class="cl">  &lt;Ctrl-D&gt;
 </span></span><span class="line"><span class="cl">  <span class="nv">foo</span>  <span class="o">=</span> <span class="m">1</span>
 </span></span><span class="line"><span class="cl">  <span class="nv">a</span>    <span class="o">=</span> <span class="m">2</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="nv">asdf</span> <span class="o">=</span> <span class="m">3</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-Emacs has a built in command, <code>shell-command-on-region</code>, which executes the
-specified command on the selected region. This would work for our example, but
-it requires two commands. First you execute <code>shell-command-on-region</code>, then you
-provide the command you want to run. If the cli command needs flags or
-arguments, it becomes tedious to put in every time. Wouldn&#39;t it be nice if we
-could select a region and only run one command?</p>
-<p>
-To accomplish this, we need a wrapper. This implementation combines a couple
-elisp components. We start our function by expecting the beginning and ending of
-the region as arguments. The region(<code>r</code>) flag passed to <code>interactive</code> ensure
-that the correct arguments get passed in.</p>
-<p>
-<code>interactive</code> lets us invoke our function from anywhere, and supports <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">many more
-options</a>, which I encourage you to explore on your own.</p>
-<p>
-With our region bounds ready, we call <code>shell-command-on-region</code> to
+</div><p>Emacs has a built in command, <code>shell-command-on-region</code>, which executes
+the specified command on the selected region. This would work for our
+example, but it requires two commands. First you execute
+<code>shell-command-on-region</code>, then you provide the command you want to run.
+If the cli command needs flags or arguments, it becomes tedious to put
+in every time. Wouldn't it be nice if we could select a region and only
+run one command?</p>
+<p>To accomplish this, we need a wrapper. This implementation combines a
+couple elisp components. We start our function by expecting the
+beginning and ending of the region as arguments. The region(<code>r</code>) flag
+passed to <code>interactive</code> ensure that the correct arguments get passed in.</p>
+<p><code>interactive</code> lets us invoke our function from anywhere, and supports
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">many more
+options</a>,
+which I encourage you to explore on your own.</p>
+<p>With our region bounds ready, we call <code>shell-command-on-region</code> to
 executes a shell command on a region specified by the beginning(<code>b</code>) and
-ending(<code>e</code>) arguments. We also supply the shell command to execute, and two
-flags which make the command replace the selected region. </p>
-<div class="src src-elisp">
+ending(<code>e</code>) arguments. We also supply the shell command to execute, and
+two flags which make the command replace the selected region.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -253,39 +230,25 @@ flags which make the command replace the selected region. </p>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-equals</span> <span class="p">(</span><span class="nv">b</span> <span class="nv">e</span><span class="p">)</span> 
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span> <span class="s">&#34;r&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="nv">b</span> <span class="nv">e</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="nv">b</span> <span class="nv">e</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-We can expand the CLI command in this wrapper to take any number or arguments
-and flags. No matter how we change it, we can still invoke it with one command:
-<code>&lt;M-x&gt; align-equals</code>.</p>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-2">
-<h2 id="headline-2">
-Take Action on a Buffer
-</h2>
-<div id="outline-text-headline-2" class="outline-text-2">
-<p>
-A common scenario I run into, is wanting to run a tool on the whole file. This
-normally comes in two variants. I either want to modify the content of the file
-in some way, like using a beautifier. Or I want to produce an output based on
-the file content, like getting totals or showing lint errors.</p>
-<p>
-Again, there are built in ways to do this, but a wrapper lets us do more with
-our shell commands.</p>
-<div id="outline-container-headline-3" class="outline-3">
-<h3 id="headline-3">
-Replacing Buffer Contents
-</h3>
-<div id="outline-text-headline-3" class="outline-text-3">
-<p>
-This time, we don&#39;t need to pass any arguments to <code>interactive</code>. Instead, we use
-<code>shell-command-on-region</code> with the results of calling <code>point-min</code> and
-<code>point-max</code> – the start and end of the buffer, respectively.</p>
-<div class="src src-elisp">
+</div><p>We can expand the CLI command in this wrapper to take any number or
+arguments and flags. No matter how we change it, we can still invoke it
+with one command: <code>&lt;M-x&gt; align-equals</code>.</p>
+<h1 id="take-action-on-a-buffer">Take Action on a Buffer</h1>
+<p>A common scenario I run into, is wanting to run a tool on the whole
+file. This normally comes in two variants. I either want to modify the
+content of the file in some way, like using a beautifier. Or I want to
+produce an output based on the file content, like getting totals or
+showing lint errors.</p>
+<p>Again, there are built in ways to do this, but a wrapper lets us do more
+with our shell commands.</p>
+<h2 id="replacing-buffer-contents">Replacing Buffer Contents</h2>
+<p>This time, we don't need to pass any arguments to <code>interactive</code>.
+Instead, we use <code>shell-command-on-region</code> with the results of calling
+<code>point-min</code> and <code>point-max</code> &ndash; the start and end of the buffer,
+respectively.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -295,34 +258,24 @@ This time, we don&#39;t need to pass any arguments to <code>interactive</code>. 
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">align-buffer</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">)</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">shell-command-on-region</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">)</span> <span class="s">&#34;align-equals&#34;</span> <span class="no">t</span> <span class="no">t</span><span class="p">))</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-<code>align-buffer</code> aligns the entire buffer without the need to manually select a
-region. This makes the it less error prone and easier to execute. We can&#39;t
-select the region incorrectly, because we don&#39;t need to anymore. We only need to
-execute <code>&lt;M-x&gt; align-buffer</code>.</p>
-</div>
-</div>
-<div id="outline-container-headline-4" class="outline-3">
-<h3 id="headline-4">
-Displaying The Output of a Shell Command
-</h3>
-<div id="outline-text-headline-4" class="outline-text-3">
-<p>
-For this examples, let&#39;s use <code>eslint</code>, a popular tool for linting JavaScript
-code. </p>
-<p>
-<code>eslint</code> is different from our previous command. It takes a file name, not the
-buffer contents. This means we will need to use some new functions.</p>
-<p>
-Once again, we don&#39;t accept any arguments and pass nothing to <code>interactive</code>. We
-get the buffer name by using the <code>buffer-name</code> function. Once we have the name,
-we merge it with the string <code>eslint</code> to create the final command, and pass it to
-<code>shell-command</code>. This logs the output to a dedicate shell command buffer.</p>
-<div class="src src-elisp">
+</div><p><code>align-buffer</code> aligns the entire buffer without the need to manually
+select a region. This makes the it less error prone and easier to
+execute. We can't select the region incorrectly, because we don't need
+to anymore. We only need to execute <code>&lt;M-x&gt; align-buffer</code>.</p>
+<h2 id="displaying-the-output-of-a-shell-command">Displaying The Output of a Shell Command</h2>
+<p>For this examples, let's use <code>eslint</code>, a popular tool for linting
+JavaScript code.</p>
+<p><code>eslint</code> is different from our previous command. It takes a file name,
+not the buffer contents. This means we will need to use some new
+functions.</p>
+<p>Once again, we don't accept any arguments and pass nothing to
+<code>interactive</code>. We get the buffer name by using the <code>buffer-name</code>
+function. Once we have the name, we merge it with the string <code>eslint</code> to
+create the final command, and pass it to <code>shell-command</code>. This logs the
+output to a dedicate shell command buffer.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -334,67 +287,48 @@ we merge it with the string <code>eslint</code> to create the final command, and
 <pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nb">defun</span> <span class="nv">run-eslint</span> <span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">interactive</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">(</span><span class="nb">let</span> <span class="p">((</span><span class="nv">current-file</span> <span class="p">(</span><span class="nf">buffer-name</span> <span class="p">(</span><span class="nf">current-buffer</span><span class="p">))))</span>
-</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint &#34;</span> <span class="nv">current-file</span><span class="p">))))</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint &#34;</span> <span class="nv">current-file</span><span class="p">))))</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-Now we can execute <code>run-eslint</code> in any JavaScript file and see the results of
-executing the command. </p>
-<p>
-Seeing the results is a good start. But <code>eslint</code> comes with a handy <code>--fix</code> flag
-that automatically fixes simple problems.</p>
-<p>
-To add this flag you only need to change the string you pass to <code>shell-command</code>.</p>
-<div class="src src-elisp">
+</div><p>Now we can execute <code>run-eslint</code> in any JavaScript file and see the
+results of executing the command.</p>
+<p>Seeing the results is a good start. But <code>eslint</code> comes with a handy
+<code>--fix</code> flag that automatically fixes simple problems.</p>
+<p>To add this flag you only need to change the string you pass to
+<code>shell-command</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">    <span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">shell-command</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&#34;eslint --fix&#34;</span> <span class="nv">current-file</span><span class="p">))))</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-With that change, the simple issues get fixed automatically and we get a
+</div><p>With that change, the simple issues get fixed automatically and we get a
 log of the complex issues to fix manually.</p>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-5" class="outline-2">
-<h2 id="headline-5">
-Running Command Automatically
-</h2>
-<div id="outline-text-headline-5" class="outline-text-2">
-<p>
-From the last example we have a useful <code>run-eslint</code> function. But we need to
-remember to run it every time we want to check a file. Let&#39;s reduce our mental
-burden, and let Emacs automatically execute this function every time we save a
-JavaScript file. </p>
-<p>
-There are two facilities that makes automatic function execution precise and
-safe: modes and hooks.</p>
-<p>
-Modes allow us to know what context we are in. When we open a new file, a number
-of modes can activate. For our example, there is a built in <code>js-mode</code> that
-activates when we open a JavaScript file.</p>
-<p>
-We will hook into the activation of this mode to limit the scope of our automatic
-function execution to only JavaScript files. We wouldn&#39;t want to execute a
-command that changes file contents in an unsupported file type.</p>
-<p>
-Once we are inside <code>js-mode</code>, we will add another hook – this time to an
-action. Since <code>eslint</code> can fix some issues for us, we will run it before the
-file is saved by hooking onto the <code>before-save</code> action.</p>
-<p>
-In the implementation, we use <code>add-hook</code> to listen to the two action described
-above. <code>js-mode-hook</code> only needs the function to execute when the mode is
-activated. But <code>before-save-hook</code> needs the <code>LOCAL</code> option. This only runs the
-action in the buffer it was activated in. Without this flag, <code>eslint</code> would run
-on every file after we opened any JavaScript file.</p>
-<div class="src src-elisp">
+<h1 id="running-command-automatically">Running Command Automatically</h1>
+<p>From the last example we have a useful <code>run-eslint</code> function. But we
+need to remember to run it every time we want to check a file. Let's
+reduce our mental burden, and let Emacs automatically execute this
+function every time we save a JavaScript file.</p>
+<p>There are two facilities that makes automatic function execution precise
+and safe: modes and hooks.</p>
+<p>Modes allow us to know what context we are in. When we open a new file,
+a number of modes can activate. For our example, there is a built in
+<code>js-mode</code> that activates when we open a JavaScript file.</p>
+<p>We will hook into the activation of this mode to limit the scope of our
+automatic function execution to only JavaScript files. We wouldn't want
+to execute a command that changes file contents in an unsupported file
+type.</p>
+<p>Once we are inside <code>js-mode</code>, we will add another hook &ndash; this time to
+an action. Since <code>eslint</code> can fix some issues for us, we will run it
+before the file is saved by hooking onto the <code>before-save</code> action.</p>
+<p>In the implementation, we use <code>add-hook</code> to listen to the two action
+described above. <code>js-mode-hook</code> only needs the function to execute when
+the mode is activated. But <code>before-save-hook</code> needs the <code>LOCAL</code> option.
+This only runs the action in the buffer it was activated in. Without
+this flag, <code>eslint</code> would run on every file after we opened any
+JavaScript file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -402,48 +336,39 @@ on every file after we opened any JavaScript file.</p>
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl">  <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;js-mode-hook</span>
-</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
-</span></span><span class="line"><span class="cl">              <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;run-eslint</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-elisp" data-lang="elisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;js-mode-hook</span>
+</span></span><span class="line"><span class="cl">          <span class="p">(</span><span class="nb">lambda</span> <span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="nv">add-hook</span> <span class="ss">&#39;before-save-hook</span> <span class="ss">&#39;run-eslint</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-headline-6" class="outline-2">
-<h2 id="headline-6">
-Going Further
-</h2>
-<div id="outline-text-headline-6" class="outline-text-2">
-<p>
-I only scratched the surface of what&#39;s possible with Elisp. Projects like <a href="https://magit.vc/">magit</a>
-provide amazing examples of extending basic CLI tools.</p>
-<p>
-Magit is a wrapper around git. It doesn&#39;t change what git does. Instead, it adds
-on text manipulation and file awareness that Emacs is good at. If you need
-inspiration for how to integrate other tools into Emacs, look no further. </p>
-<p>
-I hope that this article provided some inspiration and a few new tricks. Happy
-hacking.</p>
-</div>
-</div>
+</div><h1 id="going-further">Going Further</h1>
+<p>I only scratched the surface of what's possible with Elisp. Projects
+like <a href="https://magit.vc/">magit</a> provide amazing examples of extending
+basic CLI tools.</p>
+<p>Magit is a wrapper around git. It doesn't change what git does.
+Instead, it adds on text manipulation and file awareness that Emacs is
+good at. If you need inspiration for how to integrate other tools into
+Emacs, look no further.</p>
+<p>I hope that this article provided some inspiration and a few new tricks.
+Happy hacking.</p>
 
     </div>
 
     
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/guide/">guide</a>
+          <a href="/tags/tutorial/">tutorial</a>
           <a href="/tags/emacs/">emacs</a>
+          <a href="/tags/cli/">cli</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/embrace-the-constraints/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">Embrace Your Constraints</span>
+            <span class="prev-text nav-default">Embrace your constraints</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/hierarchies-in-hakyll/">
-            <span class="next-text nav-default">Hierarchies In a Hakyll Blog</span>
+            <span class="next-text nav-default">Hierarchies in Hakyll</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -496,7 +421,7 @@ hacking.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

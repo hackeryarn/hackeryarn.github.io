@@ -6,22 +6,8 @@
     <description>Recent content in Guide on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/guide/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>CLI Commands in Emacs</title>
-      <link>https://hackeryarn.com/post/cli-in-emacs/</link>
-      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
-      <description>&lt;p&gt;&#xA;A few months ago, Gabriel Gonzalez wrote an &lt;a href=&#34;http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html&#34;&gt;excellent article&lt;/a&gt; on creating useful&#xA;tools with Haskell. He used an example of a small CLI tool that aligns the&#xA;equals signs of a multi-line text input. The article wrapped up by integrating&#xA;this tool into vim.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;I love the overarching concept in the article: create small tools that are&#xA;useful in multiple contexts. It&amp;#39;s directly inline with the Unix philosophy.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The only problem is that I am an Emacs user. So in this article, I wanted to&#xA;show how I get the same effect in Emacs. And demonstrating how to&#xA;take CLI interaction in the text editor even further.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Hierarchies In a Hakyll Blog</title>
-      <link>https://hackeryarn.com/post/hierarchies-in-hakyll/</link>
-      <pubDate>Wed, 27 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/hierarchies-in-hakyll/</guid>
-      <description>&lt;p&gt;&#xA;Creating hierarchy in a blog is a useful technique. It allows you to&#xA;have different sections by type of content. It lets users navigate&#xA;by their interests quickly. It makes your blog organized.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;My need for a hierarchy came when working on another blog - &lt;a href=&#34;https://dailyreadingnotes.com&#34;&gt;Daily Reading&#xA;Notes&lt;/a&gt;. That blog involves notes on books I read daily. Since each book&#xA;has multiple reading notes, I wanted to allow two forms of navigation: by a&#xA;grouping of all notes for a particular book and by posted date. The groupings also&#xA;needed to be dynamic. I didn&amp;#39;t want to write code or updated configurations every&#xA;time I added a new book.&lt;/p&gt;</description>
-    </item>
     <item>
       <title>The Right Abstraction for Lambdas</title>
       <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
@@ -35,27 +21,6 @@
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Your Job Isn&#39;t Writing Code</title>
-      <link>https://hackeryarn.com/post/your-job-isnt-writing-code/</link>
-      <pubDate>Sun, 19 Aug 2018 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/your-job-isnt-writing-code/</guid>
-      <description>&lt;p&gt;Every line of code you write is a liability. That line of code you just wrote&#xA;adds complexity to your code base, gives you more nuances to remember, it&#xA;might even be a bug. If code is so expensive and dangerous. What can you do?&#xA;After all, you are a developer.&lt;/p&gt;&#xA;&lt;p&gt;The answer: You must remember your real job&amp;hellip; Delivering value to the users.&lt;/p&gt;&#xA;&lt;p&gt;Users don&amp;rsquo;t care what your class hierarchy looks like. They don&amp;rsquo;t care which&#xA;language or framework you&amp;rsquo;re using. They don&amp;rsquo;t even care if your system is a&#xA;cloud ready microservice. The user only cares that your product is helping them.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Universally Testable Dependencies in JavaScript</title>
-      <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
-      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/universally-testable-dependencies/</guid>
-      <description>&lt;p&gt;JavaScript dependencies are notoriously hard to mock and test across framework&#xA;and environments. However, &lt;a href=&#34;https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E&#34;&gt;Dependency Injection&lt;/a&gt; (DI) ensures testability. It&#xA;is common in statically typed languages, like Java or Go, but is also useful in&#xA;dynamic languages like JavaScript.&lt;/p&gt;&#xA;&lt;p&gt;This article will guide you through a simple technique that can apply&#xA;to any JavaScript code base, frontend or backend, independent of frameworks&#xA;and libraries.&lt;/p&gt;&#xA;&lt;p&gt;The technique I am going to demonstrate is arguably not true DI, since the&#xA;dependencies are still managed by the module using them. However, it&#xA;solves the dependency problem for testing which is the focus of this&#xA;article.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>ClojureScript Setup for Leiningen Project With Emacs</title>
-      <link>https://hackeryarn.com/post/clojurescript-setup/</link>
-      <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
-      <description>&lt;p&gt;A good development environment if fundamental to being productive. This is&#xA;especially true for Lisps. A good environment can&#xA;greatly speed up your development process and allow you to utilize the full&#xA;power of Clojure or any other Lisp.&lt;/p&gt;&#xA;&lt;p&gt;This tutorial is focused on a &lt;a href=&#34;https://clojurescript.org/&#34;&gt;ClojureScript&lt;/a&gt; environment for a &lt;a href=&#34;https://leiningen.org/&#34;&gt;Leiningen&lt;/a&gt; based&#xA;project being developed in &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-emacs&#34;&gt;Why Emacs?&lt;/h1&gt;&#xA;&lt;p&gt;Emacs has a great setup for most programming languages but really shines when it&#xA;comes to Lisps, including Clojure. &lt;a href=&#34;https://cider.readthedocs.io/en/latest/&#34;&gt;Cider&lt;/a&gt; is the powerful package that allows easy&#xA;interaction with the Clojure REPL and many IDE like features. In combination with&#xA;&lt;a href=&#34;https://github.com/clojure-emacs/clj-refactor.el&#34;&gt;clj-refactor&lt;/a&gt;, you get one of the most powerful toolkits out there.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Efficient CSV Imports in Rails</title>

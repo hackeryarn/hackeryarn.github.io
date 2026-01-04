@@ -16,10 +16,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="" /><meta name="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+<meta name="author" content="" /><meta name="description" content="A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
 Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.
-" /><meta name="keywords" content="blog, tech, ideas" />
+" /><meta name="keywords" content="clojurescript, clojure, leiningen, emacs, tutorial" />
 
 
 
@@ -45,7 +45,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 <meta property="og:url" content="https://hackeryarn.com/post/clojurescript-setup/">
   <meta property="og:site_name" content="hackeryarn">
   <meta property="og:title" content="ClojureScript Setup for Leiningen Project With Emacs">
-  <meta property="og:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+  <meta property="og:description" content="A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
 Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
   <meta property="og:locale" content="en">
@@ -53,20 +53,21 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2017-07-15T00:00:00+00:00">
     <meta property="article:modified_time" content="2017-07-15T00:00:00+00:00">
-    <meta property="article:tag" content="Setup">
-    <meta property="article:tag" content="Guide">
+    <meta property="article:tag" content="Clojure">
+    <meta property="article:tag" content="Tutorial">
+    <meta property="article:tag" content="Emacs">
 
   <meta itemprop="name" content="ClojureScript Setup for Leiningen Project With Emacs">
-  <meta itemprop="description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+  <meta itemprop="description" content="A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
 Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
   <meta itemprop="datePublished" content="2017-07-15T00:00:00+00:00">
   <meta itemprop="dateModified" content="2017-07-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="389">
-  <meta itemprop="keywords" content="Setup,Guide">
+  <meta itemprop="wordCount" content="372">
+  <meta itemprop="keywords" content="clojurescript,clojure,leiningen,emacs,tutorial">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ClojureScript Setup for Leiningen Project With Emacs">
-  <meta name="twitter:description" content="A good development environment if fundamental to being productive. This is especially true for Lisps. A good environment can greatly speed up your development process and allow you to utilize the full power of Clojure or any other Lisp.
+  <meta name="twitter:description" content="A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.
 This tutorial is focused on a ClojureScript environment for a Leiningen based project being developed in Emacs.
 Why Emacs? Emacs has a great setup for most programming languages but really shines when it comes to Lisps, including Clojure. Cider is the powerful package that allows easy interaction with the Clojure REPL and many IDE like features. In combination with clj-refactor, you get one of the most powerful toolkits out there.">
 
@@ -141,9 +142,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
 
       <div class="post-meta">
         <span class="post-time"> 2017-07-15 </span>
-        <div class="post-category">
-            <a href="/categories/clojurescript/"> ClojureScript </a>
-            </div>
+        
         
       </div>
     </header>
@@ -155,10 +154,7 @@ Why Emacs? Emacs has a great setup for most programming languages but really shi
   </div>
 </div>
     <div class="post-content">
-      <p>A good development environment if fundamental to being productive. This is
-especially true for Lisps. A good environment can
-greatly speed up your development process and allow you to utilize the full
-power of Clojure or any other Lisp.</p>
+      <p>A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.</p>
 <p>This tutorial is focused on a <a href="https://clojurescript.org/">ClojureScript</a> environment for a <a href="https://leiningen.org/">Leiningen</a> based
 project being developed in <a href="https://www.gnu.org/software/emacs/">Emacs</a>.</p>
 <h1 id="why-emacs">Why Emacs?</h1>
@@ -209,8 +205,9 @@ and you will have your two REPLs setup.</p>
     
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/setup/">setup</a>
-          <a href="/tags/guide/">guide</a>
+          <a href="/tags/clojure/">clojure</a>
+          <a href="/tags/tutorial/">tutorial</a>
+          <a href="/tags/emacs/">emacs</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/universally-testable-dependencies/">
@@ -272,7 +269,7 @@ and you will have your two REPLs setup.</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 

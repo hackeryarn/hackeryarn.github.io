@@ -13,7 +13,7 @@
       <link>https://hackeryarn.com/post/clojure-actions/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/clojure-actions/</guid>
-      <description>&lt;p&gt;&#xA;I recently took over the maintenance of an open source Clojure project. One of the first things I noticed was the lack CI or CD. These are things that aren&amp;#39;t required but can save a lot of work, especially for a public project.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;The CI portion helps make sure that all pull requests pass tests and conform to the project&amp;#39;s coding style. The CD portion helps with deploying the project. And these parts become especially important if the project is in maintenance mode.&lt;/p&gt;</description>
+      <description>&lt;p&gt;I recently took over the maintenance of an open source Clojure project.&#xA;One of the first things I noticed was the lack CI or CD. These are&#xA;things that aren&amp;rsquo;t required but can save a lot of work, especially for&#xA;a public project.&lt;/p&gt;&#xA;&lt;p&gt;The CI portion helps make sure that all pull requests pass tests and&#xA;conform to the project&#39;s coding style. The CD portion helps with&#xA;deploying the project. And these parts become especially important if&#xA;the project is in maintenance mode.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

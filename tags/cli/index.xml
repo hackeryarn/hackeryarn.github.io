@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cli on hackeryarn</title>
+    <link>https://hackeryarn.com/tags/cli/</link>
+    <description>Recent content in Cli on hackeryarn</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://hackeryarn.com/tags/cli/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CLI commands in Emacs</title>
+      <link>https://hackeryarn.com/post/cli-in-emacs/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/cli-in-emacs/</guid>
+      <description>&lt;p&gt;A few months ago, Gabriel Gonzalez wrote an &lt;a href=&#34;http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html&#34;&gt;excellent&#xA;article&lt;/a&gt;&#xA;on creating useful tools with Haskell. He used an example of a small CLI&#xA;tool that aligns the equals signs of a multi-line text input. The&#xA;article wrapped up by integrating this tool into vim.&lt;/p&gt;&#xA;&lt;p&gt;I love the overarching concept in the article: create small tools that&#xA;are useful in multiple contexts. It&#39;s directly inline with the Unix&#xA;philosophy.&lt;/p&gt;&#xA;&lt;p&gt;The only problem is that I am an Emacs user. So in this article, I&#xA;wanted to show how I get the same effect in Emacs. And demonstrating how&#xA;to take CLI interaction in the text editor even further.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

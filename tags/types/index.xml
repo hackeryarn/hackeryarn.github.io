@@ -2,31 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Types on hackeryarn</title>
-    <link>https://hackeryarn.com/tags/types/</link>
+    <link>http://localhost:1313/tags/types/</link>
     <description>Recent content in Types on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://hackeryarn.com/tags/types/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Type safe Django app, Part 3</title>
-      <link>https://hackeryarn.com/post/django-returns-3/</link>
-      <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/django-returns-3/</guid>
-      <description>&lt;p&gt;In &lt;a href=&#34;https://hackeryarn.com/post/django-returns-2/&#34;&gt;Part 2&lt;/a&gt; we got a taste of&#xA;using &lt;code&gt;returns&lt;/code&gt; and created our first model methods.&lt;/p&gt;&#xA;&lt;p&gt;In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.&lt;/p&gt;&#xA;&lt;h1 id=&#34;writ-views-that-actually-do-something&#34;&gt;Writ views that actually do something&lt;/h1&gt;&#xA;&lt;p&gt;The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions. Writing individual functions will help us give names to the actions that we take, bring the types to the forefront, and clearly demonstrate how to compose small functions.&lt;/p&gt;</description>
-    </item>
+    <lastBuildDate>Sun, 27 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/types/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Type safe Django app, Part 2</title>
-      <link>https://hackeryarn.com/post/django-returns-2/</link>
+      <link>http://localhost:1313/post/django-returns-2/</link>
       <pubDate>Sun, 27 Feb 2022 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/django-returns-2/</guid>
+      <guid>http://localhost:1313/post/django-returns-2/</guid>
       <description>&lt;p&gt;&#xA;In &lt;a href=&#34;https://hackeryarn.com/post/django-returns-1/&#34;&gt;Part 1&lt;/a&gt; of this series, we looked at how to setup a python project with types, setup our project, and used some basic types.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;In this part we will start working with the database, implement custom database methods, and look at how to use &lt;code&gt;returns&lt;/code&gt; to improve the safety of those methods.&lt;/p&gt;&#xA;&lt;div id=&#34;outline-container-headline-1&#34; class=&#34;outline-2&#34;&gt;&#xA;&lt;h2 id=&#34;headline-1&#34;&gt;&#xA;Into the database&#xA;&lt;/h2&gt;&#xA;&lt;div id=&#34;outline-text-headline-1&#34; class=&#34;outline-text-2&#34;&gt;&#xA;&lt;p&gt;&#xA;Let&amp;#39;s run our initial migrations and get rid of the error that we ignored in the first part.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Type safe Django app, Part 1</title>
-      <link>https://hackeryarn.com/post/django-returns-1/</link>
+      <link>http://localhost:1313/post/django-returns-1/</link>
       <pubDate>Sat, 22 Jan 2022 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/django-returns-1/</guid>
+      <guid>http://localhost:1313/post/django-returns-1/</guid>
       <description>&lt;p&gt;&#xA;Django is a great framework for web development. Unfortunately, due to the nature of Python and web development in general, it often leads to hard to track down bugs and tangled code. We will take a look at one way to reign this in.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;Throughout this series we will follow the &lt;a href=&#34;https://docs.djangoproject.com/en/4.0/intro/tutorial01/&#34;&gt;official Django tutorial&lt;/a&gt; while making the code safer and easier to reason about. We will accomplish this by enlist the help of &lt;a href=&#34;http://mypy-lang.org/&#34;&gt;mypy&lt;/a&gt; (for general type checking) and &lt;a href=&#34;https://github.com/dry-python/returns&#34;&gt;returns&lt;/a&gt; (for containers that will provide safety).&lt;/p&gt;</description>
     </item>
   </channel>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Django With Hy - hackeryarn</title>
+  <title>Django with Hy - hackeryarn</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,10 +16,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="" /><meta name="description" content=" Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
+<meta name="author" content="" /><meta name="description" content="Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
 Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
 To my surprise I only ran into minor issues. The rest of the project worked flawlessly.
-" /><meta name="keywords" content="blog, tech, ideas" />
+" /><meta name="keywords" content="tutorial, python, django, hy" />
 
 
 
@@ -44,7 +44,7 @@ To my surprise I only ran into minor issues. The rest of the project worked flaw
 
 <meta property="og:url" content="https://hackeryarn.com/post/hy-django/">
   <meta property="og:site_name" content="hackeryarn">
-  <meta property="og:title" content="Django With Hy">
+  <meta property="og:title" content="Django with Hy">
   <meta property="og:description" content="Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
 Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
 To my surprise I only ran into minor issues. The rest of the project worked flawlessly.">
@@ -53,20 +53,21 @@ To my surprise I only ran into minor issues. The rest of the project worked flaw
     <meta property="article:section" content="post">
     <meta property="article:published_time" content="2020-03-01T00:00:00+00:00">
     <meta property="article:modified_time" content="2020-03-01T00:00:00+00:00">
+    <meta property="article:tag" content="Tutorial">
+    <meta property="article:tag" content="Python">
     <meta property="article:tag" content="Django">
     <meta property="article:tag" content="Hy">
-    <meta property="article:tag" content="Python">
 
-  <meta itemprop="name" content="Django With Hy">
+  <meta itemprop="name" content="Django with Hy">
   <meta itemprop="description" content="Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
 Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
 To my surprise I only ran into minor issues. The rest of the project worked flawlessly.">
   <meta itemprop="datePublished" content="2020-03-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2020-03-01T00:00:00+00:00">
   <meta itemprop="wordCount" content="405">
-  <meta itemprop="keywords" content="Django,Hy,Python">
+  <meta itemprop="keywords" content="tutorial,python,django,hy">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Django With Hy">
+  <meta name="twitter:title" content="Django with Hy">
   <meta name="twitter:description" content="Hy introduces a List that gives you all the power of macros and the elegant Lisp syntax while enabling the full power of Python.
 Although it&#39;s easy enough to use Python libraries in Hy, you just import them as you would in Python, I was weary of using a full framework outside it&#39;s native language. To prove out this concept, I followed the official django tutorial using Hy.
 To my surprise I only ran into minor issues. The rest of the project worked flawlessly.">
@@ -138,14 +139,11 @@ To my surprise I only ran into minor issues. The rest of the project worked flaw
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Django With Hy</h1>
+      <h1 class="post-title">Django with Hy</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-03-01 </span>
-        <div class="post-category">
-            <a href="/categories/python/"> Python </a>
-            <a href="/categories/hy/"> Hy </a>
-            </div>
+        
         
       </div>
     </header>
@@ -153,77 +151,55 @@ To my surprise I only ran into minor issues. The rest of the project worked flaw
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#headline-1">Why Hy with Django?</a>
-</li>
-<li><a href="#headline-2">Using Hy with Django</a>
-</li>
-</ul>
-</nav>
+    <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
-      
-<p>
-<a href="https://docs.hylang.org/en/stable/">Hy</a> introduces a List that gives you all the power of macros and the elegant Lisp
-syntax while enabling the full power of Python.</p>
-<p>
-Although it&#39;s easy enough to use Python libraries in Hy, you just import
-them as you would in Python, I was weary of using a full framework outside it&#39;s
-native language. To prove out this concept, I followed <a href="https://docs.djangoproject.com/en/3.0/intro/tutorial01/">the official django
-tutorial</a> using Hy.</p>
-<p>
-To my surprise I only ran into minor issues. The rest of the project worked
-flawlessly.</p>
-<p>
-If you just want to see the code, you can take a look at my <a href="https://github.com/hackeryarn/hy-django">hy-django</a> github
-repo. There you will find the finished project along with branches for each of
-the tutorial parts.</p>
-<div id="outline-container-headline-1" class="outline-2">
-<h2 id="headline-1">
-Why Hy with Django?
-</h2>
-<div id="outline-text-headline-1" class="outline-text-2">
-<p>I personally love lisp syntax. It is consistent and simple without edge cases
-like Python&#39;s lambadas.</p>
-<p>
-If you&#39;re a fan of function programming, like I am, then you will love the
-decisions the Hy devs made. They tried to keep the spirit of Python while taking
-inspiration from Clojure and Scheme to make higher order functions and other
-abstractions natural.</p>
-<p>
-Being a lisp, Hy brings macros. These abstraction generate code on the fly,
-reduce repetition, and enable expressing ideas in the best way for the problem.
-It&#39;s hard to fully describe their usefulness, but Paul Graham came close:</p>
+      <p><a href="https://docs.hylang.org/en/stable/">Hy</a> introduces a List that gives
+you all the power of macros and the elegant Lisp syntax while enabling
+the full power of Python.</p>
+<p>Although it's easy enough to use Python libraries in Hy, you just
+import them as you would in Python, I was weary of using a full
+framework outside it's native language. To prove out this concept, I
+followed <a href="https://docs.djangoproject.com/en/3.0/intro/tutorial01/">the official django
+tutorial</a> using
+Hy.</p>
+<p>To my surprise I only ran into minor issues. The rest of the project
+worked flawlessly.</p>
+<p>If you just want to see the code, you can take a look at my
+<a href="https://github.com/hackeryarn/hy-django">hy-django</a> github repo. There
+you will find the finished project along with branches for each of the
+tutorial parts.</p>
+<h1 id="why-hy-with-django">Why Hy with Django?</h1>
+<p>I personally love lisp syntax. It is consistent and simple without edge
+cases like Python's lambadas.</p>
+<p>If you're a fan of function programming, like I am, then you will love
+the decisions the Hy devs made. They tried to keep the spirit of Python
+while taking inspiration from Clojure and Scheme to make higher order
+functions and other abstractions natural.</p>
+<p>Being a lisp, Hy brings macros. These abstraction generate code on the
+fly, reduce repetition, and enable expressing ideas in the best way for
+the problem. It's hard to fully describe their usefulness, but Paul
+Graham came close:</p>
 <blockquote>
-<p>&#34;The shape of a program should reflect only the problem it needs to solve. Any
-other regularity in the code is a sign, to me at least, that I&#39;m using
-abstractions that aren&#39;t powerful enough– often that I&#39;m generating by hand the
-expansions of some macro that I need to write.&#34;</p>
+<p>&quot;The shape of a program should reflect only the problem it needs to
+solve. Any other regularity in the code is a sign, to me at least,
+that I'm using abstractions that aren't powerful enough&ndash; often that
+I'm generating by hand the expansions of some macro that I need to
+write.&quot;</p>
 </blockquote>
-</div>
-</div>
-<div id="outline-container-headline-2" class="outline-2">
-<h2 id="headline-2">
-Using Hy with Django
-</h2>
-<div id="outline-text-headline-2" class="outline-text-2">
-<p>Django handle Hy and Python files the same, for the most part. Things like
-migrations just work.</p>
-<p>
-I ran into two areas that required some fiddling however.</p>
-<p>
-Using <code>manage.py</code> requires <code>settings.py</code> to remain in the base app. To get this
-working with Hy files you have to add <code>import hy</code> at the top of the
-<code>settings.py</code> file.</p>
-<p>
-<code>manage.py test</code> does not pick up test files automatically. To get it to work,
-you need to add a <code>tests</code> folder to each app, which is good practice anyways,
-with an <code>__init__.py</code> file that imports all the Hy test modules.</p>
-<p>
-I ended up using relative imports with a glob pattern:</p>
-<div class="src src-python">
+<h1 id="using-hy-with-django">Using Hy with Django</h1>
+<p>Django handle Hy and Python files the same, for the most part. Things
+like migrations just work.</p>
+<p>I ran into two areas that required some fiddling however.</p>
+<p>Using <code>manage.py</code> requires <code>settings.py</code> to remain in the base app. To
+get this working with Hy files you have to add <code>import hy</code> at the top of
+the <code>settings.py</code> file.</p>
+<p><code>manage.py test</code> does not pick up test files automatically. To get it to
+work, you need to add a <code>tests</code> folder to each app, which is good
+practice anyways, with an <code>__init__.py</code> file that imports all the Hy
+test modules.</p>
+<p>I ended up using relative imports with a glob pattern:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -231,23 +207,20 @@ I ended up using relative imports with a glob pattern:</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">.model_tests</span> <span class="kn">import</span> <span class="o">*</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">.view_tests</span> <span class="kn">import</span> <span class="o">*</span></span></span></code></pre></td></tr></table>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">.view_tests</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span></code></pre></td></tr></table>
 </div>
-</div>
-</div>
-<p>
-You can write the rest of the application in pure Hy. Happy hacking!</p>
-</div>
-</div>
+</div><p>You can write the rest of the application in pure Hy. Happy hacking!</p>
 
     </div>
 
     
 <footer class="post-footer">
       <div class="post-tags">
+          <a href="/tags/tutorial/">tutorial</a>
+          <a href="/tags/python/">python</a>
           <a href="/tags/django/">django</a>
           <a href="/tags/hy/">hy</a>
-          <a href="/tags/python/">python</a>
           </div>
       <nav class="post-nav">
         <a class="prev" href="/post/django-returns-1/">
@@ -256,7 +229,7 @@ You can write the rest of the application in pure Hy. Happy hacking!</p>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/embrace-the-constraints/">
-            <span class="next-text nav-default">Embrace Your Constraints</span>
+            <span class="next-text nav-default">Embrace your constraints</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -309,7 +282,7 @@ You can write the rest of the application in pure Hy. Happy hacking!</p>
   <span class="copyright-year">
     &copy; 
     2018 - 
-    2025<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 
