@@ -37,6 +37,13 @@
       <description>&lt;p&gt;I recently took over the maintenance of an open source Clojure project.&#xA;One of the first things I noticed was the lack CI or CD. These are&#xA;things that aren&amp;rsquo;t required but can save a lot of work, especially for&#xA;a public project.&lt;/p&gt;&#xA;&lt;p&gt;The CI portion helps make sure that all pull requests pass tests and&#xA;conform to the project&#39;s coding style. The CD portion helps with&#xA;deploying the project. And these parts become especially important if&#xA;the project is in maintenance mode.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Distrobox in practice</title>
+      <link>https://hackeryarn.com/post/distrobox/</link>
+      <pubDate>Sun, 17 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/distrobox/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://distrobox.privatedns.org/&#34;&gt;Distrobox&lt;/a&gt; is the single piece of software that completely changed the way I work. If you&amp;rsquo;ve hear of or used &lt;a href=&#34;https://www.vagrantup.com/&#34;&gt;Vagrant&lt;/a&gt; and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&amp;rsquo;ve been looking for.&lt;/p&gt;&#xA;&lt;p&gt;Within a month Distrobox became my primary dev environment and that hasn&amp;rsquo;t changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Type safe Django app, Part 3</title>
       <link>https://hackeryarn.com/post/django-returns-3/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
@@ -79,6 +86,13 @@
       <description>&lt;p&gt;Creating hierarchy in a blog is a useful technique. It allows you to&#xA;have different sections by type of content. It lets users navigate by&#xA;their interests quickly. It makes your blog organized.&lt;/p&gt;&#xA;&lt;p&gt;My need for a hierarchy came when working on another blog - &lt;a href=&#34;https://dailyreadingnotes.com&#34;&gt;Daily&#xA;Reading Notes&lt;/a&gt;. That blog involves notes&#xA;on books I read daily. Since each book has multiple reading notes, I&#xA;wanted to allow two forms of navigation: by a grouping of all notes for&#xA;a particular book and by posted date. The groupings also needed to be&#xA;dynamic. I didn&#39;t want to write code or updated configurations every&#xA;time I added a new book.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Making Redux Easy</title>
+      <link>https://hackeryarn.com/post/making-redux-easy/</link>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Universally Testable Dependencies in JavaScript</title>
       <link>https://hackeryarn.com/post/universally-testable-dependencies/</link>
       <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
@@ -91,6 +105,13 @@
       <pubDate>Sat, 15 Jul 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/clojurescript-setup/</guid>
       <description>&lt;p&gt;A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.&lt;/p&gt;&#xA;&lt;p&gt;This tutorial is focused on a &lt;a href=&#34;https://clojurescript.org/&#34;&gt;ClojureScript&lt;/a&gt; environment for a &lt;a href=&#34;https://leiningen.org/&#34;&gt;Leiningen&lt;/a&gt; based&#xA;project being developed in &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h1 id=&#34;why-emacs&#34;&gt;Why Emacs?&lt;/h1&gt;&#xA;&lt;p&gt;Emacs has a great setup for most programming languages but really shines when it&#xA;comes to Lisps, including Clojure. &lt;a href=&#34;https://cider.readthedocs.io/en/latest/&#34;&gt;Cider&lt;/a&gt; is the powerful package that allows easy&#xA;interaction with the Clojure REPL and many IDE like features. In combination with&#xA;&lt;a href=&#34;https://github.com/clojure-emacs/clj-refactor.el&#34;&gt;clj-refactor&lt;/a&gt;, you get one of the most powerful toolkits out there.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Easy Universal Haskell Development Environment</title>
+      <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
+      <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
+      <description>&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;/p&gt;&#xA;&lt;p&gt;Traditional methods included:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Installing &lt;a href=&#34;https://www.haskell.org/platform/&#34;&gt;The Haskell Platform&lt;/a&gt;, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.&lt;/li&gt;&#xA;&lt;li&gt;Required using a text editor like &lt;a href=&#34;http://www.vim.org/&#34;&gt;Vim&lt;/a&gt; or &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;. These are incredible tools and productivity boosters, if you take the time to learn them. Which is a pretty major time commitment in itself &lt;em&gt;I do suggest you learn one of these eventually, or use the vim/emacs mode of another tool.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;li&gt;Complex package management through &lt;a href=&#34;https://wiki.haskell.org/Cabal-Install&#34;&gt;Cabal-Install&lt;/a&gt;. This tool caused either version hell from everything being installed globally or caused you to have to re-install all your dependencies for every project.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;tools-of-the-trade&#34;&gt;Tools of The Trade&lt;/h1&gt;&#xA;&lt;p&gt;We will be using these tools to solve the above problems and make the installation completely system agnostic. That&amp;rsquo;s right, this installation process with work on any platform OS X, Linux, and even Windows.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

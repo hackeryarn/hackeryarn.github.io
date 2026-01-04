@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Experiment on hackeryarn</title>
-    <link>https://hackeryarn.com/tags/experiment/</link>
+    <link>http://localhost:1313/tags/experiment/</link>
     <description>Recent content in Experiment on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 11 Feb 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://hackeryarn.com/tags/experiment/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/experiment/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Making Redux Easy</title>
-      <link>https://hackeryarn.com/post/making-redux-easy/</link>
+      <link>http://localhost:1313/post/making-redux-easy/</link>
       <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
+      <guid>http://localhost:1313/post/making-redux-easy/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
     </item>
   </channel>

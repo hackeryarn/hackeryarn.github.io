@@ -2,18 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Video on hackeryarn</title>
-    <link>https://hackeryarn.com/tags/video/</link>
+    <link>http://localhost:1313/tags/video/</link>
     <description>Recent content in Video on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 02 Aug 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://hackeryarn.com/tags/video/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Phoenix talk</title>
-      <link>https://hackeryarn.com/post/phoenix-talk/</link>
-      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/phoenix-talk/</guid>
-      <description>&lt;p&gt;I recently gave a talk, at the local &lt;a href=&#34;http://www.fullstack.org/&#34;&gt;Fullstack Meetup&lt;/a&gt;, on the &lt;a href=&#34;http://www.phoenixframework.org/&#34;&gt;Phoenix Framework&lt;/a&gt;. Phoenix is the de&#xA;facto web framework for &lt;a href=&#34;http://elixir-lang.org/&#34;&gt;Elixir&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In this talk, I cover some of the best features of &lt;a href=&#34;http://www.phoenixframework.org/&#34;&gt;Phoenix&lt;/a&gt;:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.erlang.org/&#34;&gt;Erlang&lt;/a&gt;: The platmor which Elixir and Phoenix are build on. (albeit&#xA;very brief overview of the major features)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/elixir-lang/plug&#34;&gt;Plug&lt;/a&gt;: The specification for composable module design that gives&#xA;Phoenix much of it&amp;rsquo;s power.&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://hexdocs.pm/ecto/Ecto.html&#34;&gt;Ecto&lt;/a&gt;: The database integration layer.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Close to the end, there is a short demo of an app showing how a typical Phoenix&#xA;app looks. In this portion, I also use &lt;a href=&#34;https://github.com/koudelka/visualixir&#34;&gt;Visualixir&lt;/a&gt; to demonstrate the process layout of the app and how comunication is handled between processes.&lt;/p&gt;</description>
-    </item>
+    <atom:link href="http://localhost:1313/tags/video/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

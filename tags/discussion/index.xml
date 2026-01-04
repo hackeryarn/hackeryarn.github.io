@@ -23,11 +23,25 @@
       <description>&lt;p&gt;DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.&lt;/p&gt;&#xA;&lt;p&gt;Ok, maybe it&amp;rsquo;s not that bad, but many times DRY gets applied without much thought. This careless application of DRY leads to brittle code, making even simple changes scary because they could have a huge ripple effect.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Picking a Linux Distro</title>
+      <link>https://hackeryarn.com/post/picking-a-linux-distro/</link>
+      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/picking-a-linux-distro/</guid>
+      <description>&lt;p&gt;I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up-to-date software while maintaining a stable system. The results of my search surprised even me.&lt;/p&gt;&#xA;&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;&#xA;&lt;p&gt;I have ran Ubuntu on my home lab server for over a decade, and used it a daily driver from 2009 to 2014. I switched from Ubuntu because their package release cycle, even on the latest version, is too slow for my liking. At around the same time, rolling release distros were gaining popularity. So I jumped on the Arch train.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Embrace your constraints</title>
       <link>https://hackeryarn.com/post/embrace-the-constraints/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/embrace-the-constraints/</guid>
       <description>&lt;p&gt;Engineers want to measure the quality and effectiveness of their work.&#xA;They turn to code coverage, burn down charts, and yearly goals, with the&#xA;best intention.&lt;/p&gt;&#xA;&lt;p&gt;These measurements provide quantitative data about how much planned work&#xA;was delivered, but they fail to tie the work to outcome. What good are&#xA;1,000 lines of code if the users never use the feature? These metrics&#xA;distract from the two question every professional should ask:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Right Abstraction for Lambdas</title>
+      <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
+      <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
+      <description>&lt;p&gt;Serverless functions are a great alternative for many light tasks that would&#xA;traditionally required a server. They allow you to split up work across&#xA;mutiple small functions, and you only pay&#xA;for what you use. On top of that, they require less maintenance than managing your own&#xA;server or Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;However, the single function per lambda approach can become too granular. Shared&#xA;functionality becomes hard to group together. You only have hard to enforce naming convention&#xA;for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?&lt;/p&gt;</description>
     </item>
     <item>
       <title>Why I Built a Static Site in Clojure</title>

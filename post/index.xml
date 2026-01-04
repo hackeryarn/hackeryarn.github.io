@@ -142,13 +142,6 @@
       <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Introducing Daily Reading Notes</title>
-      <link>https://hackeryarn.com/post/daily-reading-notes/</link>
-      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/daily-reading-notes/</guid>
-      <description>&lt;p&gt;Recently I ran an experiment of posting daily reading notes on this blog. This&#xA;was very much a personal experiment.&lt;/p&gt;&#xA;&lt;p&gt;Making these posts every day reinforced my reading habit. I felt motivated to&#xA;set aside time to read, and I got the chance to reflect on my reading. It&#xA;also provided the opportunity to share more with others.&lt;/p&gt;&#xA;&lt;p&gt;I plan on keeping this habit going, but this blog isn&amp;rsquo;t the right place for it.&#xA;I want to keep this blog dedicated to tech posts. So I decided to&#xA;create a dedicated site for my &lt;a href=&#34;https://dailyreadingnotes.com&#34;&gt;daily reading notes&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>Why I Built a Static Site in Clojure</title>
       <link>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</link>
       <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
@@ -189,13 +182,6 @@
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/rails-csv-imports/</guid>
       <description>&lt;p&gt;Rails has great capabilities for working CSV files. However, like with many&#xA;things, the most obvious way is not the most efficient.&lt;/p&gt;&#xA;&lt;p&gt;We noticed this when our server had major fluctuations in memory consumption.&#xA;After digging through metrics, made easy thanks to&#xA;&lt;a href=&#34;https://prometheus.io&#34;&gt;Prometheus&lt;/a&gt; and &lt;a href=&#34;https://grafana.com&#34;&gt;Grafana&lt;/a&gt;. We noticed that the spikes were due to our CSV&#xA;uploads.&lt;/p&gt;&#xA;&lt;h1 id=&#34;examining-csv-import&#34;&gt;Examining CSV Import&lt;/h1&gt;&#xA;&lt;p&gt;Our processor is responsible for bringing in coordinates&#xA;from legacy systems and ones that cannot support our API.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Phoenix talk</title>
-      <link>https://hackeryarn.com/post/phoenix-talk/</link>
-      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/phoenix-talk/</guid>
-      <description>&lt;p&gt;I recently gave a talk, at the local &lt;a href=&#34;http://www.fullstack.org/&#34;&gt;Fullstack Meetup&lt;/a&gt;, on the &lt;a href=&#34;http://www.phoenixframework.org/&#34;&gt;Phoenix Framework&lt;/a&gt;. Phoenix is the de&#xA;facto web framework for &lt;a href=&#34;http://elixir-lang.org/&#34;&gt;Elixir&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In this talk, I cover some of the best features of &lt;a href=&#34;http://www.phoenixframework.org/&#34;&gt;Phoenix&lt;/a&gt;:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;http://www.erlang.org/&#34;&gt;Erlang&lt;/a&gt;: The platmor which Elixir and Phoenix are build on. (albeit&#xA;very brief overview of the major features)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/elixir-lang/plug&#34;&gt;Plug&lt;/a&gt;: The specification for composable module design that gives&#xA;Phoenix much of it&amp;rsquo;s power.&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://hexdocs.pm/ecto/Ecto.html&#34;&gt;Ecto&lt;/a&gt;: The database integration layer.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Close to the end, there is a short demo of an app showing how a typical Phoenix&#xA;app looks. In this portion, I also use &lt;a href=&#34;https://github.com/koudelka/visualixir&#34;&gt;Visualixir&lt;/a&gt; to demonstrate the process layout of the app and how comunication is handled between processes.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Easy Universal Haskell Development Environment</title>

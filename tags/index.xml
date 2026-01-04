@@ -86,27 +86,6 @@
       <description></description>
     </item>
     <item>
-      <title>Patterns</title>
-      <link>https://hackeryarn.com/tags/patterns/</link>
-      <pubDate>Sat, 10 Jun 2023 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/patterns/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Micoros</title>
-      <link>https://hackeryarn.com/tags/micoros/</link>
-      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/micoros/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Opensuse</title>
-      <link>https://hackeryarn.com/tags/opensuse/</link>
-      <pubDate>Mon, 20 Feb 2023 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/opensuse/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Commonlisp</title>
       <link>https://hackeryarn.com/tags/commonlisp/</link>
       <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
@@ -142,37 +121,9 @@
       <description></description>
     </item>
     <item>
-      <title>Guide</title>
-      <link>https://hackeryarn.com/tags/guide/</link>
-      <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/guide/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Opinion</title>
-      <link>https://hackeryarn.com/tags/opinion/</link>
-      <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/opinion/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Experiment</title>
-      <link>https://hackeryarn.com/tags/experiment/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/experiment/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Book</title>
-      <link>https://hackeryarn.com/tags/book/</link>
-      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/book/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Javascript</title>
       <link>https://hackeryarn.com/tags/javascript/</link>
-      <pubDate>Fri, 01 Jun 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/tags/javascript/</guid>
       <description></description>
     </item>
@@ -184,24 +135,10 @@
       <description></description>
     </item>
     <item>
-      <title>Talk</title>
-      <link>https://hackeryarn.com/tags/talk/</link>
-      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/talk/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Video</title>
-      <link>https://hackeryarn.com/tags/video/</link>
-      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/video/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Setup</title>
-      <link>https://hackeryarn.com/tags/setup/</link>
-      <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/tags/setup/</guid>
+      <title>Guide</title>
+      <link>https://hackeryarn.com/tags/guide/</link>
+      <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
+      <guid>https://hackeryarn.com/tags/guide/</guid>
       <description></description>
     </item>
   </channel>

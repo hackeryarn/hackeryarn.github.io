@@ -6,35 +6,14 @@
     <description>Recent content in Guide on hackeryarn</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 24 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Jun 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://hackeryarn.com/tags/guide/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>The Right Abstraction for Lambdas</title>
-      <link>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</link>
-      <pubDate>Sun, 24 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</guid>
-      <description>&lt;p&gt;Serverless functions are a great alternative for many light tasks that would&#xA;traditionally required a server. They allow you to split up work across&#xA;mutiple small functions, and you only pay&#xA;for what you use. On top of that, they require less maintenance than managing your own&#xA;server or Kubernetes cluster.&lt;/p&gt;&#xA;&lt;p&gt;However, the single function per lambda approach can become too granular. Shared&#xA;functionality becomes hard to group together. You only have hard to enforce naming convention&#xA;for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Making Redux Easy</title>
-      <link>https://hackeryarn.com/post/making-redux-easy/</link>
-      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/making-redux-easy/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; and &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; are a top choice for front end projects. &lt;a href=&#34;https://reactjs.org/&#34;&gt;React&lt;/a&gt; provides fast&#xA;performance, easy ways to create shared components, and a plethora of&#xA;libraries. &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; lets you simplify state management in your&#xA;application, but it has serious drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;In large projects, &lt;a href=&#34;https://redux.js.org/&#34;&gt;Redux&lt;/a&gt; bloat your project with repetitive code. To&#xA;support a single store update, you need to create a reducer that handles an&#xA;action type which is dispatched from an action called inside a component. If&#xA;that process sounds tedious and confusing, that&amp;rsquo;s because it is. You end up&#xA;with tons of simple actions and reducers that all look alike.&lt;/p&gt;</description>
-    </item>
     <item>
       <title>Efficient CSV Imports in Rails</title>
       <link>https://hackeryarn.com/post/rails-csv-imports/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 +0000</pubDate>
       <guid>https://hackeryarn.com/post/rails-csv-imports/</guid>
       <description>&lt;p&gt;Rails has great capabilities for working CSV files. However, like with many&#xA;things, the most obvious way is not the most efficient.&lt;/p&gt;&#xA;&lt;p&gt;We noticed this when our server had major fluctuations in memory consumption.&#xA;After digging through metrics, made easy thanks to&#xA;&lt;a href=&#34;https://prometheus.io&#34;&gt;Prometheus&lt;/a&gt; and &lt;a href=&#34;https://grafana.com&#34;&gt;Grafana&lt;/a&gt;. We noticed that the spikes were due to our CSV&#xA;uploads.&lt;/p&gt;&#xA;&lt;h1 id=&#34;examining-csv-import&#34;&gt;Examining CSV Import&lt;/h1&gt;&#xA;&lt;p&gt;Our processor is responsible for bringing in coordinates&#xA;from legacy systems and ones that cannot support our API.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Easy Universal Haskell Development Environment</title>
-      <link>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</link>
-      <pubDate>Sat, 06 Feb 2016 00:00:00 +0000</pubDate>
-      <guid>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</guid>
-      <description>&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;/p&gt;&#xA;&lt;p&gt;Traditional methods included:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Installing &lt;a href=&#34;https://www.haskell.org/platform/&#34;&gt;The Haskell Platform&lt;/a&gt;, which was a great project in it&amp;rsquo;s time but always seems to lag a few GHC versions behind.&lt;/li&gt;&#xA;&lt;li&gt;Required using a text editor like &lt;a href=&#34;http://www.vim.org/&#34;&gt;Vim&lt;/a&gt; or &lt;a href=&#34;https://www.gnu.org/software/emacs/&#34;&gt;Emacs&lt;/a&gt;. These are incredible tools and productivity boosters, if you take the time to learn them. Which is a pretty major time commitment in itself &lt;em&gt;I do suggest you learn one of these eventually, or use the vim/emacs mode of another tool.&lt;/em&gt;&lt;/li&gt;&#xA;&lt;li&gt;Complex package management through &lt;a href=&#34;https://wiki.haskell.org/Cabal-Install&#34;&gt;Cabal-Install&lt;/a&gt;. This tool caused either version hell from everything being installed globally or caused you to have to re-install all your dependencies for every project.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;tools-of-the-trade&#34;&gt;Tools of The Trade&lt;/h1&gt;&#xA;&lt;p&gt;We will be using these tools to solve the above problems and make the installation completely system agnostic. That&amp;rsquo;s right, this installation process with work on any platform OS X, Linux, and even Windows.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
