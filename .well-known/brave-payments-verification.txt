@@ -1,4 +1,0 @@
-This is a Brave Payments publisher verification file.
-
-Domain: hackeryarn.com
-Token: c60392ff673fdaef85d10045814d18f481ef70896d14a26e56993f65cbc828cb
