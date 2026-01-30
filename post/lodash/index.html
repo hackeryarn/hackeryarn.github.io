@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | How Lodash Worked Itself Out of a Job</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    How Lodash Worked Itself Out of a Job
+  </h1>
+  <p class="subtitle">Published 2017-06-25</p>
+  <div>
+    <p>I really loved lodash. It brough the joy of compact functional code to
+JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library.
+Back then, there was no ES6, no Babel, and terrible browser incompatabilities
+ran rampant. Lodash along with jQuery were the saving light of that time.</p>
+<span id="continue-reading"></span>
+<p>I gravitated towards using Lodash because the first language I learned was
+Scheme. It had functional programing at it's core, and highly influanced how I
+think about code to this day.</p>
+<p>I was a major advocate of Lodash for a long time. However, as my team
+embraced ES6 with Babel, I am at a point where I have to
+discurage the use of Lodash instead of promote it. This might seem like a
+drastic change but it is a well grounded one. It's also not just ES6 and Babel
+that are taking my attention away from Lodash. There are libraries like <a rel="external" href="http://ramdajs.com/">Ramda</a> that provide the better functionality(but more on that later).</p>
+<h1 id="es6-vs-lodash">ES6 vs Lodash</h1>
+<p>I will outline some of the benefits I saw in using pure ES6 instead of Lodash.
+The main stumbling point in this transition can be browser support but most teams use
+transpilers such as Babel, so this isn't a concern anymore.</p>
+<h2 id="library-size">Library Size</h2>
+<p>This should come as no surprise, but Lodash is a big library. In fact, if you
+modularize your application, chances are it's bigger than your codebase. However, you can import only the modules you need if you have the propper plugins setup, such as <a rel="external" href="https://github.com/lodash/babel-plugin-lodash">babel-plugin-lodash</a> or <a rel="external" href="https://github.com/lodash/lodash-webpack-plugin">lodash-webpack-plugin</a>.</p>
+<p>ES6, on the other hand, won't add much bloat by default. It's efficiently transpiled into your code and only slightly increases transpiled size, plus chances are you have to use it
+anyways to gain other ownderful features.</p>
+<h2 id="clean-code">Clean Code</h2>
+<p>Clean code is a big one. Let's take a look at what Lodash provides:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>// We will be using this data for all exaples so I won&#39;t repeat it.</span></span>
+<span class="giallo-l"><span>var teamRanking = [</span></span>
+<span class="giallo-l"><span>  {</span></span>
+<span class="giallo-l"><span>    school: &#39;alabama&#39;,</span></span>
+<span class="giallo-l"><span>    rank: 1</span></span>
+<span class="giallo-l"><span>  },</span></span>
+<span class="giallo-l"><span>  {</span></span>
+<span class="giallo-l"><span>    school: &#39;clemons&#39;,</span></span>
+<span class="giallo-l"><span>    rank: 2</span></span>
+<span class="giallo-l"><span>  },</span></span>
+<span class="giallo-l"><span>  {</span></span>
+<span class="giallo-l"><span>    school: &#39;ohio state&#39;,</span></span>
+<span class="giallo-l"><span>    rank: 3</span></span>
+<span class="giallo-l"><span>  },</span></span>
+<span class="giallo-l"><span>  {</span></span>
+<span class="giallo-l"><span>    school: &#39;washington&#39;,</span></span>
+<span class="giallo-l"><span>    rank: 4</span></span>
+<span class="giallo-l"><span>  },</span></span>
+<span class="giallo-l"><span>];</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>// We are extracting the top two teams and uppercasing the names</span></span>
+<span class="giallo-l"><span>var topTwo = _.map(_.filter(teamRanking, (team) =&gt; {</span></span>
+<span class="giallo-l"><span>    return team.rank &lt;= 2;</span></span>
+<span class="giallo-l"><span>  }), (team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return _.update(team, &#39;school&#39;, _.toUpper);</span></span>
+<span class="giallo-l"><span>})</span></span></code></pre>
+<p>Now who has written ugly code like that in the past? I know I have. Of course
+we can imporove it, this is just to show how bad things can get.</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>var topTwo = _.filter(teamRanking, (team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return team.rank &lt;= 2;</span></span>
+<span class="giallo-l"><span>})</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>var prettyTopTwo = _.map(topTwo, (team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return _.update(team, &#39;school&#39;, _.toUpper);</span></span>
+<span class="giallo-l"><span>})</span></span></code></pre>
+<p>This code is more organized. We can clearely see the two transformations, and
+the data produced has descriptive names.</p>
+<p>This is a coding practice I have seen a lot. Although it makes the code
+easier to read. It also demonstrates the weaknes of these abstractions. All we
+wanted was the final transformation. Instead we have an extra pice of data,
+`topTwo`, which has no use or reuse.</p>
+<p>Let's take a look at ES6 code to do the same thing.</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>const topTwo = teamRanking</span></span>
+<span class="giallo-l"><span>  .filter((team) =&gt; (team.rank &lt;= 2))</span></span>
+<span class="giallo-l"><span>  .map((team) =&gt; {...team, school: team.school.toUpperCase()})</span></span></code></pre>
+<p>This time we get rid of the intermedieate value and the code is more compact.
+It's clear what's going on and we don't have functions wrapping everything.</p>
+<p>This example barely scratches the surface of what's available with a transpiler
+and ES6. Much of the functionaly of Lodash is present in ES6. Please
+take a look at the standard <a rel="external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> and <a rel="external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> methods available for more.</p>
+<h1 id="where-lodash-is-still-ahead">Where lodash is Still Ahead</h1>
+<p>I can't go without saying that the nested object manipulation which Lodash
+provides is far superior to what's available in ES6. The problem is that
+we need to import the entirity of Lodash's core in order to get just a portion
+of the functionality that we will use. However, there is a solution.</p>
+<h1 id="don-t-pick-a-side">Don't Pick a Side</h1>
+<p>You might be thinking that you have a hard choice to make here. Well the good
+news is, there is a middle ground that can yield the best of both worlds!</p>
+<p>I hope you remember Ramda from earlier. Well, Ramda doesn't have a
+bloated core that Lodash does. It lets you build your own version of
+Ramda with only the functions you need. Such as the object manipulation code.</p>
+<p><em>It has been brought up that Lodash is also modular. However, the size is only marginaly reduced due to how the core is used. In my experience, Ramda's size was greately reduced when only specific modules are used.</em></p>
+<p>Let's see our example with Ramda.</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>const topTwo = R.filter((team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return team.rank &lt;= 2;</span></span>
+<span class="giallo-l"><span>}, teamRanking);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>const prettyTopTwo = R.map((team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return R.assoc(&#39;school&#39;, R.toUpper(team.school), team);</span></span>
+<span class="giallo-l"><span>}, topTwo);</span></span></code></pre>
+<p>That looks really similar to the Lodash code. Ramda can do just
+about everything Lodash can, but it can also do more.</p>
+<p>If you payed close attention, you might have noticed that the arguments to the functions are
+reversed, from Lodash. Ramda encurages a different style of programing. It's one
+that can lead to better code quality and composability, but there are other great articles that
+go into all the features. Just take a look at the <a rel="external" href="http://ramdajs.com/">Ramda homepage</a> for some great introductions.</p>
+<p>I will just show a small refactor.</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>const topTwo = R.filter((team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return team.rank &lt;= 2;</span></span>
+<span class="giallo-l"><span>});</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>const prettySchool = R.map((team) =&gt; {</span></span>
+<span class="giallo-l"><span>  return R.assoc(&#39;school&#39;, R.toUpper(team.school), team);</span></span>
+<span class="giallo-l"><span>});</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>R.compose(prettySchool, topTwo)(teamRanking)</span></span></code></pre>
+<p>This leaves us with two functions that do exactly one thing. We
+are able to compose these functions and apply them one by one to the data.
+`compose` makes this applcation even easier.</p>
+<p>This has huge benefits compared to working with data like the previous examples.
+We are able to resue the two functions for other team array, and can build them
+more generically to allow for more reuse.</p>
+<p>As it has been mentioned in the comments, much of the functionality of Ramda is actually available in Lodash through the recen addition of <a rel="external" href="https://github.com/lodash/lodash/wiki/FP-Guide">lodash-fp</a>. I think both options are fine choices to imporove code reuse.</p>
+<h1 id="consider-your-options">Consider Your Options</h1>
+<p>I don't mean to say that you should ditch Lodash and runaway from it like you
+probably should with jQuery. What I want to bring to light is that there are
+many alternatives. So you should consider your options next time you are looking
+for a library like Lodash.</p>
+<p>I also want to praise Lodash. It moved JavaScript forward in a major way and
+without all the concepts it introduced I don't think ES6 or Ramda would look the
+same. Lodash is the giant that influanced much of moder JavaScript and it's
+libraries. It accomplished what many of us strive to do. Lodash worked itself out of
+a job.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/discussion/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">discussion</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/javascript/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">javascript</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

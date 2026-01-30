@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Let&#x27;s write a macro in Rust - Part 3</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Let&#x27;s write a macro in Rust - Part 3
+  </h1>
+  <p class="subtitle">Published 2025-10-05</p>
+  <div>
+    <p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-2/">last part</a> we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.</p>
+<p>In this part, we will build on our <code>where</code> clause from the previous article. In the process we will allow the <code>where</code> clause to support multiple comparison operator (instead of just <code>=</code>) as well as multiple ways to join those operators (instead of just <code>and</code>).</p>
+<span id="continue-reading"></span><h2 id="complex-where-clause">Complex where clause</h2>
+<p>Exactly what operator do we want to support? Lets add to our previous clause. Our macro should be able to support both of:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> =</span><span class="z-constant z-numeric"> 10</span><span class="z-source"> and artist</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation z-definition z-string z-string"> &quot;Teddy Swims&quot;</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> &gt;</span><span class="z-constant z-numeric"> 9</span><span class="z-source"> or artist</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>We can make this work, but it will result in more complexity than needed. Using the <code>=</code> operator means that we need to do a manual translation from <code>=</code> to Rust's <code>==</code> operator. If we just use <code>==</code> in our macro, we can use <code>==</code> and other Rust operators directly. Our updated syntax will look like:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> ==</span><span class="z-constant z-numeric"> 10</span><span class="z-source"> and artist</span><span class="z-keyword z-operator"> ==</span><span class="z-punctuation z-definition z-string z-string"> &quot;Teddy Swims&quot;</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> &gt;</span><span class="z-constant z-numeric"> 9</span><span class="z-source"> or artist</span><span class="z-keyword z-operator"> ==</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>But before we can implement the match arm, we need to talk about a concept that we've only skimmed over, so far.</p>
+<h3 id="toketrees">TokeTrees</h3>
+<p>Token trees are a part of Rust's AST that makes it easy to work with macros by giving them explicit bounds.</p>
+<p>Almost every token in the AST (2, "hello", etc.) represents a leaf. <code>()</code>, <code>[]</code>, and <code>{}</code> are special tokens that start a new tree. A macro has to always take and produce a token tree, and that's exactly what our match arms represent. As far as macros care, all of the tree operators are interchangeable. So we could write our match arm as:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation">{</span><span class="z-source"> from</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $db</span><span class="z-keyword z-operator">:</span><span class="z-source">ident select</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation"> ),</span><span class="z-keyword z-operator">+</span><span class="z-keyword"> where</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$test_field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-keyword z-operator"> =</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $value</span><span class="z-keyword z-operator">:</span><span class="z-source">literal</span><span class="z-punctuation">)</span><span class="z-source"> and</span><span class="z-keyword z-operator"> +</span><span class="z-punctuation"> }</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> (</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">    $db</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">into_iter</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">        .</span><span class="z-entity z-name z-function">filter</span><span class="z-punctuation">(</span><span class="z-keyword z-operator"> |</span><span class="z-variable z-other z-rust">i</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-keyword z-operator">$</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust"> i</span><span class="z-keyword z-operator">.$</span><span class="z-variable z-other z-rust">test_field</span><span class="z-keyword z-operator"> == $</span><span class="z-variable z-other z-rust">value</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator">&amp;&amp;+</span><span class="z-punctuation"> )</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">        .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator"> |</span><span class="z-variable z-other z-rust">i</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-keyword z-operator">$</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust"> i</span><span class="z-keyword z-operator">.$</span><span class="z-variable z-other z-rust">field</span><span class="z-punctuation">, )</span><span class="z-keyword z-operator">+</span><span class="z-punctuation">) )</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">);</span></span></code></pre>
+<p>Or call our macro as:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">    query!</span><span class="z-punctuation">[</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> =</span><span class="z-constant z-numeric"> 10</span><span class="z-source"> and artist</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation z-definition z-string z-string"> &quot;Teddy Swims&quot;</span><span class="z-punctuation">];</span></span></code></pre>
+<p>And the compiler is perfectly happy. Although, readers of your code might not be.</p>
+<p>This is all interesting background, but how will it help us write our macro? Token trees are one of the fragment-specifiers that we can match, and we can take advantage of that to write a very concise macro definition.</p>
+<h3 id="matching-complex-where-clause">Matching complex where clause</h3>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">macro_export</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rules z-rust">macro_rules!</span><span class="z-entity z-name z-function z-macro z-rust"> query</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">    ...</span></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-source"> from</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $db</span><span class="z-keyword z-operator">:</span><span class="z-source">ident select</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation"> ),</span><span class="z-keyword z-operator">+</span><span class="z-keyword"> where</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$where_tree</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">        $db</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">into_iter</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">filter</span><span class="z-punctuation">(</span><span class="z-keyword z-operator"> |</span><span class="z-variable z-other z-rust">i</span><span class="z-keyword z-operator">|</span><span class="z-entity z-name z-function z-macro z-rust"> where_clause!</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">i</span><span class="z-punctuation">;</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">$</span><span class="z-variable z-other z-rust">where_tree</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation">) )</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator"> |</span><span class="z-variable z-other z-rust">i</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-keyword z-operator">$</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust"> i</span><span class="z-keyword z-operator">.$</span><span class="z-variable z-other z-rust">field</span><span class="z-punctuation">, )</span><span class="z-keyword z-operator">+</span><span class="z-punctuation">) )</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>We use a repeating capture of <code>tt</code> (TokenTree) to capture every TokenTree that follows the word <code>where</code>. Since every token is either a leaf or separator, <code>tt</code> will capture everything. One important caveat here is that macros can't look ahead or behind, so if we use a repeating <code>tt</code> capture, we will capture the rest of the macro. There is no breaking out of a repeating <code>tt</code> capture.</p>
+<p>We then use a helper macro, <code>where_clause</code>, to process the captured token tree. We also pass through <code>i</code> using an arbitrary separator <code>;</code> which will make the implementation a little cleaner. Using helper macros is a common technique that reduces the number of match arms a single macro needs to implement.</p>
+<p>Now let's look at the <code>where_clause</code> macro that we need to implement. This will need a few clauses, and we will implement them one by one. We start with matching a single where clause with no <code>and</code> or <code>or</code>:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">macro_export</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rules z-rust">macro_rules!</span><span class="z-entity z-name z-function z-macro z-rust"> where_clause</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $i</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation">;</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $test_field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $comp</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $value</span><span class="z-keyword z-operator">:</span><span class="z-source">literal</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">        $i</span><span class="z-keyword z-operator">.</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$test_field $comp $value</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>That's a lot of captures. The only literal in there, if you look closely enough, is <code>;</code>. But we've seen all this before. The most surprising thing here is that to capture and use the comparison operator, <code>$comp</code>, we have to use <code>tt</code>. It took me a bit of trial and error to figure out that operators are not identifier or any kind of other fragment-specifier, so we have to use the most generic fragment-specifier <code>tt</code>.</p>
+<h3 id="incremental-tt-muncher">Incremental TT muncher</h3>
+<p>To implement the other cases, we have to use recursion. The arm we just implemented becomes the base case, and the other arms continuously call <code>where_clause!</code>:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">macro_export</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rules z-rust">macro_rules!</span><span class="z-entity z-name z-function z-macro z-rust"> where_clause</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $i</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation">;</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $test_field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $comp</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $value</span><span class="z-keyword z-operator">:</span><span class="z-source">literal</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">        $i</span><span class="z-keyword z-operator">.</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$test_field $comp $value</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $i</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation">;</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $test_field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $comp</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $value</span><span class="z-keyword z-operator">:</span><span class="z-source">literal and</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$tail</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">        $i</span><span class="z-keyword z-operator">.</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$test_field $comp $value</span><span class="z-keyword z-operator"> &amp;&amp;</span><span class="z-entity z-name z-function z-macro z-rust"> where_clause!</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$i</span><span class="z-punctuation">;</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$tail</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $i</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation">;</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $test_field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $comp</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $value</span><span class="z-keyword z-operator">:</span><span class="z-source">literal or</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$tail</span><span class="z-keyword z-operator">:</span><span class="z-source">tt</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">        $i</span><span class="z-keyword z-operator">.</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$test_field $comp $value</span><span class="z-keyword z-operator"> ||</span><span class="z-entity z-name z-function z-macro z-rust"> where_clause!</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$i</span><span class="z-punctuation">;</span><span class="z-keyword z-operator"> $</span><span class="z-punctuation">(</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">$tail</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">+</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>The next two captures only differ in the separator (<code>or</code> and <code>and</code>). They both capture all the parts of a single comparison expression, just like the base case, and capture any remaining expression as a repeating <code>tt</code>. Then we can put together our conditional from and join it, using <code>&amp;&amp;</code> or <code>||</code>, with another call to <code>where_clause!</code>. This is safe to do because we know that every arm of <code>where_clause!</code> will produce a valid conditional expression.</p>
+<h3 id="stepping-through-complex-expansions">Stepping through complex expansions</h3>
+<p>That was a lot of abstract code. Luckily, we can use the debugging tools to get a clearer picture of how all of this evaluates:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-storage z-type z-rust">let</span><span class="z-source"> results</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Vec</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-punctuation">(</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> i64</span><span class="z-punctuation">)</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-keyword z-operator"> =</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">    query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> &gt;</span><span class="z-constant z-numeric"> 9</span><span class="z-source"> or artist</span><span class="z-keyword z-operator"> ==</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// [(&quot;Not Like Us&quot;, 10), (&quot;Bad Dreams&quot;, 10), (&quot;Lateralus&quot;, 8)]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// Expands to:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: expanding `query! { from db select title, rating where rating &gt; 9 or artist == &quot;Tool&quot; }`</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: to `db.into_iter().filter(| i | where_clause!</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">//         (i; rating &gt; 9 or artist == &quot;Tool&quot;)).map(| i | (i.title, i.rating,)).collect()`</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: expanding `where_clause! { i; rating &gt; 9 or artist == &quot;Tool&quot; }`</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: to `i.rating &gt; 9 || where_clause! (i; artist == &quot;Tool&quot;)`</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: expanding `where_clause! { i; artist == &quot;Tool&quot; }`</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// = note: to `i.artist == &quot;Tool&quot;` </span></span></code></pre>
+<p>The expansion becomes quite a bit more complex because we used helper macros, but it still clearly lists out all the steps. I usually have to read these types of expansions in a multi step process:</p>
+<ol>
+<li>Scan everything from top to bottom to get the general idea of the expansion</li>
+<li>Start back from the bottom with the last line</li>
+<li>Take the line I am on (<code>i.artist == "Tool"</code>)</li>
+<li>Look at the expansion above it (<code>i.rating &gt; 9 || where_clause! (i; artist == "Tool")</code>)</li>
+<li>Substitute the line we started on into this expansion (<code>i.rating &gt; 9 || i.artist == "Tool"</code>)</li>
+<li>If there are more lines above, go back to step 3 using the substituted expansion from step 5, and repeat this until I am on the last (top most) line</li>
+</ol>
+<p>By following this process I can see exactly what each step looks like and spot any problems that might occur.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With all these techniques under your belt, you should have no problem figuring out and implementing 90% of declarative macros. If you run into more complex scenarios, the Little Book of Rust Macros has great resources including:</p>
+<ul>
+<li><a rel="external" href="https://lukaswirth.dev/tlborm/decl-macros/patterns.html">More declarative macros patterns</a> if you run into very complex scenarios</li>
+<li><a rel="external" href="https://lukaswirth.dev/tlborm/proc-macros.html">Procedural macros section</a> if you need to implement derive or decide to work on a full scale DSL macro</li>
+</ul>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/rust/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">rust</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

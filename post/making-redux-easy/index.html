@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Making Redux Easy</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Making Redux Easy
+  </h1>
+  <p class="subtitle">Published 2019-02-11</p>
+  <div>
+    <p><a rel="external" href="https://reactjs.org/">React</a> and <a rel="external" href="https://redux.js.org/">Redux</a> are a top choice for front end projects. <a rel="external" href="https://reactjs.org/">React</a> provides fast
+performance, easy ways to create shared components, and a plethora of
+libraries. <a rel="external" href="https://redux.js.org/">Redux</a> lets you simplify state management in your
+application, but it has serious drawbacks.</p>
+<span id="continue-reading"></span>
+<p>In large projects, <a rel="external" href="https://redux.js.org/">Redux</a> bloat your project with repetitive code. To
+support a single store update, you need to create a reducer that handles an
+action type which is dispatched from an action called inside a component. If
+that process sounds tedious and confusing, that's because it is. You end up
+with tons of simple actions and reducers that all look alike.</p>
+<p>People went to great lengths to combat this problem. Suggestions range from using
+a new state management library, such as Mobx, to abandoning
+<a rel="external" href="https://reactjs.org/">React</a> completely for
+something like Vue. These suggestions are like throwing the baby out
+with the bath water. That's why I was happy to find
+<a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> which didn't make me
+leave these libraries behind.</p>
+<h1 id="enter-redux-easy">Enter Redux-Easy</h1>
+<p><a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> doesn't try to replace <a rel="external" href="https://redux.js.org/">Redux</a> or <a rel="external" href="https://reactjs.org/">React</a>. Instead, it removes the boilerplate and provides helper functions. You don't need to replace your entire code base. You can incrementally integrate <a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
+<p>To see how well it delivered on these promises, I decided to try it with the
+classic Todo MVC application. The <a rel="external" href="https://redux.js.org/">Redux</a> library even
+comes with an idiomatic example, which I used as a starting point.</p>
+<h2 id="reducing-boilerplate-code">Reducing Boilerplate Code</h2>
+<p><a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> simplifies the creation of the store. Instead of manually creating
+the store, passing it to the <code>Provider</code>, and wrapping your app in the
+<code>Provider</code>. You use <code>reduxSetup</code> to do all those steps for you:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>import React from &#39;react&#39;;</span></span>
+<span class="giallo-l"><span>import {reduxSetup} from &#39;redux-easy&#39;;</span></span>
+<span class="giallo-l"><span>import App from &#39;./App&#39;;</span></span>
+<span class="giallo-l"><span>import &#39;./reducers&#39;; // described next</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>const initialState = {</span></span>
+<span class="giallo-l"><span>  user: {firstName: &#39;&#39;}</span></span>
+<span class="giallo-l"><span>};</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>// The specified component is rendered in the element with</span></span>
+<span class="giallo-l"><span>// id &quot;root&quot; unless the &quot;target&quot; option is specified.</span></span>
+<span class="giallo-l"><span>reduxSetup({component: &lt;App /&gt;, initialState});</span></span></code></pre>
+<p>You no longer manually group the actions handled by the reducer, nor combine
+the reducers into to a single root reducer. Instead, you use <code>addReducer</code>. It
+manages the root reducer for you, and you can add the handler from anywhere:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>import {addReducer} from &#39;redux-easy&#39;;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>// Call addReducer once for each action type, giving it the</span></span>
+<span class="giallo-l"><span>// function to be invoked when that action type is dispatched.</span></span>
+<span class="giallo-l"><span>// These functions must return the new state</span></span>
+<span class="giallo-l"><span>// and cannot modify the existing state.</span></span>
+<span class="giallo-l"><span>addReducer(&#39;addToAge&#39;, (state, years) =&gt; {</span></span>
+<span class="giallo-l"><span>  const {user} = state;</span></span>
+<span class="giallo-l"><span>  return {</span></span>
+<span class="giallo-l"><span>    ...state,</span></span>
+<span class="giallo-l"><span>    user: {</span></span>
+<span class="giallo-l"><span>      ...user,</span></span>
+<span class="giallo-l"><span>      age: user.age + years</span></span>
+<span class="giallo-l"><span>    }</span></span>
+<span class="giallo-l"><span>  };</span></span>
+<span class="giallo-l"><span>});</span></span></code></pre>
+<p>In vanilla <a rel="external" href="https://redux.js.org/">Redux</a>, you have to use <code>mapDispatchToProps</code> and
+<code>mapStateToProps</code> to pass in the dispatch actions and state.
+<a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
+provides helpers that interact directly with the store.</p>
+<p>Instead of <code>mapDispatchToProps</code>, you use the provided <code>dispatch</code> function
+to fire off action:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>onFirstNameChange = event =&gt; {</span></span>
+<span class="giallo-l"><span>  // assumes value comes from an input</span></span>
+<span class="giallo-l"><span>  const {value} = event.target;</span></span>
+<span class="giallo-l"><span>  dispatch(&#39;setFirstName&#39;, value);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>  // If the setFirstName action just sets a value in the state,</span></span>
+<span class="giallo-l"><span>  // perhaps user.firstName, the following can be used instead.</span></span>
+<span class="giallo-l"><span>  // There is no need to implement simple reducer functions.</span></span>
+<span class="giallo-l"><span>  dispatchSet(&#39;user.firstName&#39;, value);</span></span>
+<span class="giallo-l"><span>};</span></span></code></pre>
+<p>Instead of <code>mapStateToProps</code>, you wrap your component in a <code>watch</code>
+function. This functions lets you map object from the state using the state
+path:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>// The second argument to watch is a map of property names</span></span>
+<span class="giallo-l"><span>// to state paths where path parts are separated by periods.</span></span>
+<span class="giallo-l"><span>// For example, zip: &#39;user.address.zipCode&#39;.</span></span>
+<span class="giallo-l"><span>// When the value for a prop comes from a top-level state property</span></span>
+<span class="giallo-l"><span>// with the same name, the path can be an empty string, null, or</span></span>
+<span class="giallo-l"><span>// undefined and `watch` will use the prop name as the path.</span></span>
+<span class="giallo-l"><span>export default watch(MyComponent, {</span></span>
+<span class="giallo-l"><span>  user: &#39;&#39; // path will be &#39;user&#39;</span></span>
+<span class="giallo-l"><span>});</span></span></code></pre>
+<p>These tools provide a way to reduce the setup of
+<a rel="external" href="https://redux.js.org/">Redux</a>. However, <a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a>
+doesn't stop there.</p>
+<h2 id="helpers-for-common-actions">Helpers for Common Actions</h2>
+<p><a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> provided <code>dispatchSet</code>, <code>dispatchTransform</code>, and <code>dispatchDelete</code>.
+These are simple and flexible ways to manage simple modifications to your
+state. For actions dealing with arrays, there are <code>dispatchPush</code>,
+<code>dispatchFilter</code>, and <code>dispatchMap</code>.</p>
+<p>These helpers do what you would expect. They cover 80% of the actions
+you need to perform on the store.</p>
+<p>With actions like <code>completeTodo</code>, I reduced the traditional flow,
+spread cross 4 files, to a single function defined on the component using it:</p>
+<pre class="giallo z-code"><code data-lang="plain"><span class="giallo-l"><span>completeTodo = (id) =&gt; {</span></span>
+<span class="giallo-l"><span>  dispatchMap(&#39;todos&#39;, todo =&gt;</span></span>
+<span class="giallo-l"><span>    todo.id === id ?</span></span>
+<span class="giallo-l"><span>      { ...todo, completed: !todo.completed } :</span></span>
+<span class="giallo-l"><span>      todo</span></span>
+<span class="giallo-l"><span>  )</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p><code>completeTodo</code> is an example of modifying an array. It takes the store path
+and a function. Then it maps the function over the array pulled from the path.
+The dispatch, action, and reducer are all taken care of by
+<a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a></p>
+<h1 id="conclusion">Conclusion</h1>
+<p><a rel="external" href="https://github.com/mvolkmann/redux-easy">Redux-Easy</a> delivered on its promise of making <a rel="external" href="https://redux.js.org/">Redux</a> development shorter and
+simpler. Using it, I removed 5 out of 7 action handlers. I reduce the lines of
+code by 10% from 503 to 447, and the number of files by 30% from 20 to 14.</p>
+<p>Most importantly, organize the code became simpler. The state logic is
+closer to where it's being used and is easier to follow.</p>
+<p>You can find the full version of my TodoMVC using Redux-Easy
+<a rel="external" href="https://github.com/hackeryarn/redux-easy-todomvc">here</a>.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/javascript/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">javascript</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

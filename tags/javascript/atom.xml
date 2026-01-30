@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - javascript</title>
+    <link rel="self" type="application/atom+xml" href="https://hackeryarn.com/tags/javascript/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://hackeryarn.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2019-02-11T00:00:00+00:00</updated>
+    <id>https://hackeryarn.com/tags/javascript/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Making Redux Easy</title>
+        <published>2019-02-11T00:00:00+00:00</published>
+        <updated>2019-02-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/making-redux-easy/"/>
+        <id>https://hackeryarn.com/post/making-redux-easy/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;reactjs.org&#x2F;&quot;&gt;React&lt;&#x2F;a&gt; and &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;redux.js.org&#x2F;&quot;&gt;Redux&lt;&#x2F;a&gt; are a top choice for front end projects. &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;reactjs.org&#x2F;&quot;&gt;React&lt;&#x2F;a&gt; provides fast
+performance, easy ways to create shared components, and a plethora of
+libraries. &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;redux.js.org&#x2F;&quot;&gt;Redux&lt;&#x2F;a&gt; lets you simplify state management in your
+application, but it has serious drawbacks.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Universally Testable Dependencies in JavaScript</title>
+        <published>2018-06-01T00:00:00+00:00</published>
+        <updated>2018-06-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/universally-testable-dependencies/"/>
+        <id>https://hackeryarn.com/post/universally-testable-dependencies/</id>
+        
+        <summary type="html">&lt;p&gt;JavaScript dependencies are notoriously hard to mock and test across framework
+and environments. However, &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Dependency_injection%3CPaste%3E&quot;&gt;Dependency Injection&lt;&#x2F;a&gt; (DI) ensures testability. It
+is common in statically typed languages, like Java or Go, but is also useful in
+dynamic languages like JavaScript.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How Lodash Worked Itself Out of a Job</title>
+        <published>2017-06-25T00:00:00+00:00</published>
+        <updated>2017-06-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/lodash/"/>
+        <id>https://hackeryarn.com/post/lodash/</id>
+        
+        <summary type="html">&lt;p&gt;I really loved lodash. It brough the joy of compact functional code to
+JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library.
+Back then, there was no ES6, no Babel, and terrible browser incompatabilities
+ran rampant. Lodash along with jQuery were the saving light of that time.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

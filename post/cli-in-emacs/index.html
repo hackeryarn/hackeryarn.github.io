@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | CLI commands in Emacs</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    CLI commands in Emacs
+  </h1>
+  <p class="subtitle">Published 2019-06-01</p>
+  <div>
+    <p>A few months ago, Gabriel Gonzalez wrote an <a rel="external" href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">excellent
+article</a>
+on creating useful tools with Haskell. He used an example of a small CLI
+tool that aligns the equals signs of a multi-line text input. The
+article wrapped up by integrating this tool into vim.</p>
+<span id="continue-reading"></span>
+<p>I love the overarching concept in the article: create small tools that
+are useful in multiple contexts. It's directly inline with the Unix
+philosophy.</p>
+<p>The only problem is that I am an Emacs user. So in this article, I
+wanted to show how I get the same effect in Emacs. And demonstrating how
+to take CLI interaction in the text editor even further.</p>
+<h1 id="take-action-on-a-region">Take Action on a Region</h1>
+<p>In his article, Gabriel uses the command he created to take action on a
+region. This involves selecting text and executing a CLI command on
+it's contents -- replacing the region with the command's output.</p>
+<p>For this example, we will use the command from Gabrial's article,
+<code>align-equals</code>. To see the full implementation and learn a little
+Haskell, you can read his
+<a rel="external" href="http://www.haskellforall.com/2018/10/detailed-walkthrough-for-beginner.html">article</a>.
+Or you can follow along while keeping the below command's usage in
+mind:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> align-equals</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  foo</span><span class="z-string"> =</span><span class="z-constant z-numeric"> 1</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  a</span><span class="z-string"> =</span><span class="z-constant z-numeric"> 2</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  asdf</span><span class="z-string"> =</span><span class="z-constant z-numeric"> 3</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">  &lt;</span><span class="z-entity z-name z-function">Ctrl-D</span><span class="z-source">&gt;</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  foo</span><span class="z-string">  =</span><span class="z-constant z-numeric"> 1</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  a</span><span class="z-string">    =</span><span class="z-constant z-numeric"> 2</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">  asdf</span><span class="z-string"> =</span><span class="z-constant z-numeric"> 3</span></span></code></pre>
+<p>Emacs has a built in command, <code>shell-command-on-region</code>, which executes
+the specified command on the selected region. This would work for our
+example, but it requires two commands. First you execute
+<code>shell-command-on-region</code>, then you provide the command you want to run.
+If the cli command needs flags or arguments, it becomes tedious to put
+in every time. Wouldn't it be nice if we could select a region and only
+run one command?</p>
+<p>To accomplish this, we need a wrapper. This implementation combines a
+couple elisp components. We start our function by expecting the
+beginning and ending of the region as arguments. The region(<code>r</code>) flag
+passed to <code>interactive</code> ensure that the correct arguments get passed in.</p>
+<p><code>interactive</code> lets us invoke our function from anywhere, and supports
+<a rel="external" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes">many more
+options</a>,
+which I encourage you to explore on your own.</p>
+<p>With our region bounds ready, we call <code>shell-command-on-region</code> to
+executes a shell command on a region specified by the beginning(<code>b</code>) and
+ending(<code>e</code>) arguments. We also supply the shell command to execute, and
+two flags which make the command replace the selected region.</p>
+<pre class="giallo z-code"><code data-lang="emacs-lisp"><span class="giallo-l"><span class="z-punctuation">(</span><span class="z-storage z-type">defun</span><span class="z-source"> align-equals</span><span class="z-punctuation"> (</span><span class="z-variable z-parameter">b e</span><span class="z-punctuation">)</span><span class="z-source"> </span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-storage z-modifier">interactive</span><span class="z-punctuation z-definition z-string z-string"> &quot;r&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-support z-function">shell-command-on-region</span><span class="z-source"> b e </span><span class="z-punctuation z-definition z-string z-string">&quot;align-equals&quot;</span><span class="z-source"> t t</span><span class="z-punctuation">))</span></span></code></pre>
+<p>We can expand the CLI command in this wrapper to take any number or
+arguments and flags. No matter how we change it, we can still invoke it
+with one command: <code>&lt;M-x&gt; align-equals</code>.</p>
+<h1 id="take-action-on-a-buffer">Take Action on a Buffer</h1>
+<p>A common scenario I run into, is wanting to run a tool on the whole
+file. This normally comes in two variants. I either want to modify the
+content of the file in some way, like using a beautifier. Or I want to
+produce an output based on the file content, like getting totals or
+showing lint errors.</p>
+<p>Again, there are built in ways to do this, but a wrapper lets us do more
+with our shell commands.</p>
+<h2 id="replacing-buffer-contents">Replacing Buffer Contents</h2>
+<p>This time, we don't need to pass any arguments to <code>interactive</code>.
+Instead, we use <code>shell-command-on-region</code> with the results of calling
+<code>point-min</code> and <code>point-max</code> -- the start and end of the buffer,
+respectively.</p>
+<pre class="giallo z-code"><code data-lang="emacs-lisp"><span class="giallo-l"><span class="z-punctuation">(</span><span class="z-storage z-type">defun</span><span class="z-source"> align-buffer</span><span class="z-punctuation"> ()</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-storage z-modifier">interactive</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-support z-function">shell-command-on-region</span><span class="z-punctuation"> (</span><span class="z-support z-function">point-min</span><span class="z-punctuation">) (</span><span class="z-support z-function">point-max</span><span class="z-punctuation">)</span><span class="z-punctuation z-definition z-string z-string"> &quot;align-equals&quot;</span><span class="z-source"> t t</span><span class="z-punctuation">))</span></span></code></pre>
+<p><code>align-buffer</code> aligns the entire buffer without the need to manually
+select a region. This makes the it less error prone and easier to
+execute. We can't select the region incorrectly, because we don't need
+to anymore. We only need to execute <code>&lt;M-x&gt; align-buffer</code>.</p>
+<h2 id="displaying-the-output-of-a-shell-command">Displaying The Output of a Shell Command</h2>
+<p>For this examples, let's use <code>eslint</code>, a popular tool for linting
+JavaScript code.</p>
+<p><code>eslint</code> is different from our previous command. It takes a file name,
+not the buffer contents. This means we will need to use some new
+functions.</p>
+<p>Once again, we don't accept any arguments and pass nothing to
+<code>interactive</code>. We get the buffer name by using the <code>buffer-name</code>
+function. Once we have the name, we merge it with the string <code>eslint</code> to
+create the final command, and pass it to <code>shell-command</code>. This logs the
+output to a dedicate shell command buffer.</p>
+<pre class="giallo z-code"><code data-lang="emacs-lisp"><span class="giallo-l"><span class="z-punctuation">(</span><span class="z-storage z-type">defun</span><span class="z-source"> run-eslint</span><span class="z-punctuation"> ()</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-storage z-modifier">interactive</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-source">let</span><span class="z-punctuation"> ((</span><span class="z-source">current-file </span><span class="z-punctuation">(</span><span class="z-support z-function">buffer-name</span><span class="z-punctuation"> (</span><span class="z-support z-function">current-buffer</span><span class="z-punctuation">))))</span></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-support z-function">shell-command</span><span class="z-punctuation"> (</span><span class="z-support z-function">concat</span><span class="z-punctuation z-definition z-string z-string"> &quot;eslint &quot;</span><span class="z-source"> current-file</span><span class="z-punctuation">))))</span></span></code></pre>
+<p>Now we can execute <code>run-eslint</code> in any JavaScript file and see the
+results of executing the command.</p>
+<p>Seeing the results is a good start. But <code>eslint</code> comes with a handy
+<code>--fix</code> flag that automatically fixes simple problems.</p>
+<p>To add this flag you only need to change the string you pass to
+<code>shell-command</code>.</p>
+<pre class="giallo z-code"><code data-lang="emacs-lisp"><span class="giallo-l"><span class="z-punctuation">(</span><span class="z-support z-function">shell-command</span><span class="z-punctuation"> (</span><span class="z-support z-function">concat</span><span class="z-punctuation z-definition z-string z-string"> &quot;eslint --fix&quot;</span><span class="z-source"> current-file</span><span class="z-punctuation">))</span><span class="z-source">))</span></span></code></pre>
+<p>With that change, the simple issues get fixed automatically and we get a
+log of the complex issues to fix manually.</p>
+<h1 id="running-command-automatically">Running Command Automatically</h1>
+<p>From the last example we have a useful <code>run-eslint</code> function. But we
+need to remember to run it every time we want to check a file. Let's
+reduce our mental burden, and let Emacs automatically execute this
+function every time we save a JavaScript file.</p>
+<p>There are two facilities that makes automatic function execution precise
+and safe: modes and hooks.</p>
+<p>Modes allow us to know what context we are in. When we open a new file,
+a number of modes can activate. For our example, there is a built in
+<code>js-mode</code> that activates when we open a JavaScript file.</p>
+<p>We will hook into the activation of this mode to limit the scope of our
+automatic function execution to only JavaScript files. We wouldn't want
+to execute a command that changes file contents in an unsupported file
+type.</p>
+<p>Once we are inside <code>js-mode</code>, we will add another hook -- this time to
+an action. Since <code>eslint</code> can fix some issues for us, we will run it
+before the file is saved by hooking onto the <code>before-save</code> action.</p>
+<p>In the implementation, we use <code>add-hook</code> to listen to the two action
+described above. <code>js-mode-hook</code> only needs the function to execute when
+the mode is activated. But <code>before-save-hook</code> needs the <code>LOCAL</code> option.
+This only runs the action in the buffer it was activated in. Without
+this flag, <code>eslint</code> would run on every file after we opened any
+JavaScript file.</p>
+<pre class="giallo z-code"><code data-lang="emacs-lisp"><span class="giallo-l"><span class="z-punctuation">(</span><span class="z-support z-function">add-hook</span><span class="z-punctuation"> &#39;</span><span class="z-source">js-mode-hook</span></span>
+<span class="giallo-l"><span class="z-punctuation">          (</span><span class="z-storage z-type">lambda</span><span class="z-punctuation"> ()</span></span>
+<span class="giallo-l"><span class="z-punctuation">            (</span><span class="z-support z-function">add-hook</span><span class="z-punctuation"> &#39;</span><span class="z-source">before-save-hook</span><span class="z-punctuation"> &#39;</span><span class="z-source">run-eslint</span><span class="z-constant z-language"> nil</span><span class="z-source"> t</span><span class="z-punctuation">)))</span></span></code></pre><h1 id="going-further">Going Further</h1>
+<p>I only scratched the surface of what's possible with Elisp. Projects
+like <a rel="external" href="https://magit.vc/">magit</a> provide amazing examples of extending
+basic CLI tools.</p>
+<p>Magit is a wrapper around git. It doesn't change what git does.
+Instead, it adds on text manipulation and file awareness that Emacs is
+good at. If you need inspiration for how to integrate other tools into
+Emacs, look no further.</p>
+<p>I hope that this article provided some inspiration and a few new tricks.
+Happy hacking.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/emacs/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">emacs</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/cli/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">cli</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

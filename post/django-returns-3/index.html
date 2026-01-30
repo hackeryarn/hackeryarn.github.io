@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Type safe Django app, Part 3</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Type safe Django app, Part 3
+  </h1>
+  <p class="subtitle">Published 2022-04-16</p>
+  <div>
+    <p>In <a rel="external" href="https://hackeryarn.com/post/django-returns-2/">Part 2</a> we got a taste of
+using <code>returns</code> and created our first model methods.</p>
+<p>In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.</p>
+<span id="continue-reading"></span><h1 id="writ-views-that-actually-do-something">Writ views that actually do something</h1>
+<p>The first view introduced in the official tutorial performs multiple actions which we will split up into individual functions. Writing individual functions will help us give names to the actions that we take, bring the types to the forefront, and clearly demonstrate how to compose small functions.</p>
+<p>First off the view needs to get the last 5 questions:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> _latest_question_list</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">model</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> Model</span><span class="z-punctuation">) -&gt;</span><span class="z-meta z-indexed-name z-python"> QuerySet</span><span class="z-punctuation">[</span><span class="z-meta z-item-access z-python">Model</span><span class="z-punctuation">]:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-source"> model</span><span class="z-punctuation">.</span><span class="z-source">objects</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;-pub_date&quot;</span><span class="z-punctuation">)[:</span><span class="z-constant z-numeric">5</span><span class="z-punctuation">]</span></span></code></pre>
+<p>As we’ve seen before, this operation is impure and unsafe because it reaches out to the database.</p>
+<p>The next action extracts the text from each question.</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> _questions_text</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">questions_list</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> QuerySet</span><span class="z-punctuation">[</span><span class="z-meta z-item-access z-python">Question</span><span class="z-punctuation">]) -&gt;</span><span class="z-meta z-indexed-name z-python"> list</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-punctuation"> [</span><span class="z-source">q</span><span class="z-punctuation">.</span><span class="z-source">question_text</span><span class="z-keyword z-control z-flow z-python"> for</span><span class="z-source"> q</span><span class="z-keyword z-control z-flow z-python"> in</span><span class="z-source"> questions_list</span><span class="z-punctuation">]</span></span></code></pre>
+<p>Surprisingly, this simple function is also impure and unsafe. We need to mark it as unsafe because it will take a <code>QuerySet</code> and execute a lookup on it for <code>question_text</code>. When the lookup gets executed, Django will hit the database, unless we have retrieved the data before. Since, we have no way to know if we have the data already, it’s safer to mark it as impure and unsafe.</p>
+<p>Lastly, we create a display string from the list of strings retrieved by _question_text:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> _list_to_string</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">list_of_strings</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> list</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]) -&gt;</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-punctuation z-definition z-string z-string"> &quot;, &quot;</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">join</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">list_of_strings</span><span class="z-punctuation">)</span></span></code></pre>
+<p>This function is pure, safe, and straight forward.</p>
+<p>With the individual pieces working, we can combine them:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> index</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> HttpRequest</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> HttpResponse</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">    questions_string</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> flow</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        Question</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        _latest_question_list</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        bind</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">_questions_text</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">_list_to_string</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">    output</span><span class="z-keyword z-operator"> =</span><span class="z-source"> questions_string</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">value_or</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;No questions found.&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    response</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">output</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">response</span><span class="z-punctuation">)</span></span></code></pre>
+<p>That’s a lot of new functions. Let’s break them down one by one.</p>
+<p><code>flow</code> composes any number single argument functions. The first argument must have the same type as the argument of the next function, which must return the same type as the argument of the function following it, and so on.</p>
+<p>This process helps clearly show a pipeline of the transformations our data goes through. If we need to add or remove a step, we only modify one line and we’re done.</p>
+<p><code>bind</code> is a little trickier. If we carefully inspect the types of the functions that we’re trying to use in <code>flow</code>, we will notice that something doesn’t quite line up with our earlier observation o how <code>flow</code> works. <code>_latest_question_list</code> returns a <code>IOResultE[QuerySet[Question]]</code> but <code>_questions_text</code> expects <code>QuerySet[Question]</code>; the types don’t match.</p>
+<p><code>bind</code> handles this exact scenario. When applied to <code>IOResultE</code>, it will check the output. If the result is a <code>Success</code>, <code>bind</code> will unwrap <code>IOResultE</code> and pass it’s contents to <code>_questions_text</code>. If the <code>Result</code> is a <code>Failure,</code> <code>bind</code> will skip calling <code>questions_text</code> and move on to the next step in the pipeline.</p>
+<p><code>map_</code> performs the same steps as <code>bind</code>. It unwraps <code>IOResultE</code> and passes the value to <code>_list_to_string</code>, but instead of returning the value that <code>_list_to_string</code> returns, it wraps the value from <code>_list_to_string</code> in the <code>IOResultE</code> container (or <code>Success</code> to be more exact.)</p>
+<p><code>bind</code> and <code>_map</code> are closely related. Some languages/libraries even call <code>bind</code> <code>flat_map</code>. It’s often called <code>flat_map</code> because it does the same thing as <code>_map</code> but removes one of the layers.</p>
+<p>If we ran <code>_map(_questions_text)</code> instead of <code>bind(_questions_text)</code>, we would ended up with a return value of <code>IOResultE[IOResultE[...]]</code>. This happens because both <code>_last_question_list</code> and <code>_questions_text</code> return a value wrapped in a <code>IOResultE</code>. Since this type communicates success or failure, we don’t need to know or care about how many times it had to succeed. We only care that all the action succeeded, which a single <code>Success</code> can communicate as well as 2 <code>Success</code> wrappers.</p>
+<p>We can follow a general rule on when to use <code>bind</code> vs. <code>_map</code>. If both functions work inside the same context (return the same container type), use <code>bind</code>. If the functions work in a different context, and the latter function is pure and safe, use <code>_map</code>.</p>
+<p>To wrap up the view function, we unwrap the value and return it as an <code>HttpResponse</code>.</p>
+<p>This process required learning a lot of new concepts, but we will use them again and again. Soon enough, they will become second nature.</p>
+<h2 id="using-a-template">Using a template</h2>
+<p>Using a template introduces a new challenge. We can no longer use <code>flow</code> since
+<code>template.render</code> requires two arguments.</p>
+<p>Let's see how we can make this work without unwrapping twice.</p>
+<p>First we create a small wrapper around <code>loader.get_template</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> _get_template</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">path</span><span class="z-punctuation">:</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> Template</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-source"> loader</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">get_template</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">path</span><span class="z-punctuation">)</span></span></code></pre>
+<p>This simply ensure that we get back the correct type. Since loading a template
+require IO, we need to mark it as <code>impure_safe</code>.</p>
+<p>This gives us all the pieces that we need to create the template:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> index</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> HttpRequest</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> HttpResponse</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">    context</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-meta z-item-access z-python">IndexContext</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> flow</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        Question</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        _latest_question_list</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-storage z-type">lambda</span><span class="z-variable z-parameter"> lql</span><span class="z-punctuation">: {</span><span class="z-punctuation z-definition z-string z-string">&quot;latest_question_list&quot;</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> lql</span><span class="z-punctuation">})</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"><span class="z-source">    template</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-meta z-item-access z-python">Template</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> _get_template</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;polls/index.html&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    template_string</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-source"> template</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">bind</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-storage z-type">        lambda</span><span class="z-variable z-parameter"> template</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> context</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">map</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-storage z-type">            lambda</span><span class="z-variable z-parameter"> context</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> template</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">render</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">context</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-arguments z-python"> request</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">        ))</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">    output</span><span class="z-keyword z-operator"> =</span><span class="z-source"> template_string</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">value_or</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;No questions found.&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    response</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">output</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">response</span><span class="z-punctuation">)</span></span></code></pre>
+<p>First we get the two arguments we need to pass to <code>template.render</code>. Both of these values are wrapped in an <code>IOResultE</code>. Luckily, all the wrapper types also have methods corresponding to the helper functions we’ve used in <code>flow</code>.</p>
+<p>We can get the raw value by calling <code>bind</code> on the template and inside it calling <code>map</code> on the context. Then we just pass both the values to <code>template.render</code>.</p>
+<p>We have to call <code>bind</code> because the inner <code>map</code> application will return an <code>IOResultE</code> and we don’t want to end up with a double wrapper type. If we had to unwrap more layers, we would call <code>bind</code> on all the layers except the last.</p>
+<p>That was a pretty complex process just to call a function with two arguments. Usually, having to jump through this many hoops indicates that we could use a better abstractions. In this case, Django has us covered.</p>
+<h2 id="a-shortcut-render">A shortcut: render()</h2>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> index</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> HttpRequest</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> HttpResponse</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">    template_string</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> flow</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        Question</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        _latest_question_list</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-storage z-type">lambda</span><span class="z-variable z-parameter"> lql</span><span class="z-punctuation">: {</span><span class="z-punctuation z-definition z-string z-string">&quot;latest_question_list&quot;</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> lql</span><span class="z-punctuation">}),</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-storage z-type">lambda</span><span class="z-variable z-parameter"> context</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-python"> render</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">request</span><span class="z-punctuation">,</span><span class="z-punctuation z-definition z-string z-string"> &#39;polls/index.html&#39;</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-arguments z-python"> context</span><span class="z-punctuation">))</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">    output</span><span class="z-keyword z-operator"> =</span><span class="z-source"> template_string</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">value_or</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;No questions found.&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    response</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">output</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">response</span><span class="z-punctuation">)</span></span></code></pre>
+<p>That looks much simpler. It’s a straight forward <code>flow</code> pipeline that we can easily follow. We can also start using lambdas instead of explicit helper functions as we become more comfortable with abstractions.</p>
+<p>This example provides a more realistic example of how using <code>returns</code> looks likes.</p>
+<h1 id="raising-a-404-error">Raising a 404 error</h1>
+<p>We have to deviate slightly from the official tutorial here. <code>get_object_or_404</code> doesn’t buy us anything, so we will avoid using it. Instead, we will extend the example a bit and handle both 404 and 500 errors depending on the type of failure that we get:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> detail</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> HttpRequest</span><span class="z-punctuation">,</span><span class="z-variable z-parameter"> question_id</span><span class="z-punctuation">:</span><span class="z-support z-type z-python"> int</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> HttpResponse</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">    template_string</span><span class="z-punctuation">:</span><span class="z-meta z-indexed-name z-python"> IOResultE</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">str</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> flow</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        question_id</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-arguments z-python">        _get_question</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-storage z-type">lambda</span><span class="z-variable z-parameter"> question</span><span class="z-punctuation">: {</span><span class="z-punctuation z-definition z-string z-string">&quot;question&quot;</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> question</span><span class="z-punctuation">}),</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        map_</span><span class="z-punctuation">(</span><span class="z-storage z-type">lambda</span><span class="z-variable z-parameter"> context</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-python"> render</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">request</span><span class="z-punctuation">,</span><span class="z-punctuation z-definition z-string z-string"> &quot;polls/detail.html&quot;</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-arguments z-python"> context</span><span class="z-punctuation">))</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    match</span><span class="z-source"> template_string</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        case</span><span class="z-meta z-function-call z-python"> Failure</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">Question</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">DoesNotExist</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">            return</span><span class="z-meta z-function-call z-python"> Http404</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Question does not exist&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        case</span><span class="z-meta z-function-call z-python"> Failure</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">_</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">            return</span><span class="z-meta z-function-call z-python"> Http500</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Trouble getting the question&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        case</span><span class="z-meta z-function-call z-python"> Success</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">output</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">            response</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">output</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">            return</span><span class="z-meta z-function-call z-python"> render</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">request</span><span class="z-punctuation">,</span><span class="z-punctuation z-definition z-string z-string"> &quot;polls/detail.html&quot;</span><span class="z-punctuation">, {</span><span class="z-punctuation z-definition z-string z-string">&quot;question&quot;</span><span class="z-punctuation">:</span><span class="z-meta z-function-call z-arguments z-python"> question</span><span class="z-punctuation">})</span></span></code></pre>
+<p>The <code>flow</code> pipeline remains the same, we only add a new case statement to handle the final output. If you’ve never seen case statements in python, that’s to be expected.</p>
+<p>Pythons 3.10 introduces case statements. These are prefect for our use case. We can match the <code>IOResultE</code> type for either <code>Failure</code> or <code>Success</code>. We can event further destructure the <code>Failure</code> to inspect the type of error, and <code>Success</code> to access the <code>IO</code> action directly.</p>
+<p>One thing to remember here, is that no matter where we get an error inside <code>flow</code>, it will stop further computations and return that <code>Failure</code>. This gives us the ability only worry about the happy path inside <code>flow</code> and offload all the error handling to a single place.</p>
+<h1 id="wrap-up">Wrap up</h1>
+<p>With that, we covered all the major pieces needed to effectively use <code>returns</code> with Django.</p>
+<p><code>returns</code> provides quite a few more tools, but they require more complex scenarios and only provide slight variants of what we covered in this series.</p>
+<p>The rest of the Django tutorial focuses on Django specific details and we won’t get to see anything new. Therefore, this is where I will stop the series. But I encourage you to continue with the tutorial on your own and try to use what you learned here.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/django/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

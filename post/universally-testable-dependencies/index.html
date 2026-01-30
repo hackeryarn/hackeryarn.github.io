@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Universally Testable Dependencies in JavaScript</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Universally Testable Dependencies in JavaScript
+  </h1>
+  <p class="subtitle">Published 2018-06-01</p>
+  <div>
+    <p>JavaScript dependencies are notoriously hard to mock and test across framework
+and environments. However, <a rel="external" href="https://en.wikipedia.org/wiki/Dependency_injection%3CPaste%3E">Dependency Injection</a> (DI) ensures testability. It
+is common in statically typed languages, like Java or Go, but is also useful in
+dynamic languages like JavaScript.</p>
+<span id="continue-reading"></span>
+<p>This article will guide you through a simple technique that can apply
+to any JavaScript code base, frontend or backend, independent of frameworks
+and libraries.</p>
+<p>The technique I am going to demonstrate is arguably not true DI, since the
+dependencies are still managed by the module using them. However, it
+solves the dependency problem for testing which is the focus of this
+article.</p>
+<h2 id="why-do-you-need-di">Why Do You Need DI?</h2>
+<p>At the most basic level, you need DI to avoid testing your dependencies.
+Not testing dependencies is a good idea for two reasons:</p>
+<p>Your dependencies should already be tested. This applies to both external dependencies as well as from your own project. If an external dependency doesn't have good testing, you probably shouldn't be using it or you should help them and add some tests!</p>
+<p>Dependencies can do too much. Since dependencies exist outside of
+your module's control, they can perform actions your module shouldn't be concerned with such as saving data, making web requests, or being algorithmically heavy.</p>
+<p>Your tests will be less complicated and faster if you avoid tesing dependencies because of the reasons mentioned above.</p>
+<h2 id="setting-up-your-code-to-enable-di">Setting Up Your Code to Enable DI</h2>
+<p><em>I am using <a rel="external" href="https://babeljs.io/">Babel</a> and
+<a rel="external" href="https://facebook.github.io/jest/">Jest</a> throughout this guide. However,
+you can easily adapt this technique to any JavaScript setup.</em></p>
+<p>To start off, put all dependencies which should not execute during
+a test into an exported <code>deps</code> object.</p>
+<pre class="giallo z-code"><code data-lang="javascript"><span class="giallo-l"><span class="z-keyword">import</span><span class="z-variable z-other z-readwrite"> longRunningFunction</span><span class="z-keyword"> from</span><span class="z-punctuation z-definition z-string z-string"> &#39;longRunningFunctions&#39;</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-storage z-type">export const</span><span class="z-variable z-other z-constant z-js"> deps</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-variable z-other z-readwrite">    longRunningFunction</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span>
+<span class="giallo-l"></span></code></pre>
+<p>Once you have the <code>deps</code> object defined, you no longer reference the dependency
+directly. Instead, you call the appropriate dependency on the <code>deps</code> object.</p>
+<pre class="giallo z-code"><code data-lang="javascript"><span class="giallo-l"><span class="z-keyword">export default</span><span class="z-punctuation"> (</span><span class="z-variable z-parameter">x</span><span class="z-punctuation">,</span><span class="z-variable z-parameter"> y</span><span class="z-punctuation">)</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span class="z-source"> deps</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">longRunningFunction</span><span class="z-source">(</span><span class="z-variable z-other z-readwrite z-js">x</span><span class="z-punctuation">,</span><span class="z-variable z-other z-readwrite z-js"> y</span><span class="z-source">)</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>That's all you need to make your dependencies testable in any context!</p>
+<p>You will have the same level of testability across
+node application using the <code>require</code> syntax, and front end application using
+the ES6 <code>import</code> syntax without extra code.</p>
+<h2 id="using-the-deps-object-in-your-tests">Using the <code>deps</code> Object in Your Tests</h2>
+<p>With your module exporting all of its dependencies, your tests can
+easily mock or replace anything in the <code>deps</code> object.</p>
+<pre class="giallo z-code"><code data-lang="javascript"><span class="giallo-l"><span class="z-keyword">import</span><span class="z-constant z-language"> *</span><span class="z-keyword"> as</span><span class="z-variable z-other z-readwrite"> myModule</span><span class="z-keyword"> from</span><span class="z-punctuation z-definition z-string z-string"> &#39;./myModule&#39;</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> deps</span><span class="z-keyword z-operator"> =</span><span class="z-source"> myModule</span><span class="z-punctuation z-accessor">.</span><span class="z-variable z-other z-property z-js">deps</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> result</span><span class="z-keyword z-operator"> =</span><span class="z-constant z-numeric"> 4</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">describe</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;myModule&#39;</span><span class="z-punctuation">, ()</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type">    let</span><span class="z-variable z-other z-readwrite"> got</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">    beforeAll</span><span class="z-source">(</span><span class="z-punctuation">()</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">        deps</span><span class="z-punctuation z-accessor">.</span><span class="z-variable z-other z-property z-js">longRunningFunction</span><span class="z-keyword z-operator"> =</span><span class="z-source"> jest</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">fn</span><span class="z-source">()</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">mockReturnValue</span><span class="z-source z-variable z-other z-readwrite">(result)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-variable z-other z-readwrite">        got</span><span class="z-keyword z-operator"> =</span><span class="z-source"> myModule</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">default</span><span class="z-source">(</span><span class="z-constant z-numeric">2</span><span class="z-punctuation">,</span><span class="z-constant z-numeric"> 2</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">    it</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;calls longRunningFunction with correct arguments&#39;</span><span class="z-punctuation">, ()</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">        expect</span><span class="z-source">(deps</span><span class="z-punctuation z-accessor">.</span><span class="z-variable z-other z-property z-js z-source">longRunningFunction)</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">toBeCalledWith</span><span class="z-source">(</span><span class="z-constant z-numeric">2</span><span class="z-punctuation">,</span><span class="z-constant z-numeric"> 2</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">    it</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;returns the correct result&#39;</span><span class="z-punctuation">, ()</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">        expect</span><span class="z-source z-variable z-other z-readwrite">(got)</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">toEqual</span><span class="z-source z-variable z-other z-readwrite">(result)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span><span class="z-source">)</span><span class="z-punctuation">;</span></span></code></pre>
+<p>The <code>beforeAll</code> block is the most important piece of code. Because
+we are using functions from the <code>deps</code> object in our module code, we can
+just replace <code>deps.longRunningFunction</code> with anything we want before invoking
+the module's default function.</p>
+<p>In this example, we are using <a rel="external" href="https://facebook.github.io/jest/docs/en/mock-functions.html">Jest's built in mock</a> <code>jest.fn()</code>.
+It can produce a mock value to verify that our function returns the correct value and is called with the expected arguments.</p>
+<p>The best part about testing this way is that we don't have to worry about
+any library's spying functions staying up to date with the JavaScript
+specifications. Often times, spies don't work the same for all module syntaxes.
+In fact, we don't have to use the mocks at all! We could write our
+own function with custom validators and set it as
+<code>deps.longRunningFunction</code>.</p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>This technique helped me immensely when maintaining long running or large
+JavaScript projects. It provided a minimal code approach that is easy to
+follow even when you are brand new to the code base. I hope you found this
+approach useful and less complicated than other DI approaches.</p>
+<p>Happy testing!</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/javascript/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">javascript</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/testing/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">testing</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

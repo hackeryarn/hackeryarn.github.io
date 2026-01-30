@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | The Right Abstraction for Lambdas</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    The Right Abstraction for Lambdas
+  </h1>
+  <p class="subtitle">Published 2019-02-24</p>
+  <div>
+    <p>Serverless functions are a great alternative for many light tasks that would
+traditionally required a server. They allow you to split up work across
+mutiple small functions, and you only pay
+for what you use. On top of that, they require less maintenance than managing your own
+server or Kubernetes cluster.</p>
+<span id="continue-reading"></span>
+<p>However, the single function per lambda approach can become too granular. Shared
+functionality becomes hard to group together. You only have hard to enforce naming convention
+for lambda that belong together. Then comes the problem of sharing code between lamdas. Do you need a library for a few common functions?</p>
+<p>I side with <a rel="external" href="https://www.sandimetz.com/blog/2016/1/20/the-wrong-abstraction">Sandy
+Metz</a> in that
+"duplication is far cheaper than the wrong abstraction". But that doesn't mean
+you should give up the search for the right abstraction.</p>
+<p><a rel="external" href="https://serverless.com/">The Serverless Framework</a> addresses some of these issues by letting you share code in the same project. However, it requires you to completely change how you process
+requests. You can't rely on the same set of battle tested libraries that you
+use would use elsewhere. If you later decide to switch to a microservice
+architecture, you need to change large portions of your handlers. <a rel="external" href="https://serverless.com/">The Serverless
+Framework</a> alone isn't enough.</p>
+<h2 id="the-right-abstractions">The Right Abstractions</h2>
+<p>I think having one action per lambda function is too granular. It
+gets rid of all the tooling built around handling web requests and routing.</p>
+<p>A single lambda should handle all the actions on a single resource. The
+function should know how to perform a Create, Read, Update, Delete, along with specialty methods.</p>
+<p>With this in place, you share the most appropriate logic without needless
+indirection. It creates space to break up your code. The actions that
+deal with the same resource are put together in one package. Everything else is
+either tied with its resource or abstracted into a general package.</p>
+<h2 id="other-benefits">Other Benefits</h2>
+<p>Having a single lambda handle all the actions of a resource has a hidden
+performance advantage. You see it when users perform multple actions on a single resource - a common scenario. The first action warms up the lambda, so subsequent request have better performance.</p>
+<p>The best part is that the majority of your app can still follow the same pattern as
+a microservice. If you need to move to a traditional server, the only thing you
+need to change is a small wrapper around your router.</p>
+<p>Lambdas give you great power, but you need to use them correctly to take
+full advantage of it. An abstraction that adds to your code portability and
+usability is what you need to successfully work with lambdas.</p>
+<h2 id="creating-a-multi-route-lambdas">Creating a Multi-Route Lambdas</h2>
+<p>You will run into a problem when trying to create lambdas that handle multiple
+routes. There isn't a built in mechanism for handling more than one actions in the
+context of a lambda. Luckily, there are many efforts in the community to make
+this scenario possible.</p>
+<p>No matter the technology you use, the communities create gateways that all work in a similar way.
+They translate the requests intended for a lambda into requests
+that a router can handle. You get to use the router and handlers
+approach you are used to while running your code in a lambda.</p>
+<p>The following section shows how to apply this technique across Go and Node.js
+servers.</p>
+<h3 id="go">Go</h3>
+<p>If you want to use this technique with Go, <a rel="external" href="https://github.com/apex/gateway">Apex gateway</a> provides an easy way to translate lambda bound requests. You create your router as normal, pass the router to the <code>http.Handle</code> function, and use the gateway to start your server. Everything
+else is taken care of by the library.</p>
+<pre class="giallo z-code"><code data-lang="go"><span class="giallo-l"><span class="z-keyword">package</span><span class="z-entity z-name z-type"> main</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">import</span><span class="z-punctuation"> (</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">	&quot;log&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">	&quot;github.com/apex/gateway&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">	&quot;github.com/gorilla/mux&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">func</span><span class="z-entity z-name z-function"> main</span><span class="z-punctuation">() {</span></span>
+<span class="giallo-l"><span class="z-source">	r</span><span class="z-keyword z-operator"> :=</span><span class="z-source"> mux</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function">NewRouter</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">	r</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function">HandleFunc</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;/sample&quot;</span><span class="z-punctuation">,</span><span class="z-source"> handler</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">  http</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function">Handle</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;/&quot;</span><span class="z-punctuation">,</span><span class="z-source"> r</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">	log</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function">Fatal</span><span class="z-punctuation">(</span><span class="z-source">gateway</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function">ListenAndServe</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;:8080&quot;</span><span class="z-punctuation">,</span><span class="z-constant z-language"> nil</span><span class="z-punctuation">))</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre><h3 id="node-js-and-express">Node.js and Express</h3>
+<p>For Express, there is the <a rel="external" href="https://github.com/awslabs/aws-serverless-express">aws-serverless-express</a> library. It allows you to wrap your normal express app is a server, and proxy it from a serverless handler.</p>
+<pre class="giallo z-code"><code data-lang="javascript"><span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> express</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function"> require</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;express&#39;</span><span class="z-source">)</span></span>
+<span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> awsServerlessExpress</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function"> require</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;aws-serverless-express&#39;</span><span class="z-source">)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> app</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function"> express</span><span class="z-source">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">app</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">get</span><span class="z-source">(</span><span class="z-punctuation z-definition z-string z-string">&#39;/sample&#39;</span><span class="z-punctuation">,</span><span class="z-variable z-other z-readwrite z-source"> handler)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">const</span><span class="z-variable z-other z-constant z-js"> server</span><span class="z-keyword z-operator"> =</span><span class="z-source"> awsServerlessExpress</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">createServer</span><span class="z-source z-variable z-other z-readwrite">(app)</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-support z-type z-object z-module z-js">exports</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">handler</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> (</span><span class="z-variable z-parameter">event</span><span class="z-punctuation">,</span><span class="z-variable z-parameter">context</span><span class="z-punctuation">)</span><span class="z-storage z-type"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">  awsServerlessExpress</span><span class="z-punctuation z-accessor">.</span><span class="z-entity z-name z-function">proxy</span><span class="z-source z-variable z-other z-readwrite">(server</span><span class="z-punctuation">,</span><span class="z-variable z-other z-readwrite"> event</span><span class="z-punctuation">,</span><span class="z-variable z-other z-readwrite z-source"> context)</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre><h3 id="a-word-of-warning">A Word of Warning</h3>
+<p>There is a scenario where this approach performs worse than multiple lambdas:
+rapid calls to different routes shared by a the same resource.</p>
+<p>Let's say we have a shopping app that models multiple actions on a <code>cart</code>
+resource.</p>
+<p>When a user checks out, two requests simultaneously fire for every item. The
+first, gets the current price. The second, gets the quantity ordered.</p>
+<p>For now, we will ignore the glaring architecture issues with this implementation
+and focus on the performance implications for the lambdas. Both these scenarios
+assume identical conditions and warm lambdas at the start.</p>
+<p>If we have a single lambda managing all the actions on the <code>cart</code>, as I
+suggested, we will incur a cold start penalty on our second request. Because
+lambda can only process a single request at a time, the second request has to
+spin up a brand new instance of the lambda.</p>
+<p>If we have a lambda per action, then each request will get an already warm
+lambda and we will have no performance penalty.</p>
+<p>This is a weakness of my proposed solutions. Just like most, it's not a silver
+bullet. None the less, I still suggest sticking to the approach of multiple
+resources per lambda. Just be aware that if performance is key, you need to
+profile for this scenario.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/discussion/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">discussion</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/development/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">development</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

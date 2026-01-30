@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Easy Universal Haskell Development Environment</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Easy Universal Haskell Development Environment
+  </h1>
+  <p class="subtitle">Published 2016-02-06</p>
+  <div>
+    <p>Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.</p>
+<span id="continue-reading"></span>
+<p>Traditional methods included:</p>
+<ul>
+<li>Installing <a rel="external" href="https://www.haskell.org/platform/">The Haskell Platform</a>, which was a great project in it's time but always seems to lag a few GHC versions behind.</li>
+<li>Required using a text editor like <a rel="external" href="http://www.vim.org/">Vim</a> or <a rel="external" href="https://www.gnu.org/software/emacs/">Emacs</a>. These are incredible tools and productivity boosters, if you take the time to learn them. Which is a pretty major time commitment in itself <em>I do suggest you learn one of these eventually, or use the vim/emacs mode of another tool.</em></li>
+<li>Complex package management through <a rel="external" href="https://wiki.haskell.org/Cabal-Install">Cabal-Install</a>. This tool caused either version hell from everything being installed globally or caused you to have to re-install all your dependencies for every project.</li>
+</ul>
+<h1 id="tools-of-the-trade">Tools of The Trade</h1>
+<p>We will be using these tools to solve the above problems and make the installation completely system agnostic. That's right, this installation process with work on any platform OS X, Linux, and even Windows.</p>
+<ol>
+<li><a rel="external" href="http://docs.haskellstack.org/">Stack</a> is probably the single biggest win for Haskell in the last year. It makes everything from freshly installing Haskell to creating and building new projects a no brainer.</li>
+<li><a rel="external" href="https://atom.io/">Atom</a> has become one of my favorite text editors and has great support for Haskell.</li>
+</ol>
+<p>Those are the two major tools you will need to install and everything else is done through packages for them. Go ahead and install these from their respective websites.</p>
+<h1 id="the-setup">The Setup</h1>
+<p>Now let's crack open the terminal and configure our environment. All the commands will remain the same regardless of your operating system.</p>
+<p>Let's start by installing Haskell, or GHC to be more specific. Stack does not come GHC but it does come with an easy way to install it.</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> stack setup</span></span></code></pre>
+<p>Now you have a working version of GHC and you can drop into the repl at any time. Feel free to try this out with <code>stack repl</code>.</p>
+<p>Next let's install all our atom packages. Which is just one line! These packages include everything you would expect. Syntax highlights, code completion, linting, and even some auto formatting.</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> apm install language-haskell haskell-ghc-mod ide-haskell-cabal ide-haskell autocomplete-haskell</span></span></code></pre>
+<p><strong>You must be outside of any stack project to run this command!</strong> This installs the binaries using your global configuration and not project specific setup. Which will make updating things in the future a little easier.</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> stack install ghc-mod stylish-haskell</span></span></code></pre>
+<p><code>ghc-mod</code> will do all heavy lifting for your setup. It's the backend for all the auto completion, linting, code validation, etc. While <code>stylish-haskell</code> will prettify your code.</p>
+<p>At this point you need to check the output from stack to ensure that the binary install location has been added to your path. If it hasn't you will see a message instructing you on the exact folder that needs to be added.</p>
+<p>That's it. This is all you need to have a working Haskell setup on any machine. If you want to try it out, go ahead and run <code>stack new MyProject</code>. This will create a fresh stack project and give you a few small sample file. If you try to define your own functions you should see code help and debug information just like you would expect.</p>
+<p>Happy hacking on your new setup!</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/haskell/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">haskell</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

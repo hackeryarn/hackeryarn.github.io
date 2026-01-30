@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Django with Hy</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Django with Hy
+  </h1>
+  <p class="subtitle">Published 2020-03-01</p>
+  <div>
+    <p><a rel="external" href="https://docs.hylang.org/en/stable/">Hy</a> introduces a List that gives
+you all the power of macros and the elegant Lisp syntax while enabling
+the full power of Python.</p>
+<span id="continue-reading"></span>
+<p>Although it's easy enough to use Python libraries in Hy, you just
+import them as you would in Python, I was weary of using a full
+framework outside it's native language. To prove out this concept, I
+followed <a rel="external" href="https://docs.djangoproject.com/en/3.0/intro/tutorial01/">the official django
+tutorial</a> using
+Hy.</p>
+<p>To my surprise I only ran into minor issues. The rest of the project
+worked flawlessly.</p>
+<p>If you just want to see the code, you can take a look at my
+<a rel="external" href="https://github.com/hackeryarn/hy-django">hy-django</a> github repo. There
+you will find the finished project along with branches for each of the
+tutorial parts.</p>
+<h1 id="why-hy-with-django">Why Hy with Django?</h1>
+<p>I personally love lisp syntax. It is consistent and simple without edge
+cases like Python's lambadas.</p>
+<p>If you're a fan of function programming, like I am, then you will love
+the decisions the Hy devs made. They tried to keep the spirit of Python
+while taking inspiration from Clojure and Scheme to make higher order
+functions and other abstractions natural.</p>
+<p>Being a lisp, Hy brings macros. These abstraction generate code on the
+fly, reduce repetition, and enable expressing ideas in the best way for
+the problem. It's hard to fully describe their usefulness, but Paul
+Graham came close:</p>
+<blockquote>
+<p>"The shape of a program should reflect only the problem it needs to
+solve. Any other regularity in the code is a sign, to me at least,
+that I'm using abstractions that aren't powerful enough-- often that
+I'm generating by hand the expansions of some macro that I need to
+write."</p>
+</blockquote>
+<h1 id="using-hy-with-django">Using Hy with Django</h1>
+<p>Django handle Hy and Python files the same, for the most part. Things
+like migrations just work.</p>
+<p>I ran into two areas that required some fiddling however.</p>
+<p>Using <code>manage.py</code> requires <code>settings.py</code> to remain in the base app. To
+get this working with Hy files you have to add <code>import hy</code> at the top of
+the <code>settings.py</code> file.</p>
+<p><code>manage.py test</code> does not pick up test files automatically. To get it to
+work, you need to add a <code>tests</code> folder to each app, which is good
+practice anyways, with an <code>__init__.py</code> file that imports all the Hy
+test modules.</p>
+<p>I ended up using relative imports with a glob pattern:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">from</span><span class="z-punctuation"> .</span><span class="z-source">model_tests</span><span class="z-keyword"> import</span><span class="z-keyword z-operator"> *</span></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-punctuation"> .</span><span class="z-source">view_tests</span><span class="z-keyword"> import</span><span class="z-keyword z-operator"> *</span></span></code></pre>
+<p>You can write the rest of the application in pure Hy. Happy hacking!</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/django/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

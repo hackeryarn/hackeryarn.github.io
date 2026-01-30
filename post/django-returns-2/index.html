@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Type safe Django app, Part 2</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Type safe Django app, Part 2
+  </h1>
+  <p class="subtitle">Published 2022-02-27</p>
+  <div>
+    <p>In <a rel="external" href="https://hackeryarn.com/post/django-returns-1/">Part 1</a> of this
+series, we looked at how to setup a python project with types, setup our
+project, and used some basic types.</p>
+<p>In this part we will start working with the database, implement custom
+database methods, and look at how to use <code>returns</code> to improve the safety
+of those methods.</p>
+<span id="continue-reading"></span><h1 id="into-the-database">Into the database</h1>
+<p>Let's run our initial migrations and get rid of the error that we
+ignored in the first part.</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> python manage.py migrate</span></span></code></pre>
+<p>Create models for our Polls app. Nothing new here, but notice the nice
+type hits you get for all the fields thanks to <code>django-stubs</code>.</p>
+<p><code>polls/models.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">db</span><span class="z-keyword"> import</span><span class="z-source"> models</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Question</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    question_text</span><span class="z-keyword z-operator"> =</span><span class="z-source"> models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">CharField</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">max_length</span><span class="z-keyword z-operator">=</span><span class="z-constant z-numeric">200</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    pub_date</span><span class="z-keyword z-operator"> =</span><span class="z-source"> models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">DateTimeField</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&#39;date published&#39;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Choice</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    question</span><span class="z-keyword z-operator"> =</span><span class="z-source"> models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">ForeignKey</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">Question</span><span class="z-punctuation">,</span><span class="z-variable z-parameter"> on_delete</span><span class="z-keyword z-operator">=</span><span class="z-meta z-function-call z-arguments z-python">models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">CASCADE</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    choice_text</span><span class="z-keyword z-operator"> =</span><span class="z-source"> models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">CharField</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">max_length</span><span class="z-keyword z-operator">=</span><span class="z-constant z-numeric">200</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    votes</span><span class="z-keyword z-operator"> =</span><span class="z-source"> models</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">IntegerField</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">default</span><span class="z-keyword z-operator">=</span><span class="z-constant z-numeric">0</span><span class="z-punctuation">)</span></span></code></pre>
+<p>Before we can apply these migrations, we need to let Django know about
+our Polls app.</p>
+<p><code>django_returns/settings.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-source">...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">INSTALLED_APPS</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> [</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    # add this</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;polls.apps.PollsConfig&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.admin&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.auth&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.contenttypes&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.sessions&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.messages&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &#39;django.contrib.staticfiles&#39;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">...</span></span></code></pre>
+<p>Now, we need to generate and run the migrations for our new models:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> python manage.py makemigrations polls</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> python manage.py migrate</span></span></code></pre><h1 id="model-methods">Model methods</h1>
+<p>We will start a little out of order by improving
+<code>was_published_recently</code>. Since <code>__str__</code> is a magic method, it will
+require a little extra work and build on what we will learn when we
+write <code>was_published_recently</code>.</p>
+<p><code>polls/models.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">import</span><span class="z-source"> datetime</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">db</span><span class="z-keyword"> import</span><span class="z-source"> models</span></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">utils</span><span class="z-keyword"> import</span><span class="z-source"> timezone</span></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> returns</span><span class="z-punctuation">.</span><span class="z-source">io</span><span class="z-keyword"> import</span><span class="z-source"> impure_safe</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Questions</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    # ...</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">    @impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">    def</span><span class="z-entity z-name z-function"> was_published_recently</span><span class="z-punctuation">(</span><span class="z-variable z-parameter z-function z-language z-special z-self z-python">self</span><span class="z-punctuation">) -&gt;</span><span class="z-support z-type z-python"> bool</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        return</span><span class="z-variable z-language z-special z-self z-python"> self</span><span class="z-punctuation">.</span><span class="z-source">pub_date</span><span class="z-keyword z-operator"> &gt;=</span><span class="z-source"> timezone</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">now</span><span class="z-punctuation">()</span><span class="z-keyword z-operator"> -</span><span class="z-source"> datetime</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">timedelta</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">days</span><span class="z-keyword z-operator">=</span><span class="z-constant z-numeric">1</span><span class="z-punctuation">)</span></span></code></pre>
+<p>First off, note that when we write methods, we do not add a type to
+<code>self</code>. We do, however, add a return type to all methods. This one lets
+us know that we will get back a boolean value.</p>
+<p>We also added the <code>impure_safe</code> decorator. As the name implies, this
+decorator helps us mark functions that are impure and unsafe.
+<code>was_published_recently</code> is impure because it reaches out to the
+database, where we can't guarantee what we get back, and relies on
+time, which constantly changes.</p>
+<p><code>was_published_recently</code> is also unsafe because of the dependency on the
+database. All kinds of things can go wrong when we try to get a value
+out of a database: the database could be down, the table might not
+exist, the model fields could have changed, we forgot to run our
+migrations, etc.</p>
+<p><code>impure_safe</code> doesn't fix these issues, but it lets the caller know
+that this is no longer a simple function that returns a <code>bool</code>.</p>
+<p>If we try to call this functions, we will see that <code>impure_safe</code> changed
+our <code>bool</code> return type to <code>IOResultE[bool, Exception]</code>. This wrapper
+puts two layers around the <code>bool</code> value. The first layer, <code>Result</code>,
+prevents us from getting the value without first checking and handling
+the <code>Exception</code>. The second layer, <code>IO</code>, prevents us from using the
+value outside of other <code>IO</code> functions (we don't want to mix pure and
+impure code).</p>
+<p>Next, we will start our implementation <code>__str__</code>. As mentioned earlier,
+magic methods are a little tricky to handle. It would be nice if we
+could just annotate <code>__str__</code> with <code>impure_safe</code>, but python won't know
+how to handle our <code>IOResultE</code> wrapper. So we have to come to a
+compromise.</p>
+<p><code>polls/models.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">#...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> returns</span><span class="z-punctuation">.</span><span class="z-source">unsafe</span><span class="z-keyword"> import</span><span class="z-source"> unsafe_perform_io</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Question</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    #...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">    @impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">    def</span><span class="z-entity z-name z-function"> safe_str</span><span class="z-punctuation">(</span><span class="z-variable z-parameter z-function z-language z-special z-self z-python">self</span><span class="z-punctuation">) -&gt;</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        return</span><span class="z-variable z-language z-special z-self z-python"> self</span><span class="z-punctuation">.</span><span class="z-source">question_text</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Choice</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    #...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">    @impure_safe</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">    def</span><span class="z-entity z-name z-function"> safe_str</span><span class="z-punctuation">(</span><span class="z-variable z-parameter z-function z-language z-special z-self z-python">self</span><span class="z-punctuation">) -&gt;</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        return</span><span class="z-variable z-language z-special z-self z-python"> self</span><span class="z-punctuation">.</span><span class="z-source">choice_text</span></span></code></pre>
+<p>We create a <code>safe_str</code> function with the <code>impure_safe</code> decorator. When
+we need to get a string representation in our code, we should default to
+using this function since it has all of our safety improvements.</p>
+<p><code>safe_str</code> helps our code, but we will still need a proper <code>__str__</code>
+implementation so we can get nice output at our shell.</p>
+<p>Since this functionality is mainly for the shell, this is a good time to
+fire up a shell session. If we run <code>safe_str</code> or
+<code>was_published_recentrly</code>, we will notice that the return value is
+<code>&lt;IOResult: &lt;Success: ...&gt;&gt;</code> this is the printable representation of the
+two wrappers.</p>
+<p>We can take off the <code>Result</code> wrapper by running
+<code>value_or("error message")</code>. This gives us back a <code>&lt;IO: ...&gt;</code> value.
+Unlike <code>Result</code> which we can unwrap and inspect in a safe manner (as
+long as we handle any failures), <code>IO</code> is always unsafe. In order to
+remove the <code>IO</code> wrapper we need to run the ominously named
+<code>unsafe_perform_io</code>.</p>
+<p>We should be very careful with <code>unsafe_perform_io</code>. Running
+<code>unsafe_perform_io</code> removes all the safety that we worked so hard
+building up. But because python is, by its nature, unsafe we will need
+to use it. In order to keep as much safety as possible, however, we must
+limit its usage to the places where we need to hand off the value to
+python, Django, or any library outside our control. The <code>__str__</code> magic
+method is exactly this kind of place, so it's ok to use
+<code>unsafe_perform_io</code> there.</p>
+<p>The use of <code>unsafe_perform_io</code> on the edges of our application is the
+basis of a common design patter known as imperative shell and functional
+core. <code>returns</code> automatically pushes us towards this pattern, and we
+will see how to further utilize it in the next part.</p>
+<p>Now that we know how to remove the our wrappers, we can implement
+<code>__str__</code> in the safest possible manner.</p>
+<p><code>polls/models.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">#...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Question</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    #...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">    def</span><span class="z-support z-function z-magic z-python"> __str__</span><span class="z-punctuation">(</span><span class="z-variable z-parameter z-function z-language z-special z-self z-python">self</span><span class="z-punctuation">) -&gt;</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">        value</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-special z-self z-python"> self</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">safe_str</span><span class="z-punctuation">().</span><span class="z-meta z-function-call z-python">value_or</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;No question_text found&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        return</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">value</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type">class</span><span class="z-entity z-name z-type"> Choice</span><span class="z-punctuation">(</span><span class="z-entity z-other z-inherited-class">models</span><span class="z-punctuation">.</span><span class="z-entity z-other z-inherited-class">Model</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    #...</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">    def</span><span class="z-support z-function z-magic z-python"> __str__</span><span class="z-punctuation">(</span><span class="z-variable z-parameter z-function z-language z-special z-self z-python">self</span><span class="z-punctuation">) -&gt;</span><span class="z-support z-type z-python"> str</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">        value</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-special z-self z-python"> self</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">safe_str</span><span class="z-punctuation">().</span><span class="z-meta z-function-call z-python">value_or</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;No choice_text available&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">        return</span><span class="z-meta z-function-call z-python"> unsafe_perform_io</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">value</span><span class="z-punctuation">)</span></span></code></pre><h1 id="wrap-up">Wrap up</h1>
+<p>This part of the Django tutorial introduced the simplest way to work
+with <code>returns</code>. The benefits seem marginal, if any for now, but the real
+power of <code>returns</code> and this type safe approach comes throw when we need
+to compose multiple functions with different wrappers and properties.
+That will be the focus of the next part of this tutorial.</p>
+<p>In the meantime, I encourage you to go through at least all the shell
+examples in <a rel="external" href="https://docs.djangoproject.com/en/4.0/intro/tutorial02/">the official
+tutorial</a> and
+explore how our changes made these functions work differently than what
+you see in the tutorial.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/django/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Distrobox in practice</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Distrobox in practice
+  </h1>
+  <p class="subtitle">Published 2023-09-17</p>
+  <div>
+    <p><a rel="external" href="https://distrobox.privatedns.org/">Distrobox</a> is the single piece of software that completely changed the way I work. If you've hear of or used <a rel="external" href="https://www.vagrantup.com/">Vagrant</a> and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you've been looking for.</p>
+<span id="continue-reading"></span>
+<p>Within a month Distrobox became my primary dev environment and that hasn't changed for over a year. In this post I hope to share how I use Distrobox and give you some tips for making the experience even better.</p>
+<h2 id="what-is-distrobox">What is Distrobox?</h2>
+<p>Distrobox is a wrapper around <a rel="external" href="https://www.docker.com/">Docker</a> or <a rel="external" href="https://podman.io/">Podman</a> that give access to any Linux distro from any other Linux distro.</p>
+<blockquote>
+<p>Personally, I prefer Podman. So the rest of the article will only mention Podman, but everything also applies to Docker.</p>
+</blockquote>
+<p>At this point, you might be thinking "But can't I already use Podman to run any Linux distro locally?" Well yes you can, but Distrobox takes this a step further.</p>
+<h2 id="the-shared-environment">The shared environment</h2>
+<p>The main benefit of Distrobox, over just using Containers on their own, is the integration with the base system. A Distrobox container will have access to your home directory, devices, and a few other things which combine to make it feel like you are working natively.</p>
+<p>But despite feeling like home, all the packages that you install remain safely i the container. The downside is that that you need to install all your dependencies in every environment. But, thanks to image layering, you can make this fairly efficient (more on this later).</p>
+<h2 id="don-t-containers-already-provide-isolation">Don't containers already provide isolation?</h2>
+<p>If you've only recently started using Podman, you might think that having a project run in a Podman container is enough to provide isolation. If you've done this for a while, however, you've probably run into issues with tools that you need for development.</p>
+<p>Linters, debuggers, completion servers, even the languages themselves can all require project specific versions. This puts you right back at needing to manage multiple versions of packages and languages in your development environment. And there are tools that try to solve this, but each only works with a part of your stack, and most don't even try to address the issue of system packages (NixOS and Guix are notable exceptions).</p>
+<p>In fact, I find this dev environment isolation so important that I spin up a new Distrobox container for every project.</p>
+<h2 id="making-per-project-containers-efficient">Making per project containers efficient</h2>
+<p>Having a container for every project might sound wasteful and time consuming, but you can actually make it pretty quick and efficient. This efficiency is possible thanks to image layering done by Podman.</p>
+<blockquote>
+<p>I will not cover how layering works, but if you are curious, refer to <a rel="external" href="https://docs.docker.com/build/guide/layers/">the Docker documentation on layers</a>.</p>
+</blockquote>
+<p>Because underneath Distrobox just uses containers, you can easily create a base containers that has all the common tools for your dev environment. My base container looks something like this:</p>
+<pre class="giallo z-code"><code data-lang="yaml"><span class="giallo-l"><span class="z-string">FROM archlinux:latest</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Update locale</span></span>
+<span class="giallo-l"><span class="z-string">RUN echo &quot;en_US.UTF-8 UTF-8&quot; &gt;&gt; /etc/locale.gen &amp;&amp; locale-gen</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Update package repository</span></span>
+<span class="giallo-l"><span class="z-string">RUN pacman -Syu</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Install dev tools</span></span>
+<span class="giallo-l"><span class="z-string">RUN pacman -S --noconfirm git base-devel neovim zellij exa zoxide fd bat ripgrep stow rust nodejs go starship fzf wl-clipboard lazygit kubectl go-yq jq rsync man-db unzip plocate glibc python nodejs npm</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Use the host install of podman</span></span>
+<span class="giallo-l"><span class="z-string">RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman</span></span></code></pre>
+<blockquote>
+<p>You might have noticed the last line in that file. That line avoids the whole problem of running containers in containers by allowing our dev environment to use the hosts Podman runtime. So you can continue to use Podman like normal while working inside a running container.</p>
+</blockquote>
+<p>This all gets saved into a single layer and referenced by every projects specific environment. For example, my <code>Django</code> environment looks like this:</p>
+<pre class="giallo z-code"><code data-lang="yaml"><span class="giallo-l"><span class="z-string">FROM dev:latest</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Required dependencies</span></span>
+<span class="giallo-l"><span class="z-string">RUN pacman -S --noconfirm imagemagick ghostscript postgresql chromium</span></span></code></pre>
+<p>Then I link everything together with a small script to build the containers in order:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Create my base container named `dev` from the file `dev.Dockerfile`</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">podman</span><span class="z-string"> build -t dev -f dev.Dockerfile</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># Create a more specific container based `dev` from the file `django.Dockerfile`</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function">podman</span><span class="z-string"> build -t django -f django.Dockerfile</span></span></code></pre>
+<p>If I need to run an update, I just execute the above script and I have a fresh set of containers.</p>
+<h2 id="using-graphical-applications-from-distrobox">Using graphical applications from Distrobox</h2>
+<p>Another critical features, if you use graphical applications (such as vscode) as part of your dev environmen, is running those applications natively.</p>
+<p>The above setup might seem like it wouldn't work for for this. After all, wouldn't it take a bunch of configurations to get a graphical application from a container to display and work on the host? In most cases, it would, but Distrobox takes care of all this.</p>
+<p>To start up vscode, you can just run <code>code</code> inside your Distrobox terminal and everything work. You will be actually running a graphical tool from inside your container without any extra steps. Better yet, as far as that instance of vscode is concerned, it's running in the environment of the container and uses all the packages available there.</p>
+<p>This is a great start. But Distrobox takes it even further. If going through a terminal seems like an extra burden, you can run <code>distrobox-export --app code</code> to make the <code>.desktop</code> file available on your base system (with the distrobox name prefixed). Then you don't even have to open a terminal and can get your whole environment, including the app, running right from your desktop.</p>
+<p>It's really amazing for just how many things this process works. I even have a container that runs QEMU VMs.</p>
+<h2 id="distrobox-makes-an-immutable-os-practical">Distrobox makes an immutable OS practical</h2>
+<p>I won't go on soap box about immutable OSes for too long. You can read about why I use one <a rel="external" href="https://hackeryarn.com/post/picking-a-linux-distro/">here</a>. But I will say that they keep your system more secure, more stable, and easier to maintain. The two biggest ones out there are <a rel="external" href="https://fedoraproject.org/silverblue/">Fedora Silverblue</a> and <a rel="external" href="https://microos.opensuse.org/">OpenSUSE MicroOS</a>.</p>
+<p>Without Distrobox, it really doesn't makes sense to use one of these systems for development. Luckily Distrobox makes it easy to experiment and work in a container, while never breaking the base system.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Distrobox can do many more interesting things, but having a set of per-project containers is the biggest thing that took Distrobox from a neat tool to something practical that I use every day across multiple systems.</p>
+<p>I hope this gives you some ideas of how you can improve your dev setup with Distrobox.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/linux/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">linux</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/containers/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">containers</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

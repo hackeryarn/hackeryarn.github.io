@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - cli</title>
+    <link rel="self" type="application/atom+xml" href="https://hackeryarn.com/tags/cli/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://hackeryarn.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2019-06-01T00:00:00+00:00</updated>
+    <id>https://hackeryarn.com/tags/cli/atom.xml</id>
+    <entry xml:lang="en">
+        <title>CLI commands in Emacs</title>
+        <published>2019-06-01T00:00:00+00:00</published>
+        <updated>2019-06-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/cli-in-emacs/"/>
+        <id>https://hackeryarn.com/post/cli-in-emacs/</id>
+        
+        <summary type="html">&lt;p&gt;A few months ago, Gabriel Gonzalez wrote an &lt;a rel=&quot;external&quot; href=&quot;http:&#x2F;&#x2F;www.haskellforall.com&#x2F;2018&#x2F;10&#x2F;detailed-walkthrough-for-beginner.html&quot;&gt;excellent
+article&lt;&#x2F;a&gt;
+on creating useful tools with Haskell. He used an example of a small CLI
+tool that aligns the equals signs of a multi-line text input. The
+article wrapped up by integrating this tool into vim.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

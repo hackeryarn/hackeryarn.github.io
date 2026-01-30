@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title></title>
+    <link rel="self" type="application/atom+xml" href="https://hackeryarn.com/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://hackeryarn.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-01-24T00:00:00+00:00</updated>
+    <id>https://hackeryarn.com/atom.xml</id>
+    <entry xml:lang="en">
+        <title></title>
+        <published>2026-01-24T00:00:00+00:00</published>
+        <updated>2026-01-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/about/me/"/>
+        <id>https://hackeryarn.com/about/me/</id>
+        
+        <content type="html" xml:base="https://hackeryarn.com/about/me/">&lt;p&gt;I&#x27;m a staff engineer working with Python, Clojure, and all the DevOps technologies. Outside of work, I write Rust, contribute to open source, maintain a Kubernetes homelab cluster, and dabble in 3D printing and hardware.&lt;&#x2F;p&gt;
+&lt;p&gt;In the past, I taught software engineering at &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;mycanvas.wustl.edu&#x2F;&quot;&gt;Washington University in St. Louis&lt;&#x2F;a&gt;, and worked with web technologies, across many industries, since 2006.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>What async really means for your python web app?</title>
+        <published>2025-12-30T00:00:00+00:00</published>
+        <updated>2025-12-30T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/async-python-benchmarks/"/>
+        <id>https://hackeryarn.com/post/async-python-benchmarks/</id>
+        
+        <content type="html" xml:base="https://hackeryarn.com/post/async-python-benchmarks/">&lt;p&gt;The Python community is abuzz with excitement about better async support. If you have an existing service, you might wonder if you&#x27;re missing out. Benchmarks show higher throughput and promise the ability to handle more requests with less hardware. Will a switch to async be a free lunch for your existing service?&lt;&#x2F;p&gt;
+&lt;p&gt;As often happens, the reality differs from expectations. Unless you run in a highly distributed environment and your service is the bottleneck, needing 10 instances just to keep up with all the traffic, you probably won&#x27;t see the benefits that most benchmarks promise. In fact, you might see worse performance by switching.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;benchmarking-method&quot;&gt;Benchmarking method&lt;&#x2F;h2&gt;
+&lt;p&gt;The disconnect with 80% of services and async benchmarks comes from the general design of the small to medium sized services. The most common services talk directly to a database and as traffic increases, the load on the database grows much faster than the load on the web service. This load distribution shifts the bottleneck from the service to the database. To see the implications of async under these conditions, we need to examine benchmarks that mirror the same configuration.&lt;&#x2F;p&gt;
+&lt;p&gt;The setup for these benchmarks involves Django with a PostgreSQL database. Both are the some of the most popular technologies in the world. Django gives us the ability to easily switch between sync and async configurations. While PostgreSQL gives realistic characteristics for the different types of load we want to simulate.&lt;&#x2F;p&gt;
+&lt;p&gt;For another point of comparison, the benchmarks also include FastAPI. It&#x27;s a newer framework built from the ground up for the async era.&lt;&#x2F;p&gt;
+&lt;p&gt;To get a full range of service conditions, I test three scenarios:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Static content: Runs the service with a database setup but no hits to the database.&lt;&#x2F;li&gt;
+&lt;li&gt;Database read I&#x2F;O: Queries the database to read data and uses that data to generate a response.&lt;&#x2F;li&gt;
+&lt;li&gt;Database update I&#x2F;O: Creates high contention in the database by using &lt;code&gt;SELECT FOR UPDATE&lt;&#x2F;code&gt; and locking the table for an update, and use the results to generate a response.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;To run the benchmarks, I use the same method as &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;blog.baro.dev&#x2F;p&#x2F;the-future-of-python-web-services-looks-gil-free&quot;&gt;the article&lt;&#x2F;a&gt; (which pushed me to write this post):&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;emmett-framework&#x2F;granian&quot;&gt;Granian&lt;&#x2F;a&gt; as the server since it can run using threads or processes.
+&lt;ul&gt;
+&lt;li&gt;Using the command &lt;code&gt;granian --interface &amp;lt;asgi or wsgi&amp;gt; --workers &amp;lt;1 or 2&amp;gt; --blocking-threads 32 --port 3000 &amp;lt;application&amp;gt;&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;I wanted to include free-threaded benchmarks here, but &lt;code&gt;psycopg&lt;&#x2F;code&gt; cannot run with free-threaded, yet. Once support lands and stabilizes, I will make a follow-up article that includes free-threaded benchmarks.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lnx-search&#x2F;rewrk&quot;&gt;rewrk&lt;&#x2F;a&gt; to run the load test.
+&lt;ul&gt;
+&lt;li&gt;Using the command &lt;code&gt;rewrk -d 30s -c 64 --host &amp;lt;host with route&amp;gt;&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;System76 Darter Pro as the laptop for test execution
+&lt;ul&gt;
+&lt;li&gt;NixOS unstable&lt;&#x2F;li&gt;
+&lt;li&gt;12th Gen Intel® Core™ i7-1260P × 16&lt;&#x2F;li&gt;
+&lt;li&gt;64 GiB of RAM&lt;&#x2F;li&gt;
+&lt;li&gt;Python 3.14&lt;&#x2F;li&gt;
+&lt;li&gt;PostgreSQL 18&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;I show the most relevant code snippets in the article, but the curious can find &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;codeberg.org&#x2F;hackeryarn&#x2F;django-bench&quot;&gt;all the code here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;&#x2F;h2&gt;
+&lt;p&gt;The results include four different project configurations:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sync Django: Default Django setting running with WSGI.&lt;&#x2F;li&gt;
+&lt;li&gt;Sync Django Pooled: The same as Sync Django, but using a pooled database connection.
+&lt;ul&gt;
+&lt;li&gt;While setting up the load tests, I found out that Django does not pool connections by default, but it does require pooled connections to run in async mode. This configuration closes the configuration gap between the sync and async setups.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Async Django: Default Django settings for async mode running with ASGI.&lt;&#x2F;li&gt;
+&lt;li&gt;FastAPI: Default setting for both FastAPI and SQLAlchemy.
+&lt;ul&gt;
+&lt;li&gt;I chose to use the JSON output here, despite the Django benchmarks not using JSON, since it&#x27;s the most likely use case when running FastAPI in production.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;WSGI and ASGI are the production-grade web servers suggested by most python web frameworks including Django. WSGI handles synchronous services, while ASGI handles asynchronous services.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;static-content&quot;&gt;Static content&lt;&#x2F;h3&gt;
+&lt;p&gt;Getting a baseline of static content gives us an upper bound of what each configuration can do without the database to slowdown the server.&lt;&#x2F;p&gt;
+&lt;p&gt;The sync and async Django views look almost identical. We only need to add the &lt;code&gt;async&lt;&#x2F;code&gt; keyword to make the async version work:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-storage z-type z-function z-python&quot;&gt;async def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; index&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;request&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; HttpResponse&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;Hello, world. This is the index.&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The FastAPI implementation is just as straightforward:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python&quot;&gt;@app&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function z-decorator z-python&quot;&gt;get&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;&#x2F;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-storage z-type z-function z-python&quot;&gt;async def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; read_root&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;():&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; {&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;Hello&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt; &amp;quot;World&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;async-python-benchmarks&#x2F;.&#x2F;post_async-python-benchmarks_index_diagram_1.svg&quot; alt=&quot;post_async-python-benchmarks_index_diagram_1&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Server type&lt;&#x2F;th&gt;&lt;th&gt;Workers&lt;&#x2F;th&gt;&lt;th&gt;RPS&lt;&#x2F;th&gt;&lt;th&gt;Latency avg&lt;&#x2F;th&gt;&lt;th&gt;Latency max&lt;&#x2F;th&gt;&lt;th&gt;Median&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;5032&lt;&#x2F;td&gt;&lt;td&gt;13ms&lt;&#x2F;td&gt;&lt;td&gt;7162ms&lt;&#x2F;td&gt;&lt;td&gt;20ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;551&lt;&#x2F;td&gt;&lt;td&gt;116ms&lt;&#x2F;td&gt;&lt;td&gt;193ms&lt;&#x2F;td&gt;&lt;td&gt;129ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;FastAPI&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;26287&lt;&#x2F;td&gt;&lt;td&gt;2.43ms&lt;&#x2F;td&gt;&lt;td&gt;9.38ms&lt;&#x2F;td&gt;&lt;td&gt;2.72ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;6614&lt;&#x2F;td&gt;&lt;td&gt;10ms&lt;&#x2F;td&gt;&lt;td&gt;802ms&lt;&#x2F;td&gt;&lt;td&gt;15ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;1120&lt;&#x2F;td&gt;&lt;td&gt;57ms&lt;&#x2F;td&gt;&lt;td&gt;133ms&lt;&#x2F;td&gt;&lt;td&gt;72ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;FastAPI&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;37353&lt;&#x2F;td&gt;&lt;td&gt;1.71ms&lt;&#x2F;td&gt;&lt;td&gt;7.25ms&lt;&#x2F;td&gt;&lt;td&gt;2.43ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This table does not include Sync Django Pooled because it makes no difference when we don&#x27;t hit the database.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The most obvious thing here is that FastAPI far outperforms Django across all metrics. The developers behind FastAPI worked hard to make sure it performs well under these exact conditions, and it shows. Now that we addressed the elephant in the room, let&#x27;s focus on the more nuanced Django benchmarks.&lt;&#x2F;p&gt;
+&lt;p&gt;The RPS (Requests per second) metric has a couple surprises. Async Django performs an order of magnitude slower than Sync Django. Async isn&#x27;t free, but this massive difference is surprising.&lt;&#x2F;p&gt;
+&lt;p&gt;The async version starts making up ground with smoother scaling than the Sync Django version. As we add workers, we see a modest increase in throughput for Sync Django, but a doubling throughput for Async Django. This shows how async can queue up work in a more consistent manner and start catching up with many service instances.&lt;&#x2F;p&gt;
+&lt;p&gt;When it comes to latency, we start to see an advantage of async request handling. Async Django has no outliers and a median close to the average. Sync Django, conversely, sees massive tail latency slowdown. The slowest requests take over 100x longer than the average.&lt;&#x2F;p&gt;
+&lt;p&gt;The latency metrics shows an important tradeoff between the two configurations. When we use async, we trade average performance for consistency. In many scenarios, we should make this tradeoff, but with a 10x slowdown from Sync Django to Async Django, we have to weigh the option carefully.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;database-reads&quot;&gt;Database reads&lt;&#x2F;h3&gt;
+&lt;p&gt;Now that we have a baseline for each configuration with no bottleneck, let&#x27;s connect to a database and perform some reads.&lt;&#x2F;p&gt;
+&lt;p&gt;For the testing schema we will set up two table: an &lt;code&gt;Author&lt;&#x2F;code&gt; table that will contain the names of people, and a &lt;code&gt;Quote&lt;&#x2F;code&gt; table that will contain quotes by the authors. This gives us a straightforward layout, but makes the queries more realistic by adding a relationship traversal to every request.&lt;&#x2F;p&gt;
+&lt;p&gt;The Sync Django view looks like:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-function z-python&quot;&gt;def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;request&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;objects&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;order_by&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;?&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_related&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;author&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;first&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; HttpResponse&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage z-type z-string z-python&quot;&gt;f&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote_text&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape&quot;&gt;}\n\n&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;--&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;name&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;}&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The Async Django view just needs a sprinkle of a few async operators:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-storage z-type z-function z-python&quot;&gt;async def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;request&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt; await&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;objects&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;order_by&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;?&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_related&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;author&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;afirst&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; HttpResponse&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage z-type z-string z-python&quot;&gt;f&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote_text&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape&quot;&gt;}\n\n&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;--&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;name&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;}&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The FastAPI view fully relies on SQLAlchemy to perform the search and returns the results as JSON:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python&quot;&gt;@app&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function z-decorator z-python&quot;&gt;get&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;&#x2F;quote&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-storage z-type z-function z-python&quot;&gt;async def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;db&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function z-parameters&quot;&gt; AsyncSession&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; Depends&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;get_db&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    statement&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; (&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;        select&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;order_by&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;random&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;options&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;selectinload&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;))&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    result&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt; await&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; db&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;execute&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;statement&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; result&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;scalar&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; {&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;        &amp;quot;quote&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;quote_text&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;        &amp;quot;author&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;name&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;    }&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;After introducing database operations, the metrics include both pooled and non-pooled Sync Django configurations:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;async-python-benchmarks&#x2F;.&#x2F;post_async-python-benchmarks_index_diagram_2.svg&quot; alt=&quot;post_async-python-benchmarks_index_diagram_2&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Server type&lt;&#x2F;th&gt;&lt;th&gt;Workers&lt;&#x2F;th&gt;&lt;th&gt;RPS&lt;&#x2F;th&gt;&lt;th&gt;Latency avg&lt;&#x2F;th&gt;&lt;th&gt;Latency max&lt;&#x2F;th&gt;&lt;th&gt;Median&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;456&lt;&#x2F;td&gt;&lt;td&gt;140ms&lt;&#x2F;td&gt;&lt;td&gt;262ms&lt;&#x2F;td&gt;&lt;td&gt;153ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django Pooled&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;569&lt;&#x2F;td&gt;&lt;td&gt;112ms&lt;&#x2F;td&gt;&lt;td&gt;171ms&lt;&#x2F;td&gt;&lt;td&gt;117ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;205&lt;&#x2F;td&gt;&lt;td&gt;312ms&lt;&#x2F;td&gt;&lt;td&gt;467ms&lt;&#x2F;td&gt;&lt;td&gt;331ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;FastAPI&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;236&lt;&#x2F;td&gt;&lt;td&gt;271ms&lt;&#x2F;td&gt;&lt;td&gt;372ms&lt;&#x2F;td&gt;&lt;td&gt;287ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;669&lt;&#x2F;td&gt;&lt;td&gt;96ms&lt;&#x2F;td&gt;&lt;td&gt;262ms&lt;&#x2F;td&gt;&lt;td&gt;132ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django Pooled&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;1822&lt;&#x2F;td&gt;&lt;td&gt;35ms&lt;&#x2F;td&gt;&lt;td&gt;98ms&lt;&#x2F;td&gt;&lt;td&gt;50ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;541&lt;&#x2F;td&gt;&lt;td&gt;118ms&lt;&#x2F;td&gt;&lt;td&gt;304ms&lt;&#x2F;td&gt;&lt;td&gt;196ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;FastAPI&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;409&lt;&#x2F;td&gt;&lt;td&gt;156ms&lt;&#x2F;td&gt;&lt;td&gt;433ms&lt;&#x2F;td&gt;&lt;td&gt;224ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;While looking at these benchmarks, we have to remember that to a large degree we are load testing the database. The difference in benchmarks comes from the overhead of each framework and the different approaches to waiting for data to come back.&lt;&#x2F;p&gt;
+&lt;p&gt;These benchmarks show much more interesting results. The overhead of managing async requests and async database calls really starts to show. Sync performance ends up far outperforming either of the async benchmarks. Even FastAPI starts to lag behind when we introduce a database.&lt;&#x2F;p&gt;
+&lt;p&gt;We also see a massive performance improvement by making sure we pool the database connections. The two worker Sync Django Pooled more than doubles the RPS performance of any other configuration.&lt;&#x2F;p&gt;
+&lt;p&gt;The latency evens out across the board. Since PostgreSQL becomes the bottleneck, we don&#x27;t have to worry about the bad latency characteristics that we saw in Sync Django. PostgreSQL, and most popular database engines, are battle tested across many scenarios so we can rely on good performance characteristics.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;contentious-database-writes&quot;&gt;Contentious database writes&lt;&#x2F;h3&gt;
+&lt;p&gt;While database reads run quickly and predictably, they do not show the worst case scenario for databases. A DBA&#x27;s worst performance nightmare comes in the form of contentious writes. These happen when an application needs to lock rows or an entire table and ends up having transactions that wait for other transactions before they can run.&lt;&#x2F;p&gt;
+&lt;p&gt;When improperly managed, this situation can lead to dead locks and whole transactions erroring out. In fact, we will not see benchmarks for FastAPI in this section because, despite my best efforts, I could not get the application to run in async mode without deadlocking. Flipping FastAPI to sync mode seemed to go against the spirit of the rest of the benchmarks, so I wanted to avoid that path. If you can figure out how to get this running, I would love to get a PR and update this article with those benchmarks.&lt;&#x2F;p&gt;
+&lt;p&gt;To create contentious writes, we will add a &lt;code&gt;views&lt;&#x2F;code&gt; field to the &lt;code&gt;Quote&lt;&#x2F;code&gt; table. This field will store a count of how many views the quote gets. Every call to the endpoint will increment the views count before returning a result. To ensure that the field value stays consistent, we need to lock the row with &lt;code&gt;SELECT FOR UPDATE&lt;&#x2F;code&gt;. Due to many requests running at the same time, we will end up with requests waiting for other requests to complete before they can update the &lt;code&gt;views&lt;&#x2F;code&gt; field.&lt;&#x2F;p&gt;
+&lt;p&gt;To implement this, we wrap the whole view in a transaction, use &lt;code&gt;select_for_update&lt;&#x2F;code&gt;, and update the &lt;code&gt;views&lt;&#x2F;code&gt; field before returning the results to the user:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python&quot;&gt;@transaction&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function z-decorator z-python&quot;&gt;atomic&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-function z-python&quot;&gt;def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; quote_views&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;request&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; (&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;        Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;objects&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_for_update&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;().&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;order_by&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;?&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_related&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;author&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;first&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;views&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; +=&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-numeric&quot;&gt; 1&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;save&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; HttpResponse&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage z-type z-string z-python&quot;&gt;f&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote_text&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape&quot;&gt;}\n\n&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;--&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;name&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;}&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The Async Django code follows the same general pattern, but we have to split out the transaction because Django does not support async transactions at the moment:&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python&quot;&gt;@sync_to_async&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python&quot;&gt;@transaction&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function z-decorator z-python&quot;&gt;atomic&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-function z-python&quot;&gt;def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; get_and_increment_views&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;():&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; (&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;        Quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;objects&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_for_update&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;().&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;order_by&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;?&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;select_related&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string z-string&quot;&gt;&amp;quot;author&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;).&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;first&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt;views&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; +=&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-numeric&quot;&gt; 1&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt;save&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; quote&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type z-storage z-type z-function z-python&quot;&gt;async def&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name z-function&quot;&gt; quote_views&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-parameter&quot;&gt;request&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;):&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-source&quot;&gt;    quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-operator&quot;&gt; =&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt; await&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; get_and_increment_views&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;()&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword z-control z-flow z-python&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-python&quot;&gt; HttpResponse&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage z-type z-string z-python&quot;&gt;f&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote_text&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape&quot;&gt;}\n\n&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;--&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;{&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;quote&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;author&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-meta z-function-call z-arguments z-python&quot;&gt;name&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant z-character z-format z-placeholder z-other z-python&quot;&gt;}&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;async-python-benchmarks&#x2F;.&#x2F;post_async-python-benchmarks_index_diagram_3.svg&quot; alt=&quot;post_async-python-benchmarks_index_diagram_3&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Server type&lt;&#x2F;th&gt;&lt;th&gt;Workers&lt;&#x2F;th&gt;&lt;th&gt;RPS&lt;&#x2F;th&gt;&lt;th&gt;Latency avg&lt;&#x2F;th&gt;&lt;th&gt;Latency max&lt;&#x2F;th&gt;&lt;th&gt;Median&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;170&lt;&#x2F;td&gt;&lt;td&gt;376ms&lt;&#x2F;td&gt;&lt;td&gt;2144ms&lt;&#x2F;td&gt;&lt;td&gt;542ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django Pooled&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;149&lt;&#x2F;td&gt;&lt;td&gt;429ms&lt;&#x2F;td&gt;&lt;td&gt;576ms&lt;&#x2F;td&gt;&lt;td&gt;460ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;156&lt;&#x2F;td&gt;&lt;td&gt;408ms&lt;&#x2F;td&gt;&lt;td&gt;542ms&lt;&#x2F;td&gt;&lt;td&gt;427ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;170&lt;&#x2F;td&gt;&lt;td&gt;375ms&lt;&#x2F;td&gt;&lt;td&gt;5168ms&lt;&#x2F;td&gt;&lt;td&gt;620ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Sync Django Pooled&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;160&lt;&#x2F;td&gt;&lt;td&gt;401ms&lt;&#x2F;td&gt;&lt;td&gt;951ms&lt;&#x2F;td&gt;&lt;td&gt;584ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Async Django&lt;&#x2F;td&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;169&lt;&#x2F;td&gt;&lt;td&gt;378ms&lt;&#x2F;td&gt;&lt;td&gt;824ms&lt;&#x2F;td&gt;&lt;td&gt;518ms&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;This benchmark turns out to be the great equalizer. All the benchmarks have almost the same RPS. Even when we add more workers, the contention prevents us from processing more requests.&lt;&#x2F;p&gt;
+&lt;p&gt;Also, our latency problem with Sync Django came back. Compared to async, Sync Django has much higher tail latency. The interesting part came from Sync Django Pooled. Introducing database pooling solved the sync latency problem without the need for any code changes. This puts the sync configuration on equal footing with the async configuration without any code changes.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;These benchmarks show just how much optimization for sync web services Django and the Python has. Sync Django Pooled outperforms or matches all other configurations. Even FastAPI only performs better when it&#x27;s the sole bottleneck.&lt;&#x2F;p&gt;
+&lt;p&gt;If your service talks to a database directly, it is unlikely that your service is the bottleneck. To get the best performance you should stick with a sync webserver and ensure that you pool your database connections. As the ecosystem stands, async introduces too much overhead to make sense. This will shift as async support continues to improve, but for now you probably don&#x27;t need to go changing your web server.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Let&#x27;s write a macro in Rust - Part 3</title>
+        <published>2025-10-05T00:00:00+00:00</published>
+        <updated>2025-10-05T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/rust-macros-3/"/>
+        <id>https://hackeryarn.com/post/rust-macros-3/</id>
+        
+        <summary type="html">&lt;p&gt;In the &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;rust-macros-2&#x2F;&quot;&gt;last part&lt;&#x2F;a&gt; we covered all the fundamental techniques in writing macros. This enables us to write just about any macro we could think of, but knowing a few tricks can make the process much easier.&lt;&#x2F;p&gt;
+&lt;p&gt;In this part, we will build on our &lt;code&gt;where&lt;&#x2F;code&gt; clause from the previous article. In the process we will allow the &lt;code&gt;where&lt;&#x2F;code&gt; clause to support multiple comparison operator (instead of just &lt;code&gt;=&lt;&#x2F;code&gt;) as well as multiple ways to join those operators (instead of just &lt;code&gt;and&lt;&#x2F;code&gt;).&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Let&#x27;s write a macro in Rust - Part 2</title>
+        <published>2025-08-24T00:00:00+00:00</published>
+        <updated>2025-08-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/rust-macros-2/"/>
+        <id>https://hackeryarn.com/post/rust-macros-2/</id>
+        
+        <summary type="html">&lt;p&gt;In the &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;rust-macros-1&#x2F;&quot;&gt;last part&lt;&#x2F;a&gt; we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.&lt;&#x2F;p&gt;
+&lt;p&gt;In this part we will implement multi-field select and a basic &lt;code&gt;where&lt;&#x2F;code&gt; clause. That will make our query macro far more useful.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Let&#x27;s write a macro in Rust - Part 1</title>
+        <published>2025-08-17T00:00:00+00:00</published>
+        <updated>2025-08-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/rust-macros-1/"/>
+        <id>https://hackeryarn.com/post/rust-macros-1/</id>
+        
+        <summary type="html">&lt;p&gt;Macros are required to do some very helpful things in Rust, but this isn&#x27;t an article about any of those things.&lt;&#x2F;p&gt;
+&lt;p&gt;I became enamored with macros many years ago when I read &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;gigamonkeys.com&#x2F;book&#x2F;&quot;&gt;Practical Common Lisp&lt;&#x2F;a&gt; and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>You don&#x27;t need a map for that</title>
+        <published>2024-01-01T00:00:00+00:00</published>
+        <updated>2024-01-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/maps/"/>
+        <id>https://hackeryarn.com/post/maps/</id>
+        
+        <summary type="html">&lt;p&gt;One of the most misused data structures is the humble map; hashmap,
+dictionary, hash table, etc.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s a great data structure for quick storage and access of key value
+pairs. Unfortunately, because of its ease and availability, it becomes
+pervasive at jobs it has no business doing. The problem grows most
+visible in dynamically typed languages that make the map a first class
+citizen (Python, Ruby, Clojure, etc.), but it can creep up in any
+language.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Clojure GitHub Actions</title>
+        <published>2023-10-26T00:00:00+00:00</published>
+        <updated>2023-10-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/clojure-actions/"/>
+        <id>https://hackeryarn.com/post/clojure-actions/</id>
+        
+        <summary type="html">&lt;p&gt;I recently took over the maintenance of an open source Clojure project.
+One of the first things I noticed was the lack CI or CD. These are
+things that aren&#x27;t required but can save a lot of work, especially for
+a public project.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Distrobox in practice</title>
+        <published>2023-09-17T00:00:00+00:00</published>
+        <updated>2023-09-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/distrobox/"/>
+        <id>https://hackeryarn.com/post/distrobox/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;distrobox.privatedns.org&#x2F;&quot;&gt;Distrobox&lt;&#x2F;a&gt; is the single piece of software that completely changed the way I work. If you&#x27;ve hear of or used &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;www.vagrantup.com&#x2F;&quot;&gt;Vagrant&lt;&#x2F;a&gt; and thought it was a great idea but implemented in a really heavy handed manner, then Distrobox is exactly what you&#x27;ve been looking for.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>When DRY goes wrong</title>
+        <published>2023-06-10T00:00:00+00:00</published>
+        <updated>2023-06-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/dry/"/>
+        <id>https://hackeryarn.com/post/dry/</id>
+        
+        <summary type="html">&lt;p&gt;DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Picking a Linux Distro</title>
+        <published>2023-02-20T00:00:00+00:00</published>
+        <updated>2023-02-20T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/picking-a-linux-distro/"/>
+        <id>https://hackeryarn.com/post/picking-a-linux-distro/</id>
+        
+        <summary type="html">&lt;p&gt;I recently started a new job that gave me the chance to run whatever Linux distribution would make me the most productive. In the face of complete freedom, I decided to re-evaluate my daily driver and see if there was a distribution that would give me the most up-to-date software while maintaining a stable system. The results of my search surprised even me.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Managing local common lisp projects</title>
+        <published>2023-01-11T00:00:00+00:00</published>
+        <updated>2023-01-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/local-common-lisp-projects/"/>
+        <id>https://hackeryarn.com/post/local-common-lisp-projects/</id>
+        
+        <summary type="html">&lt;p&gt;When I started using lisp, I came from the world of modern dependency managers (npm, pip, maven, and the like). So I started searching for an equivalent in lisp. I quickly came across &lt;code&gt;quicklisp&lt;&#x2F;code&gt;. To my surprise, however, &lt;code&gt;quicklisp&lt;&#x2F;code&gt; worked differently than these packages. It works more like a dependency cache than true dependency manager, but that is a topic for another article.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Type safe Django app, Part 3</title>
+        <published>2022-04-16T00:00:00+00:00</published>
+        <updated>2022-04-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/django-returns-3/"/>
+        <id>https://hackeryarn.com/post/django-returns-3/</id>
+        
+        <summary type="html">&lt;p&gt;In &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;django-returns-2&#x2F;&quot;&gt;Part 2&lt;&#x2F;a&gt; we got a taste of
+using &lt;code&gt;returns&lt;&#x2F;code&gt; and created our first model methods.&lt;&#x2F;p&gt;
+&lt;p&gt;In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Type safe Django app, Part 2</title>
+        <published>2022-02-27T00:00:00+00:00</published>
+        <updated>2022-02-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/django-returns-2/"/>
+        <id>https://hackeryarn.com/post/django-returns-2/</id>
+        
+        <summary type="html">&lt;p&gt;In &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;django-returns-1&#x2F;&quot;&gt;Part 1&lt;&#x2F;a&gt; of this
+series, we looked at how to setup a python project with types, setup our
+project, and used some basic types.&lt;&#x2F;p&gt;
+&lt;p&gt;In this part we will start working with the database, implement custom
+database methods, and look at how to use &lt;code&gt;returns&lt;&#x2F;code&gt; to improve the safety
+of those methods.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Type safe Django app, Part 1</title>
+        <published>2022-01-22T00:00:00+00:00</published>
+        <updated>2022-01-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/django-returns-1/"/>
+        <id>https://hackeryarn.com/post/django-returns-1/</id>
+        
+        <summary type="html">&lt;p&gt;Django is a great framework for web development. Unfortunately, due to
+the nature of Python and web development in general, it often leads to
+hard to track down bugs and tangled code. We will take a look at one way
+to reign this in.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Django with Hy</title>
+        <published>2020-03-01T00:00:00+00:00</published>
+        <updated>2020-03-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/hy-django/"/>
+        <id>https://hackeryarn.com/post/hy-django/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;docs.hylang.org&#x2F;en&#x2F;stable&#x2F;&quot;&gt;Hy&lt;&#x2F;a&gt; introduces a List that gives
+you all the power of macros and the elegant Lisp syntax while enabling
+the full power of Python.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Embrace your constraints</title>
+        <published>2019-08-14T00:00:00+00:00</published>
+        <updated>2019-08-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/embrace-the-constraints/"/>
+        <id>https://hackeryarn.com/post/embrace-the-constraints/</id>
+        
+        <summary type="html">&lt;p&gt;Engineers want to measure the quality and effectiveness of their work.
+They turn to code coverage, burn down charts, and yearly goals, with the
+best intention.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>CLI commands in Emacs</title>
+        <published>2019-06-01T00:00:00+00:00</published>
+        <updated>2019-06-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/cli-in-emacs/"/>
+        <id>https://hackeryarn.com/post/cli-in-emacs/</id>
+        
+        <summary type="html">&lt;p&gt;A few months ago, Gabriel Gonzalez wrote an &lt;a rel=&quot;external&quot; href=&quot;http:&#x2F;&#x2F;www.haskellforall.com&#x2F;2018&#x2F;10&#x2F;detailed-walkthrough-for-beginner.html&quot;&gt;excellent
+article&lt;&#x2F;a&gt;
+on creating useful tools with Haskell. He used an example of a small CLI
+tool that aligns the equals signs of a multi-line text input. The
+article wrapped up by integrating this tool into vim.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Hierarchies in Hakyll</title>
+        <published>2019-03-27T00:00:00+00:00</published>
+        <updated>2019-03-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/hierarchies-in-hakyll/"/>
+        <id>https://hackeryarn.com/post/hierarchies-in-hakyll/</id>
+        
+        <summary type="html">&lt;p&gt;Creating hierarchy in a blog is a useful technique. It allows you to
+have different sections by type of content. It lets users navigate by
+their interests quickly. It makes your blog organized.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The Right Abstraction for Lambdas</title>
+        <published>2019-02-24T00:00:00+00:00</published>
+        <updated>2019-02-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/the-right-abstraction-for-lambdas/"/>
+        <id>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</id>
+        
+        <summary type="html">&lt;p&gt;Serverless functions are a great alternative for many light tasks that would
+traditionally required a server. They allow you to split up work across
+mutiple small functions, and you only pay
+for what you use. On top of that, they require less maintenance than managing your own
+server or Kubernetes cluster.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Making Redux Easy</title>
+        <published>2019-02-11T00:00:00+00:00</published>
+        <updated>2019-02-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/making-redux-easy/"/>
+        <id>https://hackeryarn.com/post/making-redux-easy/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;reactjs.org&#x2F;&quot;&gt;React&lt;&#x2F;a&gt; and &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;redux.js.org&#x2F;&quot;&gt;Redux&lt;&#x2F;a&gt; are a top choice for front end projects. &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;reactjs.org&#x2F;&quot;&gt;React&lt;&#x2F;a&gt; provides fast
+performance, easy ways to create shared components, and a plethora of
+libraries. &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;redux.js.org&#x2F;&quot;&gt;Redux&lt;&#x2F;a&gt; lets you simplify state management in your
+application, but it has serious drawbacks.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Why I Built a Static Site in Clojure</title>
+        <published>2018-09-15T00:00:00+00:00</published>
+        <updated>2018-09-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/"/>
+        <id>https://hackeryarn.com/post/why-i-built-a-static-site-in-clojure/</id>
+        
+        <summary type="html">&lt;p&gt;At a summer barbecue, a friend asked if I could build a website for his
+new restaurant. But what he didn&#x27;t know was that I haven&#x27;t built a
+static site in nearly a decade. However I couldn&#x27;t let him spend
+thousands of dollars on a cookie cutter website designed by a firm that
+knew nothing about his restaurant.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Your Job Isn&#x27;t Writing Code</title>
+        <published>2018-08-19T00:00:00+00:00</published>
+        <updated>2018-08-19T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/your-job-isnt-writing-code/"/>
+        <id>https://hackeryarn.com/post/your-job-isnt-writing-code/</id>
+        
+        <summary type="html">&lt;p&gt;Every line of code you write is a liability. That line of code you just wrote
+adds complexity to your code base, gives you more nuances to remember, it
+might even be a bug. If code is so expensive and dangerous. What can you do?
+After all, you are a developer.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Universally Testable Dependencies in JavaScript</title>
+        <published>2018-06-01T00:00:00+00:00</published>
+        <updated>2018-06-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/universally-testable-dependencies/"/>
+        <id>https://hackeryarn.com/post/universally-testable-dependencies/</id>
+        
+        <summary type="html">&lt;p&gt;JavaScript dependencies are notoriously hard to mock and test across framework
+and environments. However, &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Dependency_injection%3CPaste%3E&quot;&gt;Dependency Injection&lt;&#x2F;a&gt; (DI) ensures testability. It
+is common in statically typed languages, like Java or Go, but is also useful in
+dynamic languages like JavaScript.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>ClojureScript Setup for Leiningen Project With Emacs</title>
+        <published>2017-07-15T00:00:00+00:00</published>
+        <updated>2017-07-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/clojurescript-setup/"/>
+        <id>https://hackeryarn.com/post/clojurescript-setup/</id>
+        
+        <summary type="html">&lt;p&gt;A good development environment will boost your productivity in any language. A good Clojure development environment will make you 10x more productive.&lt;&#x2F;p&gt;
+&lt;p&gt;This tutorial is focused on a &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;clojurescript.org&#x2F;&quot;&gt;ClojureScript&lt;&#x2F;a&gt; environment for a &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;leiningen.org&#x2F;&quot;&gt;Leiningen&lt;&#x2F;a&gt; based
+project being developed in &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;www.gnu.org&#x2F;software&#x2F;emacs&#x2F;&quot;&gt;Emacs&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How Lodash Worked Itself Out of a Job</title>
+        <published>2017-06-25T00:00:00+00:00</published>
+        <updated>2017-06-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/lodash/"/>
+        <id>https://hackeryarn.com/post/lodash/</id>
+        
+        <summary type="html">&lt;p&gt;I really loved lodash. It brough the joy of compact functional code to
+JavaScript. Especially 6 years ago when I first embraced it. It was a wonderful library.
+Back then, there was no ES6, no Babel, and terrible browser incompatabilities
+ran rampant. Lodash along with jQuery were the saving light of that time.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Efficient CSV Imports in Rails</title>
+        <published>2017-06-11T00:00:00+00:00</published>
+        <updated>2017-06-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/rails-csv-imports/"/>
+        <id>https://hackeryarn.com/post/rails-csv-imports/</id>
+        
+        <summary type="html">&lt;p&gt;Rails has great capabilities for working CSV files. However, like with many
+things, the most obvious way is not the most efficient.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Easy Universal Haskell Development Environment</title>
+        <published>2016-02-06T00:00:00+00:00</published>
+        <updated>2016-02-06T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/universal-haskell-dev-enviornment/"/>
+        <id>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</id>
+        
+        <summary type="html">&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

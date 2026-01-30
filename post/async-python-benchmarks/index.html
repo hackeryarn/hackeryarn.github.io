@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  <meta name="description" content="Python continues to get better async support and with that comes pressure to switch. See the realistic effects that switching to async would have on your web servers.">
+  
+  
+  
+  <meta content="https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;async-python-benchmarks&#x2F;thumbnail.png" property="og:image">
+  
+  
+  <title>hackeryarn | What async really means for your python web app?</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    What async really means for your python web app?
+  </h1>
+  <p class="subtitle">Published 2025-12-30</p>
+  <div>
+    <p>The Python community is abuzz with excitement about better async support. If you have an existing service, you might wonder if you're missing out. Benchmarks show higher throughput and promise the ability to handle more requests with less hardware. Will a switch to async be a free lunch for your existing service?</p>
+<p>As often happens, the reality differs from expectations. Unless you run in a highly distributed environment and your service is the bottleneck, needing 10 instances just to keep up with all the traffic, you probably won't see the benefits that most benchmarks promise. In fact, you might see worse performance by switching.</p>
+<h2 id="benchmarking-method">Benchmarking method</h2>
+<p>The disconnect with 80% of services and async benchmarks comes from the general design of the small to medium sized services. The most common services talk directly to a database and as traffic increases, the load on the database grows much faster than the load on the web service. This load distribution shifts the bottleneck from the service to the database. To see the implications of async under these conditions, we need to examine benchmarks that mirror the same configuration.</p>
+<p>The setup for these benchmarks involves Django with a PostgreSQL database. Both are the some of the most popular technologies in the world. Django gives us the ability to easily switch between sync and async configurations. While PostgreSQL gives realistic characteristics for the different types of load we want to simulate.</p>
+<p>For another point of comparison, the benchmarks also include FastAPI. It's a newer framework built from the ground up for the async era.</p>
+<p>To get a full range of service conditions, I test three scenarios:</p>
+<ul>
+<li>Static content: Runs the service with a database setup but no hits to the database.</li>
+<li>Database read I/O: Queries the database to read data and uses that data to generate a response.</li>
+<li>Database update I/O: Creates high contention in the database by using <code>SELECT FOR UPDATE</code> and locking the table for an update, and use the results to generate a response.</li>
+</ul>
+<p>To run the benchmarks, I use the same method as <a rel="external" href="https://blog.baro.dev/p/the-future-of-python-web-services-looks-gil-free">the article</a> (which pushed me to write this post):</p>
+<ul>
+<li><a rel="external" href="https://github.com/emmett-framework/granian">Granian</a> as the server since it can run using threads or processes.
+<ul>
+<li>Using the command <code>granian --interface &lt;asgi or wsgi&gt; --workers &lt;1 or 2&gt; --blocking-threads 32 --port 3000 &lt;application&gt;</code>.</li>
+<li>I wanted to include free-threaded benchmarks here, but <code>psycopg</code> cannot run with free-threaded, yet. Once support lands and stabilizes, I will make a follow-up article that includes free-threaded benchmarks.</li>
+</ul>
+</li>
+<li><a rel="external" href="https://github.com/lnx-search/rewrk">rewrk</a> to run the load test.
+<ul>
+<li>Using the command <code>rewrk -d 30s -c 64 --host &lt;host with route&gt;</code>.</li>
+</ul>
+</li>
+<li>System76 Darter Pro as the laptop for test execution
+<ul>
+<li>NixOS unstable</li>
+<li>12th Gen Intel® Core™ i7-1260P × 16</li>
+<li>64 GiB of RAM</li>
+<li>Python 3.14</li>
+<li>PostgreSQL 18</li>
+</ul>
+</li>
+</ul>
+<p>I show the most relevant code snippets in the article, but the curious can find <a rel="external" href="https://codeberg.org/hackeryarn/django-bench">all the code here</a>.</p>
+<h2 id="results">Results</h2>
+<p>The results include four different project configurations:</p>
+<ul>
+<li>Sync Django: Default Django setting running with WSGI.</li>
+<li>Sync Django Pooled: The same as Sync Django, but using a pooled database connection.
+<ul>
+<li>While setting up the load tests, I found out that Django does not pool connections by default, but it does require pooled connections to run in async mode. This configuration closes the configuration gap between the sync and async setups.</li>
+</ul>
+</li>
+<li>Async Django: Default Django settings for async mode running with ASGI.</li>
+<li>FastAPI: Default setting for both FastAPI and SQLAlchemy.
+<ul>
+<li>I chose to use the JSON output here, despite the Django benchmarks not using JSON, since it's the most likely use case when running FastAPI in production.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>WSGI and ASGI are the production-grade web servers suggested by most python web frameworks including Django. WSGI handles synchronous services, while ASGI handles asynchronous services.</p>
+</blockquote>
+<h3 id="static-content">Static content</h3>
+<p>Getting a baseline of static content gives us an upper bound of what each configuration can do without the database to slowdown the server.</p>
+<p>The sync and async Django views look almost identical. We only need to add the <code>async</code> keyword to make the async version work:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-storage z-type z-function z-python">async def</span><span class="z-entity z-name z-function"> index</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Hello, world. This is the index.&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>The FastAPI implementation is just as straightforward:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@app</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function z-decorator z-python">get</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;/&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-storage z-type z-function z-python">async def</span><span class="z-entity z-name z-function"> read_root</span><span class="z-punctuation">():</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-punctuation"> {</span><span class="z-punctuation z-definition z-string z-string">&quot;Hello&quot;</span><span class="z-punctuation">:</span><span class="z-punctuation z-definition z-string z-string"> &quot;World&quot;</span><span class="z-punctuation">}</span></span></code></pre>
+<p><img src="https://hackeryarn.com/post/async-python-benchmarks/./post_async-python-benchmarks_index_diagram_1.svg" alt="post_async-python-benchmarks_index_diagram_1" /></p>
+<table><thead><tr><th>Server type</th><th>Workers</th><th>RPS</th><th>Latency avg</th><th>Latency max</th><th>Median</th></tr></thead><tbody>
+<tr><td>Sync Django</td><td>1</td><td>5032</td><td>13ms</td><td>7162ms</td><td>20ms</td></tr>
+<tr><td>Async Django</td><td>1</td><td>551</td><td>116ms</td><td>193ms</td><td>129ms</td></tr>
+<tr><td>FastAPI</td><td>1</td><td>26287</td><td>2.43ms</td><td>9.38ms</td><td>2.72ms</td></tr>
+<tr><td>Sync Django</td><td>2</td><td>6614</td><td>10ms</td><td>802ms</td><td>15ms</td></tr>
+<tr><td>Async Django</td><td>2</td><td>1120</td><td>57ms</td><td>133ms</td><td>72ms</td></tr>
+<tr><td>FastAPI</td><td>2</td><td>37353</td><td>1.71ms</td><td>7.25ms</td><td>2.43ms</td></tr>
+</tbody></table>
+<blockquote>
+<p>This table does not include Sync Django Pooled because it makes no difference when we don't hit the database.</p>
+</blockquote>
+<p>The most obvious thing here is that FastAPI far outperforms Django across all metrics. The developers behind FastAPI worked hard to make sure it performs well under these exact conditions, and it shows. Now that we addressed the elephant in the room, let's focus on the more nuanced Django benchmarks.</p>
+<p>The RPS (Requests per second) metric has a couple surprises. Async Django performs an order of magnitude slower than Sync Django. Async isn't free, but this massive difference is surprising.</p>
+<p>The async version starts making up ground with smoother scaling than the Sync Django version. As we add workers, we see a modest increase in throughput for Sync Django, but a doubling throughput for Async Django. This shows how async can queue up work in a more consistent manner and start catching up with many service instances.</p>
+<p>When it comes to latency, we start to see an advantage of async request handling. Async Django has no outliers and a median close to the average. Sync Django, conversely, sees massive tail latency slowdown. The slowest requests take over 100x longer than the average.</p>
+<p>The latency metrics shows an important tradeoff between the two configurations. When we use async, we trade average performance for consistency. In many scenarios, we should make this tradeoff, but with a 10x slowdown from Sync Django to Async Django, we have to weigh the option carefully.</p>
+<h3 id="database-reads">Database reads</h3>
+<p>Now that we have a baseline for each configuration with no bottleneck, let's connect to a database and perform some reads.</p>
+<p>For the testing schema we will set up two table: an <code>Author</code> table that will contain the names of people, and a <code>Quote</code> table that will contain quotes by the authors. This gives us a straightforward layout, but makes the queries more realistic by adding a relationship traversal to every request.</p>
+<p>The Sync Django view looks like:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> quote</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-source"> Quote</span><span class="z-punctuation">.</span><span class="z-source">objects</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;?&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">select_related</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;author&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">first</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-storage z-type z-string z-python">f</span><span class="z-string">&quot;</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">quote_text</span><span class="z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape">}\n\n</span><span class="z-string">--</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">author</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">name</span><span class="z-constant z-character z-format z-placeholder z-other z-python">}</span><span class="z-string">&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>The Async Django view just needs a sprinkle of a few async operators:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-storage z-type z-function z-python">async def</span><span class="z-entity z-name z-function"> quote</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-keyword z-control z-flow z-python"> await</span><span class="z-source"> Quote</span><span class="z-punctuation">.</span><span class="z-source">objects</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;?&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">select_related</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;author&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">afirst</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-storage z-type z-string z-python">f</span><span class="z-string">&quot;</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">quote_text</span><span class="z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape">}\n\n</span><span class="z-string">--</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">author</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">name</span><span class="z-constant z-character z-format z-placeholder z-other z-python">}</span><span class="z-string">&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>The FastAPI view fully relies on SQLAlchemy to perform the search and returns the results as JSON:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@app</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function z-decorator z-python">get</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;/quote&quot;</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-storage z-type z-function z-python">async def</span><span class="z-entity z-name z-function"> quote</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">db</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> AsyncSession</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> Depends</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">get_db</span><span class="z-punctuation">)):</span></span>
+<span class="giallo-l"><span class="z-source">    statement</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> (</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">        select</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">Quote</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">func</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">random</span><span class="z-punctuation">()).</span><span class="z-meta z-function-call z-python">options</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-python">selectinload</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">Quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">author</span><span class="z-punctuation">))</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"><span class="z-source">    result</span><span class="z-keyword z-operator"> =</span><span class="z-keyword z-control z-flow z-python"> await</span><span class="z-source"> db</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">execute</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">statement</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-source"> result</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">scalar</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">        &quot;quote&quot;</span><span class="z-punctuation">:</span><span class="z-source"> quote</span><span class="z-punctuation">.</span><span class="z-source">quote_text</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">        &quot;author&quot;</span><span class="z-punctuation">:</span><span class="z-source"> quote</span><span class="z-punctuation">.</span><span class="z-source">author</span><span class="z-punctuation">.</span><span class="z-source">name</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span></code></pre>
+<p>After introducing database operations, the metrics include both pooled and non-pooled Sync Django configurations:</p>
+<p><img src="https://hackeryarn.com/post/async-python-benchmarks/./post_async-python-benchmarks_index_diagram_2.svg" alt="post_async-python-benchmarks_index_diagram_2" /></p>
+<table><thead><tr><th>Server type</th><th>Workers</th><th>RPS</th><th>Latency avg</th><th>Latency max</th><th>Median</th></tr></thead><tbody>
+<tr><td>Sync Django</td><td>1</td><td>456</td><td>140ms</td><td>262ms</td><td>153ms</td></tr>
+<tr><td>Sync Django Pooled</td><td>1</td><td>569</td><td>112ms</td><td>171ms</td><td>117ms</td></tr>
+<tr><td>Async Django</td><td>1</td><td>205</td><td>312ms</td><td>467ms</td><td>331ms</td></tr>
+<tr><td>FastAPI</td><td>1</td><td>236</td><td>271ms</td><td>372ms</td><td>287ms</td></tr>
+<tr><td>Sync Django</td><td>2</td><td>669</td><td>96ms</td><td>262ms</td><td>132ms</td></tr>
+<tr><td>Sync Django Pooled</td><td>2</td><td>1822</td><td>35ms</td><td>98ms</td><td>50ms</td></tr>
+<tr><td>Async Django</td><td>2</td><td>541</td><td>118ms</td><td>304ms</td><td>196ms</td></tr>
+<tr><td>FastAPI</td><td>2</td><td>409</td><td>156ms</td><td>433ms</td><td>224ms</td></tr>
+</tbody></table>
+<p>While looking at these benchmarks, we have to remember that to a large degree we are load testing the database. The difference in benchmarks comes from the overhead of each framework and the different approaches to waiting for data to come back.</p>
+<p>These benchmarks show much more interesting results. The overhead of managing async requests and async database calls really starts to show. Sync performance ends up far outperforming either of the async benchmarks. Even FastAPI starts to lag behind when we introduce a database.</p>
+<p>We also see a massive performance improvement by making sure we pool the database connections. The two worker Sync Django Pooled more than doubles the RPS performance of any other configuration.</p>
+<p>The latency evens out across the board. Since PostgreSQL becomes the bottleneck, we don't have to worry about the bad latency characteristics that we saw in Sync Django. PostgreSQL, and most popular database engines, are battle tested across many scenarios so we can rely on good performance characteristics.</p>
+<h3 id="contentious-database-writes">Contentious database writes</h3>
+<p>While database reads run quickly and predictably, they do not show the worst case scenario for databases. A DBA's worst performance nightmare comes in the form of contentious writes. These happen when an application needs to lock rows or an entire table and ends up having transactions that wait for other transactions before they can run.</p>
+<p>When improperly managed, this situation can lead to dead locks and whole transactions erroring out. In fact, we will not see benchmarks for FastAPI in this section because, despite my best efforts, I could not get the application to run in async mode without deadlocking. Flipping FastAPI to sync mode seemed to go against the spirit of the rest of the benchmarks, so I wanted to avoid that path. If you can figure out how to get this running, I would love to get a PR and update this article with those benchmarks.</p>
+<p>To create contentious writes, we will add a <code>views</code> field to the <code>Quote</code> table. This field will store a count of how many views the quote gets. Every call to the endpoint will increment the views count before returning a result. To ensure that the field value stays consistent, we need to lock the row with <code>SELECT FOR UPDATE</code>. Due to many requests running at the same time, we will end up with requests waiting for other requests to complete before they can update the <code>views</code> field.</p>
+<p>To implement this, we wrap the whole view in a transaction, use <code>select_for_update</code>, and update the <code>views</code> field before returning the results to the user:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@transaction</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function z-decorator z-python">atomic</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> quote_views</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> (</span></span>
+<span class="giallo-l"><span class="z-source">        Quote</span><span class="z-punctuation">.</span><span class="z-source">objects</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">select_for_update</span><span class="z-punctuation">().</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;?&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">select_related</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;author&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">first</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-punctuation">.</span><span class="z-source">views</span><span class="z-keyword z-operator"> +=</span><span class="z-constant z-numeric"> 1</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">save</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-storage z-type z-string z-python">f</span><span class="z-string">&quot;</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">quote_text</span><span class="z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape">}\n\n</span><span class="z-string">--</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">author</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">name</span><span class="z-constant z-character z-format z-placeholder z-other z-python">}</span><span class="z-string">&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>The Async Django code follows the same general pattern, but we have to split out the transaction because Django does not support async transactions at the moment:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@sync_to_async</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-decorator z-python z-entity z-name z-function z-decorator z-python">@transaction</span><span class="z-punctuation">.</span><span class="z-entity z-name z-function z-decorator z-python">atomic</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> get_and_increment_views</span><span class="z-punctuation">():</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> (</span></span>
+<span class="giallo-l"><span class="z-source">        Quote</span><span class="z-punctuation">.</span><span class="z-source">objects</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">select_for_update</span><span class="z-punctuation">().</span><span class="z-meta z-function-call z-python">order_by</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;?&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">select_related</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;author&quot;</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">first</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">    )</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-punctuation">.</span><span class="z-source">views</span><span class="z-keyword z-operator"> +=</span><span class="z-constant z-numeric"> 1</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">save</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-source"> quote</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type z-storage z-type z-function z-python">async def</span><span class="z-entity z-name z-function"> quote_views</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">):</span></span>
+<span class="giallo-l"><span class="z-source">    quote</span><span class="z-keyword z-operator"> =</span><span class="z-keyword z-control z-flow z-python"> await</span><span class="z-meta z-function-call z-python"> get_and_increment_views</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-storage z-type z-string z-python">f</span><span class="z-string">&quot;</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">quote_text</span><span class="z-constant z-character z-format z-placeholder z-other z-python z-constant z-character z-escape">}\n\n</span><span class="z-string">--</span><span class="z-constant z-character z-format z-placeholder z-other z-python">{</span><span class="z-meta z-function-call z-arguments z-python">quote</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">author</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">name</span><span class="z-constant z-character z-format z-placeholder z-other z-python">}</span><span class="z-string">&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p><img src="https://hackeryarn.com/post/async-python-benchmarks/./post_async-python-benchmarks_index_diagram_3.svg" alt="post_async-python-benchmarks_index_diagram_3" /></p>
+<table><thead><tr><th>Server type</th><th>Workers</th><th>RPS</th><th>Latency avg</th><th>Latency max</th><th>Median</th></tr></thead><tbody>
+<tr><td>Sync Django</td><td>1</td><td>170</td><td>376ms</td><td>2144ms</td><td>542ms</td></tr>
+<tr><td>Sync Django Pooled</td><td>1</td><td>149</td><td>429ms</td><td>576ms</td><td>460ms</td></tr>
+<tr><td>Async Django</td><td>1</td><td>156</td><td>408ms</td><td>542ms</td><td>427ms</td></tr>
+<tr><td>Sync Django</td><td>2</td><td>170</td><td>375ms</td><td>5168ms</td><td>620ms</td></tr>
+<tr><td>Sync Django Pooled</td><td>2</td><td>160</td><td>401ms</td><td>951ms</td><td>584ms</td></tr>
+<tr><td>Async Django</td><td>2</td><td>169</td><td>378ms</td><td>824ms</td><td>518ms</td></tr>
+</tbody></table>
+<p>This benchmark turns out to be the great equalizer. All the benchmarks have almost the same RPS. Even when we add more workers, the contention prevents us from processing more requests.</p>
+<p>Also, our latency problem with Sync Django came back. Compared to async, Sync Django has much higher tail latency. The interesting part came from Sync Django Pooled. Introducing database pooling solved the sync latency problem without the need for any code changes. This puts the sync configuration on equal footing with the async configuration without any code changes.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>These benchmarks show just how much optimization for sync web services Django and the Python has. Sync Django Pooled outperforms or matches all other configurations. Even FastAPI only performs better when it's the sole bottleneck.</p>
+<p>If your service talks to a database directly, it is unlikely that your service is the bottleneck. To get the best performance you should stick with a sync webserver and ensure that you pool your database connections. As the ecosystem stands, async introduces too much overhead to make sense. This will shift as async support continues to improve, but for now you probably don't need to go changing your web server.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/django/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/benchmarks/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">benchmarks</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

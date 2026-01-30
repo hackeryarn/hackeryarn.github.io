@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - development</title>
+    <link rel="self" type="application/atom+xml" href="https://hackeryarn.com/tags/development/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://hackeryarn.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+    <id>https://hackeryarn.com/tags/development/atom.xml</id>
+    <entry xml:lang="en">
+        <title>You don&#x27;t need a map for that</title>
+        <published>2024-01-01T00:00:00+00:00</published>
+        <updated>2024-01-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/maps/"/>
+        <id>https://hackeryarn.com/post/maps/</id>
+        
+        <summary type="html">&lt;p&gt;One of the most misused data structures is the humble map; hashmap,
+dictionary, hash table, etc.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s a great data structure for quick storage and access of key value
+pairs. Unfortunately, because of its ease and availability, it becomes
+pervasive at jobs it has no business doing. The problem grows most
+visible in dynamically typed languages that make the map a first class
+citizen (Python, Ruby, Clojure, etc.), but it can creep up in any
+language.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>When DRY goes wrong</title>
+        <published>2023-06-10T00:00:00+00:00</published>
+        <updated>2023-06-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/dry/"/>
+        <id>https://hackeryarn.com/post/dry/</id>
+        
+        <summary type="html">&lt;p&gt;DRY has become a mantra throughout the industry. Any time repetitive code shows up, DRY gets applied as a cure all. If you even start to question DRYing up a piece of code, you are viewed as a heretic to the entire industry.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Embrace your constraints</title>
+        <published>2019-08-14T00:00:00+00:00</published>
+        <updated>2019-08-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/embrace-the-constraints/"/>
+        <id>https://hackeryarn.com/post/embrace-the-constraints/</id>
+        
+        <summary type="html">&lt;p&gt;Engineers want to measure the quality and effectiveness of their work.
+They turn to code coverage, burn down charts, and yearly goals, with the
+best intention.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The Right Abstraction for Lambdas</title>
+        <published>2019-02-24T00:00:00+00:00</published>
+        <updated>2019-02-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/the-right-abstraction-for-lambdas/"/>
+        <id>https://hackeryarn.com/post/the-right-abstraction-for-lambdas/</id>
+        
+        <summary type="html">&lt;p&gt;Serverless functions are a great alternative for many light tasks that would
+traditionally required a server. They allow you to split up work across
+mutiple small functions, and you only pay
+for what you use. On top of that, they require less maintenance than managing your own
+server or Kubernetes cluster.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Your Job Isn&#x27;t Writing Code</title>
+        <published>2018-08-19T00:00:00+00:00</published>
+        <updated>2018-08-19T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/your-job-isnt-writing-code/"/>
+        <id>https://hackeryarn.com/post/your-job-isnt-writing-code/</id>
+        
+        <summary type="html">&lt;p&gt;Every line of code you write is a liability. That line of code you just wrote
+adds complexity to your code base, gives you more nuances to remember, it
+might even be a bug. If code is so expensive and dangerous. What can you do?
+After all, you are a developer.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

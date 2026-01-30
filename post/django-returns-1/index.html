@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Type safe Django app, Part 1</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Type safe Django app, Part 1
+  </h1>
+  <p class="subtitle">Published 2022-01-22</p>
+  <div>
+    <p>Django is a great framework for web development. Unfortunately, due to
+the nature of Python and web development in general, it often leads to
+hard to track down bugs and tangled code. We will take a look at one way
+to reign this in.</p>
+<span id="continue-reading"></span>
+<p>Throughout this series we will follow the <a rel="external" href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">official Django
+tutorial</a> while
+making the code safer and easier to reason about. We will accomplish
+this by enlist the help of <a rel="external" href="http://mypy-lang.org/">mypy</a> (for general
+type checking) and <a rel="external" href="https://github.com/dry-python/returns">returns</a> (for
+containers that will provide safety).</p>
+<p>I will not cover the basics of Django or Python. If you ever feel like
+you don't fully understand the Django portion, you can refer to the
+official tutorial. The parts of this tutorial will directly correspond
+to the parts of the official tutorial.</p>
+<p>I will explain how we're integrating <code>returns</code> and the benefits of
+jumping through some of the extra hoops that it requires. I will not
+cover the underlying theory behind returns. For that, you can read their
+excellent documentation.</p>
+<h1 id="what-makes-code-safe">What makes code safe?</h1>
+<p>There are two properties that make a piece of code safe. It has to be
+<strong>pure</strong> and <strong>complete</strong>.</p>
+<p>As an example, <code>2 + 2</code> is a pure and complete piece of code. Every time
+we run this code, we will always get back <code>4</code>. If we wanted to, we could
+even replace this code with <code>4</code> itself. This is easy to reason about,
+easy to understand, and easy to test. These properties make a piece of
+code <strong>pure</strong> and <strong>complete</strong>.</p>
+<p>Things get complicated, however, once we introduce functions calls. If
+we have <code>get_two() + get_two()</code>, some questions immediately start to
+arise: What kind of thing does <code>get_two()</code> return? Does <code>get_two()</code>
+always return the same thing? Can <code>get_two()</code> fail?</p>
+<p>We can, of course, read the source code to answer these questions. This
+gives us full understanding of what the abstraction does, but it quickly
+becomes time consuming and after going a few layers deep it becomes hard
+to keep everything in our heads. The other option is to blindly trust
+that the name of the function fully states what it does. This options
+lets us proceed with using the abstraction, but it could easily get us
+into trouble -- see the questions above. So what's the solution?</p>
+<p>Let us address these problems one at a time.</p>
+<h2 id="what-kind-of-thing-does-get-two-return">What kind of thing does <code>get_two()</code> return?</h2>
+<p>As the code stands, we have not way know that <code>get_two()</code> returns a <code>2</code>,
+a <code>"2.0"</code>, a <code>100, 200</code>, or any other crazy thing.</p>
+<p><code>mypy</code> can help here:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> get_two</span><span class="z-punctuation">() -&gt;</span><span class="z-support z-type z-python"> int</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-source">    ...</span></span></code></pre>
+<p>This one additions lets us know, right away, that we will get an <code>int</code>.
+No accidental strings or tuple can sneak into our code.</p>
+<h2 id="does-get-two-always-return-the-same-thing">Does <code>get_two()</code> always return the same thing?</h2>
+<p>This question becomes harder to answer and reason about. This function
+could return 2 on the first call, but on the second call returns
+something totally different. This will often happen if a function gets
+the value from a database, calculates the value based on time, or grabs
+a random number. If it does any of these things, we have no way of
+knowing without reading the body.</p>
+<p>Let's assume that in this case, we are doing one of the <strong>impure</strong>
+things mentioned above. So what can we do about it? Well, we can mark
+the value as impure by using a special container called <code>IO</code>.</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> get_two</span><span class="z-punctuation">() -&gt;</span><span class="z-meta z-item-access z-python"> IO</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">int</span><span class="z-punctuation">]:</span></span>
+<span class="giallo-l"><span class="z-source">    ...</span></span></code></pre>
+<p>This container tell all the caller that the function does something more
+than simply calculate a value. It also requires that any function that
+uses this return value also returns an <code>IO</code> container. This is a good
+thing. It lets us know, without reading the source, that we can't
+depend on the result always being the same. Although, it should still
+make us want to read the source to figure out what impure thing a
+function called <code>get_two()</code> could be doing.</p>
+<h2 id="can-get-two-fail">Can <code>get_two()</code> fail?</h2>
+<p>The final question is especially troubling in Python. Python a lot of
+python code can throw exceptions without warning. Even simple things
+like dividing by zero could throw an exception that crashes our
+applications -- if not handled properly.</p>
+<p>We could wrap everything in a giant <code>try</code> statement, but wouldn't it be
+nice to know ahead of time that this function could result in an
+exception?</p>
+<p>Throwing an error makes a function <strong>incomplete</strong> because it cannot
+always return the promised value. Just like with <code>IO</code> we can use the
+type system to let all the callers know this. The new container we will
+use is <code>Result</code>.</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> get_two</span><span class="z-punctuation">() -&gt;</span><span class="z-meta z-indexed-name z-python"> Result</span><span class="z-punctuation">[</span><span class="z-support z-type z-python">int</span><span class="z-punctuation">,</span><span class="z-support z-type z-exception z-python"> Exception</span><span class="z-punctuation">]:</span></span>
+<span class="giallo-l"><span class="z-source">    ...</span></span></code></pre>
+<p>This container lets the callers know that we could expect an <code>int</code> or
+and <code>Exception</code>. Better yet, it forces the caller to also return a
+<code>Result</code> container or to handle the exception.</p>
+<h1 id="starting-the-project">Starting the project</h1>
+<p>Use your favorite method to install Django, and let's dive in right
+where part <a rel="external" href="https://docs.djangoproject.com/en/4.0/intro/tutorial01/">the official
+tutorial</a>
+starts.</p>
+<p>We will start the project just like a typical Django project:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> django-admin startproject django_returns</span></span></code></pre>
+<p>Next we need to install some dependencies that will allow us to use the
+type system to its fullest:</p>
+<ul>
+<li><code>mypy</code> provides our type system and integrates well with the rest of
+our dependencies.</li>
+<li><code>django-stubs</code> provides type stubs for Django.</li>
+<li><code>returns</code> provides type safe functional programming facilities.</li>
+</ul>
+<p>Once we have the dependencies installed, we need to configure <code>returns</code>
+and Django to work smoothly with <code>mypy</code>.</p>
+<p><code>setup.cfg</code>:</p>
+<pre class="giallo z-code"><code data-lang="ini"><span class="giallo-l"><span class="z-punctuation">[</span><span class="z-entity z-name z-section z-group-title z-ini">mypy</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword z-other z-definition z-ini">plugins</span><span class="z-punctuation z-separator z-key-value"> =</span></span>
+<span class="giallo-l"><span class="z-source">  returns.contrib.mypy.returns_plugin,</span></span>
+<span class="giallo-l"><span class="z-source">  mypy_django_plugin.main</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation">[</span><span class="z-entity z-name z-section z-group-title z-ini">mypy.plugins.django-stubs</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword z-other z-definition z-ini">django_settings_module</span><span class="z-punctuation z-separator z-key-value"> =</span><span class="z-punctuation z-definition z-string z-string"> &quot;django_returns.settings&quot;</span></span></code></pre><h1 id="polls-app">Polls app</h1>
+<p>We will follow the django tutorial and create the Polls app:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> python manage.py startapp polls</span></span></code></pre>
+<p>The index view function will look almost the same, except we will add
+some types.</p>
+<p><code>polls/view.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">http</span><span class="z-keyword"> import</span><span class="z-source"> HttpRequest</span><span class="z-punctuation">,</span><span class="z-source"> HttpResponse</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage z-type z-function z-python">def</span><span class="z-entity z-name z-function"> index</span><span class="z-punctuation">(</span><span class="z-variable z-parameter">request</span><span class="z-punctuation">:</span><span class="z-meta z-function z-parameters"> HttpRequest</span><span class="z-punctuation">) -&gt;</span><span class="z-source"> HttpResponse</span><span class="z-punctuation">:</span></span>
+<span class="giallo-l"><span class="z-keyword z-control z-flow z-python">    return</span><span class="z-meta z-function-call z-python"> HttpResponse</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Hello, world&quot;</span><span class="z-punctuation">)</span></span></code></pre>
+<p>Giving the <code>request</code> a type might seem excessive right now, but when we
+pass it to a function later on, this will make sure that we pass the
+right thing.</p>
+<p>Before we can access our new view, we need to update a couple <code>urls.py</code>
+files:</p>
+<p><code>polls/urls.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">urls</span><span class="z-keyword"> import</span><span class="z-source"> path</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-punctuation"> .</span><span class="z-keyword"> import</span><span class="z-source"> views</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">urlpatterns</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> [</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">    path</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string">&#39;&#39;</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-arguments z-python"> views</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">index</span><span class="z-punctuation">,</span><span class="z-variable z-parameter"> name</span><span class="z-keyword z-operator">=</span><span class="z-punctuation z-definition z-string z-string">&#39;index&#39;</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-punctuation">]</span></span></code></pre>
+<p><code>django_returns/urls.py</code>:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">contrib</span><span class="z-keyword"> import</span><span class="z-source"> admin</span></span>
+<span class="giallo-l"><span class="z-keyword">from</span><span class="z-source"> django</span><span class="z-punctuation">.</span><span class="z-source">urls</span><span class="z-keyword"> import</span><span class="z-source"> include</span><span class="z-punctuation">,</span><span class="z-source"> path</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">urlpatterns</span><span class="z-keyword z-operator"> =</span><span class="z-punctuation"> [</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">    path</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&#39;polls/&#39;</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-python"> include</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&#39;polls.urls&#39;</span><span class="z-punctuation">)),</span></span>
+<span class="giallo-l"><span class="z-meta z-function-call z-python">    path</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&#39;admin/&#39;</span><span class="z-punctuation">,</span><span class="z-meta z-function-call z-arguments z-python"> admin</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">site</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-arguments z-python">urls</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-punctuation">]</span></span></code></pre>
+<p>After these steps, we can access the site at
+<a rel="external" href="http://localhost:8000/polls/">http://localhost:8000/polls/</a> after running:</p>
+<pre class="giallo z-code"><code data-lang="shellscript"><span class="giallo-l"><span class="z-entity z-name z-function">$</span><span class="z-string"> python manage.py runserver</span></span></code></pre><h1 id="wrap-up">Wrap up</h1>
+<p>We covered the goal of this tutorial series along with some basic
+terminology that we will use throughout. We also setup the base
+application and got all our dependencies setup. In <a rel="external" href="https://hackeryarn.com/post/django-returns-2/">Part
+2</a>, we will actually use
+the types introduced in <code>returns</code> and get a glimpse at how they can lead
+to cleaner code.</p>
+<p>If this is your first time using <code>mypy</code>, you should start seeing some
+nice type hints coming through. This is already a benefit without
+needing to do anything different in the code. And if you haven't done
+so already, make sure to get your editor fully setup for types to work
+properly.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/django/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

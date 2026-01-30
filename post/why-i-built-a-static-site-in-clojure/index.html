@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Why I Built a Static Site in Clojure</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Why I Built a Static Site in Clojure
+  </h1>
+  <p class="subtitle">Published 2018-09-15</p>
+  <div>
+    <p>At a summer barbecue, a friend asked if I could build a website for his
+new restaurant. But what he didn't know was that I haven't built a
+static site in nearly a decade. However I couldn't let him spend
+thousands of dollars on a cookie cutter website designed by a firm that
+knew nothing about his restaurant.</p>
+<span id="continue-reading"></span>
+<p>We started coming up with ideas right away over a couple of beers. He
+wanted manageable content, an Instagram feed, and an easy to change
+restaurant menu. It quickly started sounding like a full on Content
+Management System and not a simple website. I had to reel in this
+ambitious project before it became a feature sink. So we decided to just
+make a beautiful static site.</p>
+<p>I started using <code>Wordpress</code> to build the website because I've used it
+in the past and it's easy to expand. With a list of dream features in
+mind, a basic website quicky emerged. But as it grew, themes became
+complicated to build. Plugins were ugly and difficult to customize. And
+templates were clunky to use. I couldn't continue with the <code>Wordpress</code>
+route.</p>
+<p>Having been spoiled by component based systems, I decided to try
+<a rel="external" href="https://github.com/zeit/next.js/">Next.js</a>. I use React in my day job,
+so it's familiar ground, but I couldn't justify the complexity for a
+website that didn't need dynamic content. Also, <code>Next.js</code> had no CMS
+support.</p>
+<p>That's when I decided to reach for
+<a rel="external" href="https://github.com/weavejester/hiccup">hiccup</a>, a Clojure library for
+generating server side content. <code>hiccup</code> let me use Clojure data
+structures to build my pages.</p>
+<pre class="giallo z-code"><code data-lang="clojure"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; generating a span element with the class `foo` and content of `bar`</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-entity z-name z-function">html</span><span class="z-punctuation"> [</span><span class="z-source">:span.foo</span><span class="z-punctuation z-definition z-string z-string">  &quot;bar&quot;</span><span class="z-punctuation">])</span></span></code></pre>
+<p>This short syntax let me express more with less code. I also had
+components.</p>
+<pre class="giallo z-code"><code data-lang="clojure"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; defining an `h1` variable with the content `Welcome`</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-keyword">def</span><span class="z-source"> header</span><span class="z-punctuation"> [</span><span class="z-source">:h1</span><span class="z-punctuation z-definition z-string z-string"> &quot;Welcome&quot;</span><span class="z-punctuation">])</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; using `header` variable inside a `div` with an additional paragraph</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-entity z-name z-function">html</span><span class="z-punctuation"> [</span><span class="z-source">:div.content</span></span>
+<span class="giallo-l"><span class="z-source">       header</span></span>
+<span class="giallo-l"><span class="z-punctuation">       [</span><span class="z-source">:p</span><span class="z-punctuation z-definition z-string z-string"> &quot;more content&quot;</span><span class="z-punctuation">]])</span></span></code></pre>
+<p>I could define functions or plain variables, then use them as components
+in my templates.</p>
+<p>On top of that, I didn't have to learn a special syntax for working
+with data. I had the full power of Clojure to interact with data and
+components themselves.</p>
+<pre class="giallo z-code"><code data-lang="clojure"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; defining data for the menu</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-keyword">def</span><span class="z-source"> menu-items</span></span>
+<span class="giallo-l"><span class="z-punctuation">  [</span><span class="z-punctuation z-definition z-string z-string">&quot;Crab Rangoon&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">   &quot;Pot Stickers&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">   &quot;Miso Soup&quot;</span><span class="z-punctuation">])</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; creating a function to generate a list elment from the provided `menu-item`</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-keyword">defn</span><span class="z-source"> create-menu-item</span><span class="z-punctuation"> [</span><span class="z-source">menu-item</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-punctuation">  [</span><span class="z-source">:li.menu-item menu-item</span><span class="z-punctuation">])</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">;; generating an unordered list by mapping over the `menu-items` data</span></span>
+<span class="giallo-l"><span class="z-punctuation">(</span><span class="z-keyword">def</span><span class="z-source"> menu</span></span>
+<span class="giallo-l"><span class="z-punctuation">  [</span><span class="z-source">:ul</span></span>
+<span class="giallo-l"><span class="z-punctuation">   (</span><span class="z-entity z-name z-function">map</span><span class="z-source"> create-menu-item menu-items</span><span class="z-punctuation">)])</span></span></code></pre>
+<p>I could do all this with a concise syntax that is simpler than Wordpress
+templates, and shorter than React components.</p>
+<p>The final benefit is the ease of mind provided by Clojure. I know that
+no matter what features we dream up, they will be possible with this
+general purpose language.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/discussion/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">discussion</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/clojure/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">clojure</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - haskell</title>
+    <link rel="self" type="application/atom+xml" href="https://hackeryarn.com/tags/haskell/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://hackeryarn.com"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2019-03-27T00:00:00+00:00</updated>
+    <id>https://hackeryarn.com/tags/haskell/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Hierarchies in Hakyll</title>
+        <published>2019-03-27T00:00:00+00:00</published>
+        <updated>2019-03-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/hierarchies-in-hakyll/"/>
+        <id>https://hackeryarn.com/post/hierarchies-in-hakyll/</id>
+        
+        <summary type="html">&lt;p&gt;Creating hierarchy in a blog is a useful technique. It allows you to
+have different sections by type of content. It lets users navigate by
+their interests quickly. It makes your blog organized.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Easy Universal Haskell Development Environment</title>
+        <published>2016-02-06T00:00:00+00:00</published>
+        <updated>2016-02-06T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://hackeryarn.com/post/universal-haskell-dev-enviornment/"/>
+        <id>https://hackeryarn.com/post/universal-haskell-dev-enviornment/</id>
+        
+        <summary type="html">&lt;p&gt;Haskell is notoriously difficult to setup, which probably led to many people being scared away from ever getting started. However, there has been a lot of work done to address these short comings. And there is a way to setup a very pleasant environment thanks to the hard work of many projects.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+</feed>

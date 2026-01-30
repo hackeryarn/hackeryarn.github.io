@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Let&#x27;s write a macro in Rust - Part 1</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Let&#x27;s write a macro in Rust - Part 1
+  </h1>
+  <p class="subtitle">Published 2025-08-17</p>
+  <div>
+    <p>Macros are required to do some very helpful things in Rust, but this isn't an article about any of those things.</p>
+<p>I became enamored with macros many years ago when I read <a rel="external" href="https://gigamonkeys.com/book/">Practical Common Lisp</a> and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.</p>
+<span id="continue-reading"></span>
+<p>In this article, I will try to share some of that excitement with you while using Rust's macro system. Will this be the most practical and useful macro you can write? Absolutely not. I only hope to show you some possibilities of this powerful tool.</p>
+<h2 id="prior-art">Prior art</h2>
+<p>Rust's macros build on top of a long legacy of syntax macros primarily seen in the Lisp language family. Unlike Go, C, and Assembly macros, which work as a pre-processor step on raw strings, Rust's macros work directly on the AST (<a rel="external" href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>). This means that Tokenization and AST parsing has already occurred, so you can be sure that the what you work with is at least shaped like hypothetical Rust code.</p>
+<p>Unlike the Lisp family of languages, Rust had some additional challenges to overcome with their macro implementation.</p>
+<p>Lisp has a syntax that's basically an AST, so it is extremely easy to consume and produce an AST, because it looks like normal code. Rust, on the other hand, looks nothing like Lisp or an AST, so it needs a way to elegantly handle these conversion steps. That's where the <code>macro_rules!</code> macro comes in, which will be the focus of this article.</p>
+<p>The other challenge within <code>macro_rules!</code> comes from Rust's goal to provide as much help and correctness as possible. Rust actually supports types (technically fragment-specifiers) in macros. We will see more of this later, but it goes towards making macros easier to write, reason about, and maintain.</p>
+<p>Without further ado, let's jump into using <code>macro_rules!</code> and declarative macros.</p>
+<h2 id="macro-design-process">Macro design process</h2>
+<p>Since every time we write a macro, we create a DSL it's important to keep some rules and processes in mind. With that in mind, these are the typical steps that we should follow when writing macros:</p>
+<ul>
+<li>Evaluate if you need a macro</li>
+<li>Design the simplest possible invocation first (determine what your DSL looks like)</li>
+<li>Try to implement a match arms and adjust the invocation as needed</li>
+<li>Work one match arm at a time</li>
+<li>Write sub macros where possible</li>
+</ul>
+<p>Some of these steps might not mean much to you yet, but we will walk through them a few times while designing our final macro.</p>
+<h3 id="don-t-write-macros">Don't write macros</h3>
+<p>Before we start writing a macro, we should always evaluate if it is the best choice for the problem in hand. I know this is an odd step to start with for an article about writing macros, but macros get frequently abused, and we should strive to use all our tools well.</p>
+<p>Macros bring a lot of complexity in writing and debugging them. You are introducing another compilation step in your code, and often times erasing some of Rust's ability to help you write correct code. On top of all this, making code generic enough for macros can lead to far more complex types than you could accomplish with a little more boilerplate.</p>
+<p>Because of this overhead, you have to really consider the trade offs that you're making. Rust is a powerful language with lots of abstractions. Often times, the existing tools can get you to your goal without resorting to macros.</p>
+<p>In our case, we are writing the macro for practice, so these concerns don't apply here.</p>
+<h2 id="the-simplest-query-macro">The simplest query! macro</h2>
+<p>Lets jump right to the second step and design our invocation:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">)</span></span></code></pre>
+<p><code>db</code> will be the data structure that we want to query. We will start with supporting a single argument <code>select</code> for picking a field from the items in the data structure. Working in the abstract makes it really hard to reason about how we want this structure to work, so let's put together some sample data.</p>
+<p>We will borrow the domain from Practical Common Lisp and work with a list of songs. A song is a simple structure:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-storage z-type z-rust">struct</span><span class="z-entity z-name z-type"> Song</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">  title</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> String</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-source">  artist</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> String</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-source">  rating</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> i64</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>And to make a database of songs, we can just throw a bunch of songs into a vector:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-storage z-type z-rust">let</span><span class="z-source"> db</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function z-macro z-rust"> vec!</span><span class="z-punctuation">[</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Hate Me&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Blue October&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 9</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Not Like Us&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Kendrick Lamar&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 10</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Bad Dreams&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Teddy Swims&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 10</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &quot;Rockin&#39; the Suburbs&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-string z-string">    &quot;Ben Folds&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span></span>
+<span class="giallo-l"><span class="z-constant z-numeric">    6</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">  ),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Lateralus&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 8</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Lose Control&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Teddy Swims&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 9</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">  Song</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-punctuation z-definition z-string z-string">&quot;Come as you are&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-punctuation z-definition z-string z-string"> &quot;Nirvana&quot;</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">to_string</span><span class="z-punctuation">(),</span><span class="z-constant z-numeric"> 9</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-punctuation">];</span></span></code></pre>
+<p>Now if we come back to our invocation, we can fill in the desired output:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// &gt; [&quot;Hate Me&quot;, &quot;Not Like Us&quot;, &quot;Bad Dreams&quot;, &quot;Rockin&#39; the Suburbs&quot;, &quot;Lateralus&quot;, &quot;Lose Control&quot;, &quot;Come as you are&quot;]</span></span></code></pre><h3 id="our-first-match-arm">Our first match arm</h3>
+<p>Now that we know what we want our dsl to look like and what it should output, we can start working on our macro. Let's look at the implementation and fill in the gaps from there:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">macro_export</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rules z-rust">macro_rules!</span><span class="z-entity z-name z-function z-macro z-rust"> query</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation">  (</span><span class="z-source"> from</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $db</span><span class="z-keyword z-operator">:</span><span class="z-source">ident select</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> { };</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<blockquote>
+<p>If you want to follow along, remember that macros need to be declared in their own module.</p>
+</blockquote>
+<p>The basic syntax is <code>($matcher) =&gt; {$expansion}</code>. If you squint, it looks just like a <code>match</code> statement, and that's what makes these types of macros so easy to work with.</p>
+<p>Just about everything in the matcher is treated as a literal. <code>$</code> denotes a variable for what we actually want to capture. Everything that we capture must also have a fragment-specifier (you can think of it as a type). There are 14 possible fragment-specifiers that we could capture, see <a rel="external" href="https://doc.rust-lang.org/reference/macros-by-example.html#metavariables">Metavariables</a> for a full list, but in our case we are only capturing <code>ident</code>.</p>
+<p><code>ident</code> denotes an actual identifier or keyword declared somewhere outside the macro. We capture two identifiers. One for the database what we want to query, and one for the field that we want to extract.</p>
+<p>We can run this declaration to make sure it executes without any error, but we won't see any result a until we implement the expansion.</p>
+<h3 id="implementing-single-field-select">Implementing single field select</h3>
+<p>Now that we have a match, we need to put it to use.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">macro_export</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rules z-rust">macro_rules!</span><span class="z-entity z-name z-function z-macro z-rust"> query</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation">    (</span><span class="z-source"> from</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $db</span><span class="z-keyword z-operator">:</span><span class="z-source">ident select</span><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust"> $field</span><span class="z-keyword z-operator">:</span><span class="z-source">ident</span><span class="z-punctuation"> )</span><span class="z-keyword z-operator"> =&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator z-macro z-dollar z-rust z-variable z-other z-metavariable z-name z-rust">      $db</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">into_iter</span><span class="z-punctuation">()</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|</span><span class="z-variable z-other z-rust">i</span><span class="z-keyword z-operator">|</span><span class="z-variable z-other z-rust"> i</span><span class="z-keyword z-operator">.$</span><span class="z-variable z-other z-rust">field</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">    };</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>This is the part where we get to make the decisions of how our macro works. I am choosing to use <code>into_iter</code> so that our macro can work with anything that implements the <code>Iterator</code> trait. This is great for flexibility and an intuitive choice. But, it reveals a weakness of macros. We have no way to help the user know that they need to provide an <code>Iterator</code>. They would need to read the docs or guess correctly.</p>
+<p>You can also see the flexibility of the <code>ident</code> fragment specifier. We are using it for a variable and a struct field name.</p>
+<p>With this implementation we can actually run our macro, and get the expected output:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-storage z-type z-rust">let</span><span class="z-source"> results</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Vec</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function z-macro z-rust"> query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// &gt; [&quot;Hate Me&quot;, &quot;Not Like Us&quot;, &quot;Bad Dreams&quot;, &quot;Rockin&#39; the Suburbs&quot;, &quot;Lateralus&quot;, &quot;Lose Control&quot;, &quot;Come as you are&quot;]</span></span></code></pre>
+<p>And if we mistype the field name, we get a very helpful error message:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-storage z-type z-rust">let</span><span class="z-source"> results</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Vec</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-function z-macro z-rust"> query!</span><span class="z-punctuation">(</span><span class="z-source">from db select titles</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">// &gt; no field `titles` on type `Song`</span></span></code></pre><h2 id="conclusion-for-now">Conclusion... for now</h2>
+<p>This article sets up the groundwork for the macro that we want to build. Our goal is to get to macro like:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> &gt;</span><span class="z-constant z-numeric"> 9</span><span class="z-source"> or artist</span><span class="z-keyword z-operator"> ==</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-punctuation">);</span></span></code></pre>
+<p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-2/">next part</a> we will make progress toward that goal and explore some more advanced macro techniques.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/rust/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">rust</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  
+  
+  <title>hackeryarn | Clojure GitHub Actions</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js" data-auto-replace-svg="nest"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Clojure GitHub Actions
+  </h1>
+  <p class="subtitle">Published 2023-10-26</p>
+  <div>
+    <p>I recently took over the maintenance of an open source Clojure project.
+One of the first things I noticed was the lack CI or CD. These are
+things that aren't required but can save a lot of work, especially for
+a public project.</p>
+<span id="continue-reading"></span>
+<p>The CI portion helps make sure that all pull requests pass tests and
+conform to the project's coding style. The CD portion helps with
+deploying the project. And these parts become especially important if
+the project is in maintenance mode.</p>
+<p>Unlike a project under active development where all the details are
+fresh in my mind and I am working on it almost daily, a project in
+maintenance mode might not need any work for weeks or months. In that
+time, I am likely to forget a step and cause things to get messy or
+worse, cause a regression. CI and CD provide a safety net against things
+slipping.</p>
+<p>So with that reasoning in mind, I dove into CI/CD GitHub actions for
+Clojure.</p>
+<h1 id="ground-work">Ground work</h1>
+<p>Every GitHub action needs some setup to get the correct environment
+started. Luckily, Clojure has a <a rel="external" href="https://github.com/DeLaGuardo/setup-clojure">setup
+action</a> that makes it
+trivial to get started with the most common dependencies. The project I
+took over is a Leiningen project, so that will be the focus here, but
+these pieces should translate easily into other systems. See the <a rel="external" href="https://github.com/DeLaGuardo/setup-clojure">setup
+action repo</a> for details on
+how to setup other systems.</p>
+<p>My Leiningen setup ended up like this:</p>
+<pre class="giallo z-code"><code data-lang="yaml"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># This will go in as part of later actions.</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    steps</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # Checkout the project repository.</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Checkout</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        uses</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> actions/checkout@v3</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # Install the desired Java version.</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Prepare java</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        uses</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> actions/setup-java@v3</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        with</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          distribution</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-punctuation z-definition z-string z-string"> &quot;zulu&quot;</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          java-version</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-punctuation z-definition z-string z-string"> &quot;17&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # Setup Leiningen. Also supports setting up other commonly used tools.</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Install clojure tools</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        uses</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> DeLaGuardo/setup-clojure@12.1</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        with</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          lein</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-constant z-numeric"> 2.9.1</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # Enable cache so our actions run faster.</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Cache clojure dependencies</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        uses</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> actions/cache@v3</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        with</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          path</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-keyword"> |</span></span>
+<span class="giallo-l"><span class="z-string">            ~/.m2/repository</span></span>
+<span class="giallo-l"><span class="z-string">            ~/.gitlibs</span></span>
+<span class="giallo-l"><span class="z-string">            ~/.deps.clj</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          key</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> cljdeps-${{ hashFiles(&#39;project.clj&#39;) }}</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          restore-keys</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> cljdeps-</span></span></code></pre>
+<p>This does all the basics that I needed for a Clojure action. All the
+steps after this can proceed with Clojure fully setup.</p>
+<h1 id="lint-and-test">Lint and test</h1>
+<p>The most basic, but probably most important action, is linting and
+testing on every push or pull request. These are the steps that everyone
+should run locally before making a push, but often forget.</p>
+<p>To get both linting and tests running only required two short steps:</p>
+<pre class="giallo z-code"><code data-lang="yaml"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># ./.github/workflows/test.yaml</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Test</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># This will run the action on any push or pull request. GitHub also supports other</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># options here, and you will see one of them later.</span></span>
+<span class="giallo-l"><span class="z-constant z-language z-boolean">on</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-punctuation"> [</span><span class="z-string">push</span><span class="z-punctuation">,</span><span class="z-string"> pull_request</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">jobs</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">  test</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    runs-on</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> ubuntu-latest</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    steps</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # The ground work setup goes before these steps ...</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Lint</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        run</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> lein clj-kondo</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Test</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        run</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> lein test</span></span></code></pre>
+<p>To get linting to work, I had to add
+<a rel="external" href="https://github.com/clj-kondo/lein-clj-kondo">lein-clj-kondo</a> to the
+project dependencies.</p>
+<p>The testing portion didn't require any other setup besides following
+the regular Clojure testing conventions.</p>
+<h1 id="deployment">Deployment</h1>
+<p>Once you have linting and testing running, the next step is to make
+deployment easier. The most reasonable way to automate this is to use
+tags. That way, when I create a new tag, it becomes automatically
+available in Clojars.</p>
+<pre class="giallo z-code"><code data-lang="yaml"><span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment"># ./.github/workflows/deploy.yaml</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Deploy</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-constant z-language z-boolean">on</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">  # Run this workflow any time that the test workflow completes.</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">  workflow_run</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    workflows</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-punctuation"> [</span><span class="z-string">Test</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    types</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-punctuation"> [</span><span class="z-string">completed</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">jobs</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">  deploy-clojars</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    # Only run this part if it is running on a tag that starts with `v` (e.g. v1.0.1).</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    if</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> startsWith(github.ref, &#39;refs/tags/v&#39;)</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    runs-on</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> ubuntu-latest</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">    steps</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">      # The ground work setup goes before these steps ...</span></span>
+<span class="giallo-l"><span class="z-punctuation">      -</span><span class="z-entity z-name z-tag z-yaml"> name</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> Deploy</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        env</span><span class="z-punctuation z-separator z-key-value">:</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">          # Provide environment variables used to deploy.</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          CLOJARS_USERNAME</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> ${{ secrets.CLOJARS_USERNAME }}</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">          CLOJARS_PASSWORD</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> ${{ secrets.CLOJARS_PASSWORD }}</span></span>
+<span class="giallo-l"><span class="z-entity z-name z-tag z-yaml">        run</span><span class="z-punctuation z-separator z-key-value">:</span><span class="z-string"> lein deploy clojars</span></span>
+<span class="giallo-l"></span></code></pre>
+<p>Besides providing the credentials as environment variables (see <a rel="external" href="https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions">Using
+secrets in GitHub
+Actions</a>
+for how to make these available), I needed to do one more thing to make
+this project deployable in an actions.</p>
+<p>By default, Clojars requires signing of all releases. I don't see a
+major benefit in this since it's a publicly hosted repository that has
+a lot of safeguard as it is. So instead of fiddling with providing a gpg
+key to a github action and extracting the release hash, I just disabled
+signing in my <code>project.clj</code>.</p>
+<pre class="giallo z-code"><code data-lang="clojure"><span class="giallo-l"><span class="z-source">:deploy-repositories</span><span class="z-punctuation"> [[</span><span class="z-punctuation z-definition z-string z-string">&quot;clojars&quot;</span><span class="z-punctuation"> {</span><span class="z-source">:url</span><span class="z-punctuation z-definition z-string z-string"> &quot;https://clojars.org/repo&quot;</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">                                  ;; Uses the environment variables that we set in the action.</span></span>
+<span class="giallo-l"><span class="z-source">                                  :username :env/clojars_username</span></span>
+<span class="giallo-l"><span class="z-source">                                  :password :env/clojars_password</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">                                  ;; Disables signing</span></span>
+<span class="giallo-l"><span class="z-source">                                  :sign-releases</span><span class="z-constant z-language z-boolean"> false</span><span class="z-punctuation">}]]</span></span></code></pre>
+<p>With that, I had a fully working CI/CD pipeline for the project that I
+took over.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/tutorial/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/clojure/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">clojure</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/automation/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">automation</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>
