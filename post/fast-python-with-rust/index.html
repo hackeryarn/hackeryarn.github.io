@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="latte" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="fediverse:creator" content="@hackeryarn@mastodon.social">
+  
+  <meta name="description" content="By applying data-oriented design patterns in Rust, we can build a use case specific Python library that outperforms even NumPy. This article lays out the bottlenecks and architectural shifts needed to achieve this level of performance.">
+  
+  
+  
+  <meta content="https:&#x2F;&#x2F;hackeryarn.com&#x2F;post&#x2F;fast-python-with-rust&#x2F;thumbnail.png" property="og:image">
+  
+  
+  <title>hackeryarn | Fast Python with Rust: a data-oriented approach</title>
+  
+  <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/generated.css">
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
+    href="/atom.xml" />
+  
+  <script defer src="/js/main.bundle.js"></script>
+</head>
+
+<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
+  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
+  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
+    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+  </a>
+  <nav class="carrois lg:text-3xl text-lg">
+    <ul class="flex gap-3 lg:gap-6">
+      <li>
+        <a href="https://hackeryarn.com">posts</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/tags">tags</a>
+      </li>
+      <li>
+        <a href="https://hackeryarn.com/about/me">about</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+    
+<article>
+  <h1 class="title">
+    Fast Python with Rust: a data-oriented approach
+  </h1>
+  <p class="subtitle">Published 2026-02-28</p>
+  <div>
+    <p>How fast can Rust make Python? With a bit of <a rel="external" href="https://en.wikipedia.org/wiki/Data-oriented_design">data-oriented design</a>, really fast:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Redbear</td><td>100000 × 5</td><td>10</td><td>0.056</td></tr>
+<tr><td>Redbear</td><td>1000000 × 5</td><td>10</td><td>0.583</td></tr>
+<tr><td>Redbear</td><td>10000 × 5</td><td>1000</td><td>0.015</td></tr>
+<tr><td>Redbear</td><td>100000 × 5</td><td>1000</td><td>0.145</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>10</td><td>0.285</td></tr>
+<tr><td>NumPy</td><td>1000000 × 5</td><td>10</td><td>2.436</td></tr>
+<tr><td>NumPy</td><td>10000 × 5</td><td>1000</td><td>0.039</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>1000</td><td>0.371</td></tr>
+</tbody></table>
+<p>Despite the impressive numbers above, this post holds no delusional that a small library will replace the monumental work behind libraries like <a rel="external" href="https://numpy.org/">NumPy</a> and <a rel="external" href="https://pola.rs/">Polars</a>. <a rel="external" href="https://github.com/hackeryarn/redbear">Redbear</a> only achieves this performance by focusing on a narrow use case and making functionality concessions in the name of speed. If you have a data manipulation problem, you should, without question, use one of the de facto libraries.</p>
+<p>This post shows how Redbear achieved this level of performance by focusing on element wise operations on dictionaries, while demonstrating Rust performance optimizations.</p>
+<h2 id="is-python-really-that-slow">Is Python really that slow?</h2>
+<p>As you can see above, NumPy has fantastic performance across the board, but it doesn't provide all the functionality you might need. Most data processing pipelines rely <a rel="external" href="https://pandas.pydata.org/">pandas</a>, or <a rel="external" href="https://pola.rs/">Polars</a>. These libraries have a different performance story. They incur a higher performance penalty for providing a lot more functionality, and specialize in working with large data sets.</p>
+<p>Libraries like <a rel="external" href="https://github.com/cgdeboer/blackbear">Blackbear</a> noticed that performance dramatically degrades when running lots of operations on small data sets. Blackbear in particular implemented common operations on dictionaries in plain Python with great success:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Blackbear</td><td>100000 × 5</td><td>10</td><td>0.313</td></tr>
+<tr><td>Blackbear</td><td>1000000 × 5</td><td>10</td><td>3.072</td></tr>
+<tr><td>Polars</td><td>100000 × 5</td><td>10</td><td>1.072</td></tr>
+<tr><td>Polars</td><td>1000000 × 5</td><td>10</td><td>11.147</td></tr>
+<tr><td>pandas</td><td>100000 × 5</td><td>10</td><td>13.466</td></tr>
+<tr><td>pandas</td><td>1000000 × 5</td><td>10</td><td>130.837</td></tr>
+</tbody></table>
+<p>That performance gain starts to fall off as the data sets grew, so pandas and Polars still play an important part:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Blackbear</td><td>10000 × 5</td><td>1000</td><td>3.643</td></tr>
+<tr><td>Blackbear</td><td>100000 × 5</td><td>1000</td><td>36.307</td></tr>
+<tr><td>Polars</td><td>10000 × 5</td><td>1000</td><td>0.132</td></tr>
+<tr><td>Polars</td><td>100000 × 5</td><td>1000</td><td>1.219</td></tr>
+<tr><td>pandas</td><td>10000 × 5</td><td>1000</td><td>1.339</td></tr>
+<tr><td>pandas</td><td>100000 × 5</td><td>1000</td><td>13.432</td></tr>
+</tbody></table>
+<p>The fragmented performance and need to mix libraries for optimal performance made me look for an alternative. And that's when I started looking at Rust's Python integration.</p>
+<h2 id="is-rust-enough">Is Rust enough?</h2>
+<p>Rust can work with python thanks to the fantastic <a rel="external" href="https://pyo3.rs">PyO3</a> library. And since python dictionaries can perform so well, would we see a performance boost from using Rust hash maps instead?</p>
+<p>We will only look at addition operations since we can extrapolate the rest from there. And we will not go through the full project setup. <a rel="external" href="https://www.maturin.rs/">maturin</a> makes the setup trivial, so if you want to follow along, you can follow their instructions.</p>
+<p>Let's with scalar addition, the simplest operation we can perform. It takes a dictionary and a value, and adds the value to all the values in the dictionary.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-keyword">use</span><span class="z-entity z-name z-namespace"> std</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-namespace">collections</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-type">HashMap</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-keyword">use</span><span class="z-entity z-name z-namespace"> pyo3</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-namespace">prelude</span><span class="z-keyword z-operator">::*</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyfunction</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">fn</span><span class="z-entity z-name z-function"> add_scalar</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">d</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> value</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">    d</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">into_iter</span><span class="z-punctuation">()</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> v</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-source">k</span><span class="z-punctuation">,</span><span class="z-source"> v</span><span class="z-keyword z-operator"> +</span><span class="z-source"> value</span><span class="z-punctuation">))</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>To turn a Rust function into a python function we just have to use the <code>pyfunction</code> macro. PyO3 takes care of converting the arguments and outputs for us.</p>
+<p>We want to keep this API immutable so we can continue building calculations without modifying the original values, and to match the implementation of Blackbear. That means we can implement this calculation as a quick iterator without even worrying about Python.</p>
+<p>The next addition operation we need is addition of two dictionaries. We will only consider the keys of the first dictionary and add the values of the matching keys together. If we can't find a matching key, we will use a fill value with the default of <code>0.0</code>.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyfunction</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyo3</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">signature </span><span class="z-keyword z-operator">=</span><span class="z-punctuation"> (</span><span class="z-meta z-attribute z-rust">d1</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> d2</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> fill</span><span class="z-keyword z-operator">=</span><span class="z-meta z-attribute z-rust">0</span><span class="z-keyword z-operator">.</span><span class="z-meta z-attribute z-rust">0</span><span class="z-punctuation">))]</span></span>
+<span class="giallo-l"><span class="z-keyword">fn</span><span class="z-entity z-name z-function"> add</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">d1</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> d2</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> fill</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">    d1</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">iter</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">        .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> v</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-source">k</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">clone</span><span class="z-punctuation">(),</span><span class="z-source"> v</span><span class="z-keyword z-operator"> +</span><span class="z-source"> d2</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">get</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">unwrap_or</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-other z-rust">fill</span><span class="z-punctuation">)))</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">        .</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>We need to use another macro here to provide a default value for the <code>fill</code> argument. Since Rust can't take default values and Python often uses default values in signatures, PyO3 provides the <code>signature</code> macro to simulate this functionality while keeping the function a good citizen in both languages.</p>
+<p>We can proceed in almost the same way as before. We only need to switch to using <code>.iter()</code> so we can work with references, and look up the value to add in <code>d2</code> using <code>.get(k).unwrap_or(&amp;fill)</code>.</p>
+<p>So... Did we get our performance boost by directly porting the Python functions?</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Blackbear</td><td>100000 × 5</td><td>10</td><td>0.313</td></tr>
+<tr><td>Blackbear</td><td>1000000 × 5</td><td>10</td><td>3.072</td></tr>
+<tr><td>Blackbear</td><td>10000 × 5</td><td>1000</td><td>3.643</td></tr>
+<tr><td>Blackbear</td><td>100000 × 5</td><td>1000</td><td>36.307</td></tr>
+<tr><td>Redbear</td><td>100000 × 5</td><td>10</td><td>1.066</td></tr>
+<tr><td>Redbear</td><td>1000000 × 5</td><td>10</td><td>10.931</td></tr>
+<tr><td>Redbear</td><td>10000 × 5</td><td>1000</td><td>13.467</td></tr>
+<tr><td>Redbear</td><td>100000 × 5</td><td>1000</td><td>133.243</td></tr>
+</tbody></table>
+<p>Those numbers don't look great. We see 3-5x worse performance than the native Python implementation. This really shows the cost converting data. For every function call we have to convert the data structures from Python, to Rust, and back to Python. All that data movement quickly adds up and slows down our implementation beyond the performance improvements Rust can give us.</p>
+<p>It's clear that just switching to Rust isn't enough.</p>
+<h2 id="using-a-dedicated-structure">Using a dedicated structure</h2>
+<p>To start the optimization, let's take inspiration from all the other libraries that already handle this problem well.</p>
+<p>The other libraries that we compared against, except Blackbear, use a dedicated data structure. Thanks to having this data structure, they can convert the data once, run a bunch of operation, and then convert it back at the end. That's exactly what we should do.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyclass</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">struct</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">    values</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pymethods</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">impl</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">    #</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">new</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">    fn</span><span class="z-entity z-name z-function"> new</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">dict</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-variable z-language z-self z-rust">        Self</span><span class="z-punctuation"> {</span><span class="z-source"> values</span><span class="z-keyword z-operator">:</span><span class="z-source"> dict</span><span class="z-punctuation"> }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>We use three new macros here. <code>pyclass</code> allows us to make a class out of a <code>struct</code>, and <code>pymethods</code> converts all the Rust methods inside an <code>imp</code> into Python methods on the class. These two macros work together to seamlessly translate Rust construct to Python, but they don't work for all methods. Some Python magic methods, like <code>__init__</code>, require special handling. Luckily PyO3 covers the most common cases with macros like the <code>new</code> macro we use here.</p>
+<p>With the above declaration, we get a Python class that we can initialize naturally with <code>RedDict(py_dict)</code>.</p>
+<p>Now we have to migrate our <code>add</code> functions to methods that can work on <code>RedDict</code> directly.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pymethods</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">impl</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">    #</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyo3</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">signature </span><span class="z-keyword z-operator">=</span><span class="z-punctuation"> (</span><span class="z-meta z-attribute z-rust">other</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> fill</span><span class="z-keyword z-operator">=</span><span class="z-meta z-attribute z-rust">0</span><span class="z-keyword z-operator">.</span><span class="z-meta z-attribute z-rust">0</span><span class="z-punctuation">))]</span></span>
+<span class="giallo-l"><span class="z-keyword">    fn</span><span class="z-entity z-name z-function"> add</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-language z-self z-rust">self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">: &amp;</span><span class="z-variable z-language z-self z-rust">Self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> fill</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">        let</span><span class="z-source"> values</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-self z-rust"> self</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-source">values</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">iter</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> v</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">|</span><span class="z-punctuation"> (</span><span class="z-source">k</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">clone</span><span class="z-punctuation">(),</span><span class="z-source"> v</span><span class="z-keyword z-operator"> +</span><span class="z-source"> other</span><span class="z-keyword z-operator">.</span><span class="z-source">values</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">get</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">unwrap_or</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-other z-rust">fill</span><span class="z-punctuation">)))</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">collect</span><span class="z-punctuation">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-variable z-language z-self z-rust">        Self</span><span class="z-punctuation"> {</span><span class="z-source"> values</span><span class="z-punctuation"> }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<blockquote>
+<p>In the interest of space, I will only show the <code>add</code> implementation from now on. It's straight forward enough to derive the scalar implementation from there.</p>
+</blockquote>
+<p>We only need to add the <code>.values</code> accessor to our <code>RedDict</code> instances, and construct a new <code>RedDict</code> instance before returning the results. And with that change, we gain a massive performance increase:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Before</td><td>100000 × 5</td><td>10</td><td>1.066</td></tr>
+<tr><td>Before</td><td>1000000 × 5</td><td>10</td><td>10.931</td></tr>
+<tr><td>Before</td><td>10000 × 5</td><td>1000</td><td>13.467</td></tr>
+<tr><td>Before</td><td>100000 × 5</td><td>1000</td><td>133.243</td></tr>
+<tr><td>After</td><td>100000 × 5</td><td>10</td><td>0.240</td></tr>
+<tr><td>After</td><td>1000000 × 5</td><td>10</td><td>2.532</td></tr>
+<tr><td>After</td><td>10000 × 5</td><td>1000</td><td>3.253</td></tr>
+<tr><td>After</td><td>100000 × 5</td><td>1000</td><td>32.645</td></tr>
+</tbody></table>
+<p>We now caught up to the Python implementation and gained a nice chaining syntax that lets us write expressions like:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-meta z-function-call z-python">RedDict</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">py_dict</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">add_scalar</span><span class="z-punctuation">(</span><span class="z-constant z-numeric">2</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">multiply_scalar</span><span class="z-punctuation">(</span><span class="z-constant z-numeric">10</span><span class="z-punctuation">)</span></span></code></pre><h2 id="optimizing-copying-with-mutation">Optimizing copying with mutation</h2>
+<p>We now have a short and clean implementation, but it's not optimal. Using an iterator to build up a <code>HashMap</code> has negative performance characteristics because we fill the structure as we iterate over it. We can remedy this by leaning on highly optimized built in types and methods.</p>
+<p>First we wrap <code>values</code> in an <code>Arc</code> smart pointer so we only copy around the pointer instead of the whole <code>HashMap</code>:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyclass</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">struct</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">    values</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Arc</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;&gt;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>Then, instead of building up the data structure through iteration, we clone the <code>values</code> efficiently by using the built in <code>.clone()</code> method which avoids growing the <code>HashMap</code> as we build it. And once we have the clone, mutate only the values to avoid any structural changes to the <code>HashMap</code>:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pymethods</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">impl</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">    #</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyo3</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">signature </span><span class="z-keyword z-operator">=</span><span class="z-punctuation"> (</span><span class="z-meta z-attribute z-rust">other</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> fill</span><span class="z-keyword z-operator">=</span><span class="z-meta z-attribute z-rust">0</span><span class="z-keyword z-operator">.</span><span class="z-meta z-attribute z-rust">0</span><span class="z-punctuation">))]</span></span>
+<span class="giallo-l"><span class="z-keyword">    fn</span><span class="z-entity z-name z-function"> add</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-language z-self z-rust">self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">: &amp;</span><span class="z-variable z-language z-self z-rust">Self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> fill</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust z-storage z-modifier">        let mut</span><span class="z-source"> values</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-self z-rust"> self</span><span class="z-keyword z-operator">.</span><span class="z-source">values</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">clone</span><span class="z-punctuation">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-entity z-name z-type">        Arc</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">make_mut</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-storage z-modifier">mut</span><span class="z-variable z-other z-rust"> values</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">iter_mut</span><span class="z-punctuation">()</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">for_each</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">key</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> val</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">| *</span><span class="z-source">val</span><span class="z-keyword z-operator"> +=</span><span class="z-source"> other</span><span class="z-keyword z-operator">.</span><span class="z-source">values</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">get</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">key</span><span class="z-punctuation">)</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">unwrap_or</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-other z-rust">fill</span><span class="z-punctuation">));</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-variable z-language z-self z-rust">        Self</span><span class="z-punctuation"> {</span><span class="z-source"> values</span><span class="z-punctuation"> }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>These changes might seem small, but they double our operations throughput:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Before</td><td>100000 × 5</td><td>10</td><td>0.240</td></tr>
+<tr><td>Before</td><td>1000000 × 5</td><td>10</td><td>2.532</td></tr>
+<tr><td>Before</td><td>10000 × 5</td><td>1000</td><td>3.253</td></tr>
+<tr><td>Before</td><td>100000 × 5</td><td>1000</td><td>32.645</td></tr>
+<tr><td>After</td><td>100000 × 5</td><td>10</td><td>0.157</td></tr>
+<tr><td>After</td><td>1000000 × 5</td><td>10</td><td>1.609</td></tr>
+<tr><td>After</td><td>10000 × 5</td><td>1000</td><td>1.730</td></tr>
+<tr><td>After</td><td>100000 × 5</td><td>1000</td><td>17.941</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>10</td><td>0.285</td></tr>
+<tr><td>NumPy</td><td>1000000 × 5</td><td>10</td><td>2.436</td></tr>
+<tr><td>NumPy</td><td>10000 × 5</td><td>1000</td><td>0.039</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>1000</td><td>0.371</td></tr>
+</tbody></table>
+<p>These changes are transparent to the user and makes this library surpass NumPy on the small data structures. But we can still do better.</p>
+<h2 id="ditching-the-hash-map">Ditching the hash map</h2>
+<p>Hash maps excel at random element access, but we only perform element wise operations. When it comes to element wise operations, vectors are the performance king. CPUs have optimizations specifically for working with vectors, so if we can tap into those operations, we will use the most efficient operations possible (outside of numeric operations).</p>
+<p>To take advantage of vectors, we need to update <code>RedDict</code> one more time:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyclass</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">from_py_object</span><span class="z-punctuation">)]</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">derive</span><span class="z-punctuation">(</span><span class="z-entity z-name z-type">Clone</span><span class="z-punctuation">)]</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">struct</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    /// Mapping from key -&gt; index into `values`.</span></span>
+<span class="giallo-l"><span class="z-source">    index</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Arc</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> usize</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;&gt;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment z-comment">    /// Packed numeric values.</span></span>
+<span class="giallo-l"><span class="z-source">    values</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Arc</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">Vec</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type z-numeric z-rust">f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;&gt;</span><span class="z-punctuation">,</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>We store all the values in a <code>Vec</code>, while still using a hash map for key to index storage. Storing the key to index relationship means that we can perform all the operations on the <code>values</code> vector and only reference the hash map when we need to go back to a Python dictionary.</p>
+<p>This layous also brings out the true power of <code>Arc</code>. Since we leave the <code>index</code> unchanged, we only clone the pointer to <code>index</code>. If we ever do change it, <code>Arc</code> will automatically clone it and create a new reference. That's the power of smart pointers.</p>
+<p>As often happens: to achieve the best performance we have to deal with addition complexity, starting with the <code>RedDict</code> initialization:</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pymethods</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">impl</span><span class="z-entity z-name z-type"> RedDict</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">    #</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">new</span><span class="z-punctuation">]</span></span>
+<span class="giallo-l"><span class="z-keyword">    fn</span><span class="z-entity z-name z-function"> new</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">dict</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-punctuation z-brackets z-angle z-rust">&lt;</span><span class="z-entity z-name z-type">String</span><span class="z-punctuation">,</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation z-brackets z-angle z-rust">&gt;</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust z-storage z-modifier">        let mut</span><span class="z-source"> values</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-type"> Vec</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">with_capacity</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">dict</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">len</span><span class="z-punctuation">());</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust z-storage z-modifier">        let mut</span><span class="z-source"> index</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-type"> HashMap</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">with_capacity</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">dict</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">len</span><span class="z-punctuation">());</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">        for</span><span class="z-punctuation"> (</span><span class="z-source">pos</span><span class="z-punctuation">, (</span><span class="z-source">k</span><span class="z-punctuation">,</span><span class="z-source"> v</span><span class="z-punctuation">))</span><span class="z-keyword"> in</span><span class="z-source"> dict</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">into_iter</span><span class="z-punctuation">()</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">enumerate</span><span class="z-punctuation">() {</span></span>
+<span class="giallo-l"><span class="z-source">            values</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">push</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">v</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-source">            index</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">insert</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">k</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> pos</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-punctuation">        }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-variable z-language z-self z-rust">        Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-source">            index</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Arc</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">index</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-source">            values</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type"> Arc</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">new</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">values</span><span class="z-punctuation">),</span></span>
+<span class="giallo-l"><span class="z-punctuation">        }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span></code></pre>
+<p>Instead of PyO3 handling most of the conversion for us, we have to manually construct both the values vector and the index hash map based on the passed in hash map.</p>
+<p>The addition between two dictionaries becomes more complex. We need to:</p>
+<ul>
+<li>Iterate over indexes to retrieve the keys</li>
+<li>Remember the position that the key maps to in the our left hand values vector</li>
+<li>Look up the position of the key in the right hand vector, or use the fill value</li>
+<li>Update the value at the correct position in the left handed vector by adding the right handed value</li>
+</ul>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyo3</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">signature </span><span class="z-keyword z-operator">=</span><span class="z-punctuation"> (</span><span class="z-meta z-attribute z-rust">other</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> fill</span><span class="z-keyword z-operator">=</span><span class="z-meta z-attribute z-rust">0</span><span class="z-keyword z-operator">.</span><span class="z-meta z-attribute z-rust">0</span><span class="z-punctuation">))]</span></span>
+<span class="giallo-l"><span class="z-keyword">fn</span><span class="z-entity z-name z-function"> add</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-language z-self z-rust">self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">:</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> fill</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust z-storage z-modifier">    let mut</span><span class="z-source"> new</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-self z-rust"> self</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">clone</span><span class="z-punctuation">();</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">    let</span><span class="z-source"> new_vals</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-type"> Arc</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">make_mut</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-storage z-modifier">mut</span><span class="z-variable z-other z-rust"> new</span><span class="z-keyword z-operator">.</span><span class="z-meta z-function z-call z-rust">values</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    for</span><span class="z-punctuation"> (</span><span class="z-source">key</span><span class="z-punctuation">,</span><span class="z-keyword z-operator"> &amp;</span><span class="z-source">i</span><span class="z-punctuation">)</span><span class="z-keyword"> in</span><span class="z-variable z-language z-self z-rust"> self</span><span class="z-keyword z-operator">.</span><span class="z-source">index</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">iter</span><span class="z-punctuation">() {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">        let</span><span class="z-source"> rhs</span><span class="z-keyword z-operator"> =</span><span class="z-source"> other</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-source">index</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">get</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">key</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|&amp;</span><span class="z-variable z-other z-rust">j</span><span class="z-keyword z-operator">|</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">.</span><span class="z-meta z-function z-call z-rust">values</span><span class="z-punctuation">[</span><span class="z-variable z-other z-rust">j</span><span class="z-punctuation">])</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            .</span><span class="z-entity z-name z-function">unwrap_or</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">fill</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-source">        new_vals</span><span class="z-punctuation">[</span><span class="z-source">i</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> += &amp;</span><span class="z-source">rhs</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">    new</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>And we get a good performance increase, but still fall far short of the NumPy performance for large collections:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Redbear</td><td>100000 × 5</td><td>10</td><td>0.111</td></tr>
+<tr><td>Redbear</td><td>1000000 × 5</td><td>10</td><td>1.156</td></tr>
+<tr><td>Redbear</td><td>10000 × 5</td><td>1000</td><td>0.604</td></tr>
+<tr><td>Redbear</td><td>100000 × 5</td><td>1000</td><td>5.877</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>10</td><td>0.285</td></tr>
+<tr><td>NumPy</td><td>1000000 × 5</td><td>10</td><td>2.436</td></tr>
+<tr><td>NumPy</td><td>10000 × 5</td><td>1000</td><td>0.039</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>1000</td><td>0.371</td></tr>
+</tbody></table>
+<p>The issue comes down to us doing a lot more work than we need to. In some cases.</p>
+<h2 id="minimizing-unnecessary-look-ups">Minimizing unnecessary look-ups</h2>
+<p>Since we perform a lookup for every value in a collection, we pay a lot of overhead. It would be great if we could get rid of all those operation.</p>
+<p>It turns out that a lot of the time we start with a dictionary, transform it in some way, and use then perform more operations using the intermediate derivations:</p>
+<pre class="giallo z-code"><code data-lang="python"><span class="giallo-l"><span class="z-source">    rd</span><span class="z-keyword z-operator"> =</span><span class="z-meta z-function-call z-python"> RedDict</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">py_dict</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-source">    rd2</span><span class="z-keyword z-operator"> =</span><span class="z-source"> rd</span><span class="z-punctuation">.</span><span class="z-meta z-function-call z-python">add_scalar</span><span class="z-punctuation">(</span><span class="z-constant z-numeric">2</span><span class="z-punctuation">).</span><span class="z-meta z-function-call z-python">add</span><span class="z-punctuation">(</span><span class="z-meta z-function-call z-arguments z-python">rd</span><span class="z-punctuation">)</span></span></code></pre>
+<p>In these cases, our <code>self</code> and <code>other</code> dictionaries share an <code>index</code>. And if they share an index, it means that <code>values</code> have the same order, so we don't need to do any look-ups.</p>
+<pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-punctuation z-definition z-attribute z-rust">#</span><span class="z-punctuation">[</span><span class="z-meta z-attribute z-rust">pyo3</span><span class="z-punctuation">(</span><span class="z-meta z-attribute z-rust">signature </span><span class="z-keyword z-operator">=</span><span class="z-punctuation"> (</span><span class="z-meta z-attribute z-rust">other</span><span class="z-punctuation">,</span><span class="z-meta z-attribute z-rust"> fill</span><span class="z-keyword z-operator">=</span><span class="z-meta z-attribute z-rust">0</span><span class="z-keyword z-operator">.</span><span class="z-meta z-attribute z-rust">0</span><span class="z-punctuation">))]</span></span>
+<span class="giallo-l"><span class="z-keyword">fn</span><span class="z-entity z-name z-function"> add</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-variable z-language z-self z-rust">self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">:</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation">,</span><span class="z-variable z-other z-rust"> fill</span><span class="z-keyword z-operator">:</span><span class="z-entity z-name z-type z-numeric z-rust"> f64</span><span class="z-punctuation">)</span><span class="z-keyword z-operator"> -&gt;</span><span class="z-variable z-language z-self z-rust"> Self</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust z-storage z-modifier">    let mut</span><span class="z-source"> new</span><span class="z-keyword z-operator"> =</span><span class="z-variable z-language z-self z-rust"> self</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">clone</span><span class="z-punctuation">();</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">    let</span><span class="z-source"> new_vals</span><span class="z-keyword z-operator"> =</span><span class="z-entity z-name z-type"> Arc</span><span class="z-keyword z-operator">::</span><span class="z-entity z-name z-function">make_mut</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">&amp;</span><span class="z-storage z-modifier">mut</span><span class="z-variable z-other z-rust"> new</span><span class="z-keyword z-operator">.</span><span class="z-meta z-function z-call z-rust">values</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    if</span><span class="z-source"> new</span><span class="z-keyword z-operator">.</span><span class="z-source">index </span><span class="z-keyword z-operator">==</span><span class="z-source"> other</span><span class="z-keyword z-operator">.</span><span class="z-source">index </span><span class="z-punctuation">{</span></span>
+<span class="giallo-l"><span class="z-keyword">        for</span><span class="z-punctuation"> (</span><span class="z-source">lhs</span><span class="z-punctuation">,</span><span class="z-source"> rhs</span><span class="z-punctuation">)</span><span class="z-keyword"> in</span><span class="z-source"> new_vals</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">iter_mut</span><span class="z-punctuation">()</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">zip</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">other</span><span class="z-keyword z-operator">.</span><span class="z-meta z-function z-call z-rust">values</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">iter</span><span class="z-punctuation">()) {</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">            *</span><span class="z-source">lhs</span><span class="z-keyword z-operator"> +=</span><span class="z-source"> rhs</span></span>
+<span class="giallo-l"><span class="z-punctuation">        }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span><span class="z-keyword"> else</span><span class="z-punctuation"> {</span></span>
+<span class="giallo-l"><span class="z-keyword">        for</span><span class="z-punctuation"> (</span><span class="z-source">key</span><span class="z-punctuation">,</span><span class="z-keyword z-operator"> &amp;</span><span class="z-source">i</span><span class="z-punctuation">)</span><span class="z-keyword"> in</span><span class="z-variable z-language z-self z-rust"> self</span><span class="z-keyword z-operator">.</span><span class="z-source">index</span><span class="z-keyword z-operator">.</span><span class="z-entity z-name z-function">iter</span><span class="z-punctuation">() {</span></span>
+<span class="giallo-l"><span class="z-storage z-type z-rust">            let</span><span class="z-source"> rhs</span><span class="z-keyword z-operator"> =</span><span class="z-source"> other</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">                .</span><span class="z-source">index</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">                .</span><span class="z-entity z-name z-function">get</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">key</span><span class="z-punctuation">)</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">                .</span><span class="z-entity z-name z-function">map</span><span class="z-punctuation">(</span><span class="z-keyword z-operator">|&amp;</span><span class="z-variable z-other z-rust">j</span><span class="z-keyword z-operator">|</span><span class="z-variable z-other z-rust"> other</span><span class="z-keyword z-operator">.</span><span class="z-meta z-function z-call z-rust">values</span><span class="z-punctuation">[</span><span class="z-variable z-other z-rust">j</span><span class="z-punctuation">])</span></span>
+<span class="giallo-l"><span class="z-keyword z-operator">                .</span><span class="z-entity z-name z-function">unwrap_or</span><span class="z-punctuation">(</span><span class="z-variable z-other z-rust">fill</span><span class="z-punctuation">);</span></span>
+<span class="giallo-l"><span class="z-source">            new_vals</span><span class="z-punctuation">[</span><span class="z-source">i</span><span class="z-punctuation">]</span><span class="z-keyword z-operator"> += &amp;</span><span class="z-source">rhs</span><span class="z-punctuation">;</span></span>
+<span class="giallo-l"><span class="z-punctuation">        }</span></span>
+<span class="giallo-l"><span class="z-punctuation">    }</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-source">    new</span></span>
+<span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
+<p>Here we check the <code>index</code> for equality. If they equal we use <code>zip</code> to traverse both the <code>value</code> vectors in the same order, and add the elements together.</p>
+<p>With these changes, we reach our goal! We surpass NumPy across the board:</p>
+<table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
+<tr><td>Redbear</td><td>100000 × 5</td><td>10</td><td>0.065</td></tr>
+<tr><td>Redbear</td><td>1000000 × 5</td><td>10</td><td>0.653</td></tr>
+<tr><td>Redbear</td><td>10000 × 5</td><td>1000</td><td>0.016</td></tr>
+<tr><td>Redbear</td><td>100000 × 5</td><td>1000</td><td>0.160</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>10</td><td>0.285</td></tr>
+<tr><td>NumPy</td><td>1000000 × 5</td><td>10</td><td>2.436</td></tr>
+<tr><td>NumPy</td><td>10000 × 5</td><td>1000</td><td>0.039</td></tr>
+<tr><td>NumPy</td><td>100000 × 5</td><td>1000</td><td>0.371</td></tr>
+</tbody></table>
+<h2 id="trace-offs-and-when-to-use-redbear">Trace-offs, and when to use Redbear</h2>
+<p>By applying data-oriented design in Rust we achieved our goal of surpassing the general purpose libraries in Python. This came at the caveat of needing to re-use derivations of a base instance and only working with floats, but it's an impressive achievement for less than 50 lines of code.</p>
+<p>If you want to see all the benchmarks and continuing evolution of the library, you can find all the code at https://github.com/hackeryarn/redbear.</p>
+
+  </div>
+  <hr />
+  <div class="not-prose -mt-10">
+    
+
+<ul class="not-prose flex gap-3">
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/python/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/rust/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">rust</a>
+  </li>
+  
+  <li>
+    <a href="https://hackeryarn.com/tags/discussion/"
+      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">discussion</a>
+  </li>
+  
+</ul>
+
+
+  </div>
+</article>
+
+
+  </section>
+  <footer class="p-4 mt-15">
+  <div class="flex justify-center text-4xl gap-6">
+    <a href="https://mastodon.social/@hackeryarn">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+    <a href="https://codeberg.org/hackeryarn">
+      <i class="codeberg"></i>
+    </a>
+    <a href="https://github.com/hackeryarn">
+      <i class="fa-brands fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/achernyak/">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </div>
+  <p class="text-center text-neutral-500 mt-5">
+    Copyright 2026 by Artem Chernyak
+  </p>
+</footer>
+  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
+</body>
+
+</html>
