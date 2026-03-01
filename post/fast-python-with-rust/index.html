@@ -64,6 +64,7 @@
 <tr><td>NumPy</td><td>10000 × 5</td><td>1000</td><td>0.039</td></tr>
 <tr><td>NumPy</td><td>100000 × 5</td><td>1000</td><td>0.371</td></tr>
 </tbody></table>
+<p><em>You can find all the benchmark script in the <a rel="external" href="https://github.com/hackeryarn/redbear/tree/main/benchmarks">Redbear benchmarks folder</a></em></p>
 <p>Despite the impressive numbers above, this post holds no delusional that a small library will replace the monumental work behind libraries like <a rel="external" href="https://numpy.org/">NumPy</a> and <a rel="external" href="https://pola.rs/">Polars</a>. <a rel="external" href="https://github.com/hackeryarn/redbear">Redbear</a> only achieves this performance by focusing on a narrow use case and making functionality concessions in the name of speed. If you have a data manipulation problem, you should, without question, use one of the de facto libraries.</p>
 <p>This post shows how Redbear achieved this level of performance by focusing on element wise operations on dictionaries, while demonstrating Rust performance optimizations.</p>
 <h2 id="is-python-really-that-slow">Is Python really that slow?</h2>
@@ -154,9 +155,7 @@
 <span class="giallo-l"><span class="z-variable z-language z-self z-rust">        Self</span><span class="z-punctuation"> {</span><span class="z-source"> values</span><span class="z-punctuation"> }</span></span>
 <span class="giallo-l"><span class="z-punctuation">    }</span></span>
 <span class="giallo-l"><span class="z-punctuation">}</span></span></code></pre>
-<blockquote>
-<p>In the interest of space, I will only show the <code>add</code> implementation from now on. It's straight forward enough to derive the scalar implementation from there.</p>
-</blockquote>
+<p><em>In the interest of space, I will only show the <code>add</code> implementation from now on. It's straight forward enough to derive the scalar implementation from there.</em></p>
 <p>We only need to add the <code>.values</code> accessor to our <code>RedDict</code> instances, and construct a new <code>RedDict</code> instance before returning the results. And with that change, we gain a massive performance increase:</p>
 <table><thead><tr><th>Library</th><th>Operations</th><th>Collection Size</th><th>Time (seconds)</th></tr></thead><tbody>
 <tr><td>Before</td><td>100000 × 5</td><td>10</td><td>1.066</td></tr>
@@ -315,7 +314,6 @@
 </tbody></table>
 <h2 id="trace-offs-and-when-to-use-redbear">Trace-offs, and when to use Redbear</h2>
 <p>By applying data-oriented design in Rust we achieved our goal of surpassing the general purpose libraries in Python. This came at the caveat of needing to re-use derivations of a base instance and only working with floats, but it's an impressive achievement for less than 50 lines of code.</p>
-<p>If you want to see all the benchmarks and continuing evolution of the library, you can find all the code at https://github.com/hackeryarn/redbear.</p>
 
   </div>
   <hr />

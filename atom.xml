@@ -33,6 +33,7 @@
 &lt;tr&gt;&lt;td&gt;NumPy&lt;&#x2F;td&gt;&lt;td&gt;10000 × 5&lt;&#x2F;td&gt;&lt;td&gt;1000&lt;&#x2F;td&gt;&lt;td&gt;0.039&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
 &lt;tr&gt;&lt;td&gt;NumPy&lt;&#x2F;td&gt;&lt;td&gt;100000 × 5&lt;&#x2F;td&gt;&lt;td&gt;1000&lt;&#x2F;td&gt;&lt;td&gt;0.371&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
 &lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;&lt;em&gt;You can find all the benchmark script in the &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;hackeryarn&#x2F;redbear&#x2F;tree&#x2F;main&#x2F;benchmarks&quot;&gt;Redbear benchmarks folder&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Despite the impressive numbers above, this post holds no delusional that a small library will replace the monumental work behind libraries like &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;numpy.org&#x2F;&quot;&gt;NumPy&lt;&#x2F;a&gt; and &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;pola.rs&#x2F;&quot;&gt;Polars&lt;&#x2F;a&gt;. &lt;a rel=&quot;external&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;hackeryarn&#x2F;redbear&quot;&gt;Redbear&lt;&#x2F;a&gt; only achieves this performance by focusing on a narrow use case and making functionality concessions in the name of speed. If you have a data manipulation problem, you should, without question, use one of the de facto libraries.&lt;&#x2F;p&gt;
 &lt;p&gt;This post shows how Redbear achieved this level of performance by focusing on element wise operations on dictionaries, while demonstrating Rust performance optimizations.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;is-python-really-that-slow&quot;&gt;Is Python really that slow?&lt;&#x2F;h2&gt;
@@ -123,9 +124,7 @@
 &lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-variable z-language z-self z-rust&quot;&gt;        Self&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; {&lt;&#x2F;span&gt;&lt;span class=&quot;z-source&quot;&gt; values&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation&quot;&gt; }&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
 &lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;    }&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
 &lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation&quot;&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;blockquote&gt;
-&lt;p&gt;In the interest of space, I will only show the &lt;code&gt;add&lt;&#x2F;code&gt; implementation from now on. It&#x27;s straight forward enough to derive the scalar implementation from there.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
+&lt;p&gt;&lt;em&gt;In the interest of space, I will only show the &lt;code&gt;add&lt;&#x2F;code&gt; implementation from now on. It&#x27;s straight forward enough to derive the scalar implementation from there.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;We only need to add the &lt;code&gt;.values&lt;&#x2F;code&gt; accessor to our &lt;code&gt;RedDict&lt;&#x2F;code&gt; instances, and construct a new &lt;code&gt;RedDict&lt;&#x2F;code&gt; instance before returning the results. And with that change, we gain a massive performance increase:&lt;&#x2F;p&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Library&lt;&#x2F;th&gt;&lt;th&gt;Operations&lt;&#x2F;th&gt;&lt;th&gt;Collection Size&lt;&#x2F;th&gt;&lt;th&gt;Time (seconds)&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
 &lt;tr&gt;&lt;td&gt;Before&lt;&#x2F;td&gt;&lt;td&gt;100000 × 5&lt;&#x2F;td&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;1.066&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
@@ -284,7 +283,6 @@
 &lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
 &lt;h2 id=&quot;trace-offs-and-when-to-use-redbear&quot;&gt;Trace-offs, and when to use Redbear&lt;&#x2F;h2&gt;
 &lt;p&gt;By applying data-oriented design in Rust we achieved our goal of surpassing the general purpose libraries in Python. This came at the caveat of needing to re-use derivations of a base instance and only working with floats, but it&#x27;s an impressive achievement for less than 50 lines of code.&lt;&#x2F;p&gt;
-&lt;p&gt;If you want to see all the benchmarks and continuing evolution of the library, you can find all the code at https:&#x2F;&#x2F;github.com&#x2F;hackeryarn&#x2F;redbear.&lt;&#x2F;p&gt;
 </content>
         
     </entry>
