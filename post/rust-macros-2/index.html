@@ -13,6 +13,7 @@
   <title>hackeryarn | Let&#x27;s write a macro in Rust - Part 2</title>
   
   <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/generated.css">
   
   <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
@@ -21,13 +22,13 @@
   <script defer src="/js/main.bundle.js"></script>
 </head>
 
-<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
-  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
-  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
-    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+<body hx-boost="true" hx-ext="head-support" hx-swap="transition:true">
+  <header>
+  <a href="https://hackeryarn.com">
+    <i class="hackeryarn"></i> hackeryarn
   </a>
-  <nav class="carrois lg:text-3xl text-lg">
-    <ul class="flex gap-3 lg:gap-6">
+  <nav>
+    <ul>
       <li>
         <a href="https://hackeryarn.com">posts</a>
       </li>
@@ -40,15 +41,16 @@
     </ul>
   </nav>
 </header>
-  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+  <main>
     
 <article>
-  <h1 class="title">
-    Let&#x27;s write a macro in Rust - Part 2
-  </h1>
-  <p class="subtitle">Published 2025-08-24</p>
-  <div>
-    <p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-1/">last part</a> we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.</p>
+  <section>
+    <h1>
+      Let&#x27;s write a macro in Rust - Part 2
+    </h1>
+    <p class="subtitle">Published 2025-08-24</p>
+    <div>
+      <p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-1/">last part</a> we covered the very basics of macros and implemented a single argument query select. This was a good start, but only scratched the surface of what macros can do.</p>
 <p>In this part we will implement multi-field select and a basic <code>where</code> clause. That will make our query macro far more useful.</p>
 <span id="continue-reading"></span><h2 id="multi-field-select">Multi-field select</h2>
 <p>After being able to select one field, the immediate next thing that comes to mind is selecting multiple fields. Just like before, lets start with the invocation syntax:</p>
@@ -141,34 +143,84 @@
 <p>This part expands the macro functionality to far more scenarios. It also covers all the major concepts of declarative macros. With these tools, you should be able to write a wide range of declarative macros.</p>
 <p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-3/">next part</a> we will look at handling multiple operators in our <code>where</code> clause. This will push our tools to their limit and we will need to use one of the most powerful pattern for declarative macros.</p>
 
-  </div>
-  <hr />
-  <div class="not-prose -mt-10">
-    
+    </div>
+    <hr />
+    <div>
+      
 
-<ul class="not-prose flex gap-3">
+<ul class="tags">
   
   <li>
-    <a href="https://hackeryarn.com/tags/tutorial/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+    <a href="https://hackeryarn.com/tags/tutorial/">tutorial</a>
   </li>
   
   <li>
-    <a href="https://hackeryarn.com/tags/rust/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">rust</a>
+    <a href="https://hackeryarn.com/tags/rust/">rust</a>
   </li>
   
 </ul>
 
 
-  </div>
+    </div>
+  </section>
+  <aside>
+    <ul>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-2/#multi-field-select">Multi-field select</a>
+        
+        <ul>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#matching-multi-field-select">Matching multi-field select</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#repetition-match-syntax">Repetition match syntax</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#implementing-multi-field-select">Implementing multi-field select</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#debugging-macros">Debugging macros</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-2/#where-clause">Where clause</a>
+        
+        <ul>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#matching-where-clause">Matching where clause</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-2/#implementing-where-clause">Implementing where clause</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-2/#conclusion">Conclusion</a>
+        
+      </li>
+      
+    </ul>
+  </aside>
 </article>
 
-
-  </section>
-  <footer class="p-4 mt-15">
-  <div class="flex justify-center text-4xl gap-6">
-    <a href="https://mastodon.social/@hackeryarn">
+  </main>
+  <footer>
+  <div class="social">
+    <a rel="me" href="https://mastodon.social/@hackeryarn">
       <i class="fa-brands fa-mastodon"></i>
     </a>
     <a href="https://codeberg.org/hackeryarn">
@@ -181,11 +233,10 @@
       <i class="fa-brands fa-linkedin"></i>
     </a>
   </div>
-  <p class="text-center text-neutral-500 mt-5">
+  <p>
     Copyright 2026 by Artem Chernyak
   </p>
 </footer>
-  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
 </body>
 
 </html>

@@ -13,6 +13,7 @@
   <title>hackeryarn | Embrace your constraints</title>
   
   <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/generated.css">
   
   <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
@@ -21,13 +22,13 @@
   <script defer src="/js/main.bundle.js"></script>
 </head>
 
-<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
-  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
-  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
-    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+<body hx-boost="true" hx-ext="head-support" hx-swap="transition:true">
+  <header>
+  <a href="https://hackeryarn.com">
+    <i class="hackeryarn"></i> hackeryarn
   </a>
-  <nav class="carrois lg:text-3xl text-lg">
-    <ul class="flex gap-3 lg:gap-6">
+  <nav>
+    <ul>
       <li>
         <a href="https://hackeryarn.com">posts</a>
       </li>
@@ -40,15 +41,16 @@
     </ul>
   </nav>
 </header>
-  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+  <main>
     
 <article>
-  <h1 class="title">
-    Embrace your constraints
-  </h1>
-  <p class="subtitle">Published 2019-08-14</p>
-  <div>
-    <p>Engineers want to measure the quality and effectiveness of their work.
+  <section>
+    <h1>
+      Embrace your constraints
+    </h1>
+    <p class="subtitle">Published 2019-08-14</p>
+    <div>
+      <p>Engineers want to measure the quality and effectiveness of their work.
 They turn to code coverage, burn down charts, and yearly goals, with the
 best intention.</p>
 <span id="continue-reading"></span>
@@ -198,34 +200,67 @@ scope of what problems we are solving.</p>
 <a rel="external" href="https://seths.blog/2019/06/constraints-and-measurement/">inspiration</a>
 for this article.</p>
 
-  </div>
-  <hr />
-  <div class="not-prose -mt-10">
-    
+    </div>
+    <hr />
+    <div>
+      
 
-<ul class="not-prose flex gap-3">
+<ul class="tags">
   
   <li>
-    <a href="https://hackeryarn.com/tags/discussion/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">discussion</a>
+    <a href="https://hackeryarn.com/tags/discussion/">discussion</a>
   </li>
   
   <li>
-    <a href="https://hackeryarn.com/tags/development/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">development</a>
+    <a href="https://hackeryarn.com/tags/development/">development</a>
   </li>
   
 </ul>
 
 
-  </div>
+    </div>
+  </section>
+  <aside>
+    <ul>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#not-enough-time">Not Enough Time</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#missing-or-changing-requirements">Missing or Changing Requirements</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#unrealistic-expectations">Unrealistic Expectations</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#the-right-tool-for-the-job">The Right Tool for the Job</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#technological-limitations">Technological Limitations</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/embrace-the-constraints/#wrap-up">Wrap Up</a>
+        
+      </li>
+      
+    </ul>
+  </aside>
 </article>
 
-
-  </section>
-  <footer class="p-4 mt-15">
-  <div class="flex justify-center text-4xl gap-6">
-    <a href="https://mastodon.social/@hackeryarn">
+  </main>
+  <footer>
+  <div class="social">
+    <a rel="me" href="https://mastodon.social/@hackeryarn">
       <i class="fa-brands fa-mastodon"></i>
     </a>
     <a href="https://codeberg.org/hackeryarn">
@@ -238,11 +273,10 @@ for this article.</p>
       <i class="fa-brands fa-linkedin"></i>
     </a>
   </div>
-  <p class="text-center text-neutral-500 mt-5">
+  <p>
     Copyright 2026 by Artem Chernyak
   </p>
 </footer>
-  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
 </body>
 
 </html>

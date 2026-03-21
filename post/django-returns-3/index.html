@@ -13,6 +13,7 @@
   <title>hackeryarn | Type safe Django app, Part 3</title>
   
   <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/generated.css">
   
   <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
@@ -21,13 +22,13 @@
   <script defer src="/js/main.bundle.js"></script>
 </head>
 
-<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
-  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
-  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
-    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+<body hx-boost="true" hx-ext="head-support" hx-swap="transition:true">
+  <header>
+  <a href="https://hackeryarn.com">
+    <i class="hackeryarn"></i> hackeryarn
   </a>
-  <nav class="carrois lg:text-3xl text-lg">
-    <ul class="flex gap-3 lg:gap-6">
+  <nav>
+    <ul>
       <li>
         <a href="https://hackeryarn.com">posts</a>
       </li>
@@ -40,15 +41,16 @@
     </ul>
   </nav>
 </header>
-  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+  <main>
     
 <article>
-  <h1 class="title">
-    Type safe Django app, Part 3
-  </h1>
-  <p class="subtitle">Published 2022-04-16</p>
-  <div>
-    <p>In <a rel="external" href="https://hackeryarn.com/post/django-returns-2/">Part 2</a> we got a taste of
+  <section>
+    <h1>
+      Type safe Django app, Part 3
+    </h1>
+    <p class="subtitle">Published 2022-04-16</p>
+    <div>
+      <p>In <a rel="external" href="https://hackeryarn.com/post/django-returns-2/">Part 2</a> we got a taste of
 using <code>returns</code> and created our first model methods.</p>
 <p>In this part, we will build out views that interact with databases and learn how to combine returns containers. This composition is the key to effectively using container types and where we will see the benefits of all our work.</p>
 <span id="continue-reading"></span><h1 id="writ-views-that-actually-do-something">Writ views that actually do something</h1>
@@ -160,39 +162,68 @@ require IO, we need to mark it as <code>impure_safe</code>.</p>
 <p><code>returns</code> provides quite a few more tools, but they require more complex scenarios and only provide slight variants of what we covered in this series.</p>
 <p>The rest of the Django tutorial focuses on Django specific details and we won’t get to see anything new. Therefore, this is where I will stop the series. But I encourage you to continue with the tutorial on your own and try to use what you learned here.</p>
 
-  </div>
-  <hr />
-  <div class="not-prose -mt-10">
-    
+    </div>
+    <hr />
+    <div>
+      
 
-<ul class="not-prose flex gap-3">
+<ul class="tags">
   
   <li>
-    <a href="https://hackeryarn.com/tags/django/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">django</a>
+    <a href="https://hackeryarn.com/tags/django/">django</a>
   </li>
   
   <li>
-    <a href="https://hackeryarn.com/tags/python/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">python</a>
+    <a href="https://hackeryarn.com/tags/python/">python</a>
   </li>
   
   <li>
-    <a href="https://hackeryarn.com/tags/tutorial/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+    <a href="https://hackeryarn.com/tags/tutorial/">tutorial</a>
   </li>
   
 </ul>
 
 
-  </div>
+    </div>
+  </section>
+  <aside>
+    <ul>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/django-returns-3/#writ-views-that-actually-do-something">Writ views that actually do something</a>
+        
+        <ul>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/django-returns-3/#using-a-template">Using a template</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/django-returns-3/#a-shortcut-render">A shortcut: render()</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/django-returns-3/#raising-a-404-error">Raising a 404 error</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/django-returns-3/#wrap-up">Wrap up</a>
+        
+      </li>
+      
+    </ul>
+  </aside>
 </article>
 
-
-  </section>
-  <footer class="p-4 mt-15">
-  <div class="flex justify-center text-4xl gap-6">
-    <a href="https://mastodon.social/@hackeryarn">
+  </main>
+  <footer>
+  <div class="social">
+    <a rel="me" href="https://mastodon.social/@hackeryarn">
       <i class="fa-brands fa-mastodon"></i>
     </a>
     <a href="https://codeberg.org/hackeryarn">
@@ -205,11 +236,10 @@ require IO, we need to mark it as <code>impure_safe</code>.</p>
       <i class="fa-brands fa-linkedin"></i>
     </a>
   </div>
-  <p class="text-center text-neutral-500 mt-5">
+  <p>
     Copyright 2026 by Artem Chernyak
   </p>
 </footer>
-  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
 </body>
 
 </html>

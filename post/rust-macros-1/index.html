@@ -13,6 +13,7 @@
   <title>hackeryarn | Let&#x27;s write a macro in Rust - Part 1</title>
   
   <link rel="icon" type="image/svg" href="/imgs/hackeryarn.svg" />
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/generated.css">
   
   <link rel="alternate" type="application/atom+xml" title="Atom Feed for https://hackeryarn.com"
@@ -21,13 +22,13 @@
   <script defer src="/js/main.bundle.js"></script>
 </head>
 
-<body hx-boost="true" hx-ext="head-support" class="flex flex-col justify-between h-screen">
-  <header class="top-0 w-full z-10 flex justify-between items-center mb-7 lg:text-8xl text-4xl p-5">
-  <a class="logo flex items-center no-underline lg:gap-5 gap-2 neutral-900 italianno" href="https://hackeryarn.com">
-    <img class="inline lg:w-20 w-10 rounded-full" src="/imgs/hackeryarn.svg" /> hackeryarn
+<body hx-boost="true" hx-ext="head-support" hx-swap="transition:true">
+  <header>
+  <a href="https://hackeryarn.com">
+    <i class="hackeryarn"></i> hackeryarn
   </a>
-  <nav class="carrois lg:text-3xl text-lg">
-    <ul class="flex gap-3 lg:gap-6">
+  <nav>
+    <ul>
       <li>
         <a href="https://hackeryarn.com">posts</a>
       </li>
@@ -40,15 +41,16 @@
     </ul>
   </nav>
 </header>
-  <section class="w-full mx-auto mb-auto prose-neutral prose lg:prose-2xl px-6">
+  <main>
     
 <article>
-  <h1 class="title">
-    Let&#x27;s write a macro in Rust - Part 1
-  </h1>
-  <p class="subtitle">Published 2025-08-17</p>
-  <div>
-    <p>Macros are required to do some very helpful things in Rust, but this isn't an article about any of those things.</p>
+  <section>
+    <h1>
+      Let&#x27;s write a macro in Rust - Part 1
+    </h1>
+    <p class="subtitle">Published 2025-08-17</p>
+    <div>
+      <p>Macros are required to do some very helpful things in Rust, but this isn't an article about any of those things.</p>
 <p>I became enamored with macros many years ago when I read <a rel="external" href="https://gigamonkeys.com/book/">Practical Common Lisp</a> and saw the implementation of a SQL DSL that works with built in data structures. The whole implementation took less than a screen of code and absolutely blew away my expectations of what it took to create DSLs.</p>
 <span id="continue-reading"></span>
 <p>In this article, I will try to share some of that excitement with you while using Rust's macro system. Will this be the most practical and useful macro you can write? Absolutely not. I only hope to show you some possibilities of this powerful tool.</p>
@@ -132,34 +134,77 @@
 <pre class="giallo z-code"><code data-lang="rust"><span class="giallo-l"><span class="z-entity z-name z-function z-macro z-rust">query!</span><span class="z-punctuation">(</span><span class="z-source">from db select title</span><span class="z-punctuation">,</span><span class="z-source"> rating</span><span class="z-keyword"> where</span><span class="z-source"> rating</span><span class="z-keyword z-operator"> &gt;</span><span class="z-constant z-numeric"> 9</span><span class="z-source"> or artist</span><span class="z-keyword z-operator"> ==</span><span class="z-punctuation z-definition z-string z-string"> &quot;Tool&quot;</span><span class="z-punctuation">);</span></span></code></pre>
 <p>In the <a rel="external" href="https://hackeryarn.com/post/rust-macros-2/">next part</a> we will make progress toward that goal and explore some more advanced macro techniques.</p>
 
-  </div>
-  <hr />
-  <div class="not-prose -mt-10">
-    
+    </div>
+    <hr />
+    <div>
+      
 
-<ul class="not-prose flex gap-3">
+<ul class="tags">
   
   <li>
-    <a href="https://hackeryarn.com/tags/tutorial/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">tutorial</a>
+    <a href="https://hackeryarn.com/tags/tutorial/">tutorial</a>
   </li>
   
   <li>
-    <a href="https://hackeryarn.com/tags/rust/"
-      class="prose lg:prose-2xl underline decoration-dotted transition text-neutral-500 hover:text-neutral-900">rust</a>
+    <a href="https://hackeryarn.com/tags/rust/">rust</a>
   </li>
   
 </ul>
 
 
-  </div>
+    </div>
+  </section>
+  <aside>
+    <ul>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-1/#prior-art">Prior art</a>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-1/#macro-design-process">Macro design process</a>
+        
+        <ul>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-1/#don-t-write-macros">Don&#x27;t write macros</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-1/#the-simplest-query-macro">The simplest query! macro</a>
+        
+        <ul>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-1/#our-first-match-arm">Our first match arm</a>
+          </li>
+          
+          <li>
+            <a href="https://hackeryarn.com/post/rust-macros-1/#implementing-single-field-select">Implementing single field select</a>
+          </li>
+          
+        </ul>
+        
+      </li>
+      
+      <li>
+        <a href="https://hackeryarn.com/post/rust-macros-1/#conclusion-for-now">Conclusion... for now</a>
+        
+      </li>
+      
+    </ul>
+  </aside>
 </article>
 
-
-  </section>
-  <footer class="p-4 mt-15">
-  <div class="flex justify-center text-4xl gap-6">
-    <a href="https://mastodon.social/@hackeryarn">
+  </main>
+  <footer>
+  <div class="social">
+    <a rel="me" href="https://mastodon.social/@hackeryarn">
       <i class="fa-brands fa-mastodon"></i>
     </a>
     <a href="https://codeberg.org/hackeryarn">
@@ -172,11 +217,10 @@
       <i class="fa-brands fa-linkedin"></i>
     </a>
   </div>
-  <p class="text-center text-neutral-500 mt-5">
+  <p>
     Copyright 2026 by Artem Chernyak
   </p>
 </footer>
-  <a class="hidden" rel="me" href="https://mastodon.social/@hackeryarn">Mastodon</a>
 </body>
 
 </html>
